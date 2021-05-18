@@ -12,6 +12,8 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
+
+    <script src="https://kit.fontawesome.com/7346ca967a.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <script
@@ -83,19 +85,34 @@
           
         <div class="row d-flex align-items-center justify-content-center">
             <div class="col-md-12">
-                <div class="card px-5 py-5"> <span class="circle"><i class="fa fa-check"></i></span>
+                <div class="card px-5 py-5">
                     <h5 class="mt-3"><div class="section-headline text-center">
-                        <h2 style="color: black">Put In</h2>
+                        <h2 style="color: black">Information</h2>
                       </div></h5>
                      <small class="mt-2 text-muted">We are confident that our trading site is reliable and the most attractive.</small>
 
-                     <div class="form-group mt-3">
+                     <div class="form-group mt-3 row">
                         <label for="id">ID</label>
-                        <input type="text" class="form-control" placeholder="Enter ID" id="id" />
+                        <div class="col-sm-12">
+                        <input type="text" class="form-control" placeholder="Enter ID" id="id" style="background-image:linear-gradient( to right, white, rgba(255, 99, 71, 0.5) ); "/>
+                        </div>
+                      </div>
+                      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+                        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                          <div class="toast-header">
+                            <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                            <strong class="me-auto">Bootstrap</strong>
+                            <small>11 mins ago</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                          </div>
+                          <div class="toast-body">
+                            Hello, world! This is a toast message.
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group mt-3">
                         <label for="pw">Password</label>
-                        <input type="password" class="form-control" placeholder="Enter Password" id="pw" />
+                        <input type="password" class="form-control" placeholder="Enter Password" id="pw" style="background-image:linear-gradient( to right, white, rgba(255, 104, 47, 0.5) ); "/>
                       </div>
                       <div class="form-group mt-3">
                         <label for="pwdchk">Password Check</label>
@@ -103,12 +120,13 @@
                           type="password"
                           class="form-control"
                           placeholder="Enter Password Double Check"
-                          id="pwdchk"
+                          id="pwdchk" 
+                          style="background-image:linear-gradient( to right, white, rgba(255, 159, 8, 0.4) ); "
                         />
                       </div>
                       <div class="form-group mt-3">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" placeholder="Name" id="name" />
+                        <input type="text" class="form-control" placeholder="Name" id="name" style="background-image:linear-gradient( to right, white, rgba(255, 220, 0, 0.3) ); "/>
                       </div>
                       <div class="form-group mt-3">
                         <label for="phone">Phone Number</label>
@@ -116,7 +134,8 @@
                           type="text"
                           class="form-control"
                           placeholder="Enter PhoneNumber"
-                          id="phone"
+                          id="phone" 
+                          style="background-image:linear-gradient( to right, white, rgba(167, 18, 115, 0.3) ); "
                         />
                       </div>
                       <div class="col-xl-12 form-group mt-3">
@@ -138,7 +157,7 @@
                       </div>
                       <div class="row form-group">
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" placeholder="Enter E-mail" id="email" /> 
+                          <input type="text" class="form-control" placeholder="Enter E-mail" id="email" style="background-image:linear-gradient( to right, white, rgba(95, 5,165, 0.3) ); "/> 
                         </div>
                         <div class="col-sm-3">
                           <select name="mailcom" id="mailcom" style="width: 250px; height: 40px">
@@ -186,19 +205,24 @@
                         </div>
                       </div>
                     <div class="row mt-3">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                           <button type="button" id="back" class="btn btn-dark bg-dark" style="width: 100%; background-image:linear-gradient( to right, black, red )">
                             HOME
                           </button>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <button type="button" id="update" class="btn btn-dark bg-dark" style="width: 100%; background-image:linear-gradient( to right, red, white )">
+                              UPDATE
+                            </button>
+                          </div>
+                        <div class="col-sm-4">
                           <button
                             type="button"
-                            id="btnSubmit"
+                            id="delete"
                             class="btn btn-dark bg-dark signup "
-                            style="width: 100%; background-image:linear-gradient( to right, red, black )"
+                            style="width: 100%; background-image:linear-gradient( to right, white, black )"
                           >
-                            JOIN IN
+                            DELETE
                           </button>
                         </div>
                     </div>
