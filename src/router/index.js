@@ -28,24 +28,24 @@ const routes = [
     }
   },
   {
-    path: "/member",
+    path: "/member/:infoUpdate",
     name: "Member",
     components: {
       'default': Member,
-      components: {
-        children: [
-          // {
-          //   path: 'info',
-          //   name: "Info",
-          //   component: MemberInfo,
-          // },
-          {
-            path: 'update',
-            name: "Update",
-            component: Member,
-          },
-        ],
-      }
+      // components: {
+      //   children: [
+      //     // {
+      //     //   path: 'info',
+      //     //   name: "Info",
+      //     //   component: MemberInfo,
+      //     // },
+      //     {
+      //       path: 'update',
+      //       name: "Update",
+      //       component: Member,
+      //     },
+      //   ],
+      // }
     },
   },
   // {
