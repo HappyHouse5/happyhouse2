@@ -10,6 +10,8 @@ Vue.config.productionTip = false;
 // for bootstrap 5
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
+// import "vue-kakao-sdk"
+// import "vue-kakao-api"
 
 new Vue({
   router,
