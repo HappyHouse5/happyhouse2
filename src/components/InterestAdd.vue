@@ -1,7 +1,7 @@
 <template>
         <div>
                         <div
-                          class="row align-items-center justify-content-center mb-5 interest-add"
+                          class="row align-items-center justify-content-center interest-add"
                         >
                           <div class="col-2 my-2">
                             <select name="location" id="location" class="form-select mr-sm-2">

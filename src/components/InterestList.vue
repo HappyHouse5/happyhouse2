@@ -1,6 +1,6 @@
 <template>
                         <div class="text-center align-middle">
-                          <ul class="m-auto list-group list-group-flush interst-list">
+                          <ul class="m-auto list-group list-group-flush interst-list align-items-center justify-content-center">
                             <li class="m-2">
                               <span class="fs-6 align-middle">종로구 사직동</span>
                               <button

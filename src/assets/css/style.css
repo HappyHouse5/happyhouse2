@@ -625,14 +625,16 @@ div#preloader {
 
 @media (min-width: 1024px) {
   #hero p {
+    margin: 160px auto 30px auto;
     width: 60%;
   }
 }
 
 @media (max-width: 768px) {
   #hero p {
+    margin: 150px auto 30px auto;
     font-size: 28px;
-    line-height: 1.2;
+    /* line-height: 1.2; */
   }
 }
 
@@ -1852,13 +1854,13 @@ span.email-notes {
 
 .interest-inner {
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 90px 0px;
+  padding: 60px 0px 80px 0px;
   max-width: 900px;
 }
 
 .interst-list {
   max-width: 850px;
-  min-height: 250px;
+  min-height: 300px;
 }
 
 .interst-list > li > span {
@@ -1866,7 +1868,7 @@ span.email-notes {
 }
 
 .interest-add {
-  min-height: 250px;
+  min-height: 300px;
 }
 
 .interest-add > div > button {
