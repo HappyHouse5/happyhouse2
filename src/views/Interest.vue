@@ -31,7 +31,7 @@
 
                         <div class="interest-link fs-4 text-center">
                           <router-link to="/interest/add" type="button" class="btn btn-secondary m-2">Add</router-link>
-                          <router-link to="/interest/list" type="button" class="btn btn-secondary m-2">List</router-link>
+                          <router-link default to="/interest/list" type="button" class="btn btn-secondary m-2">List</router-link>
                           <router-link to="/interest/del" type="button"  class="btn btn-secondary m-2">Delete</router-link>
                         </div>
                       </div>
@@ -58,6 +58,9 @@ export default {
         // InterestList,
         // InterestAdd,
         // InterestDel,
+    },
+    mounted() {
+      this.$router.push("/interest/list");
     }
 }
 </script>

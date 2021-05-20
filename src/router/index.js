@@ -50,7 +50,6 @@ const routes = [
     path: "/interest",
     name: "Interest",
     component: Interest,
-    Redirect: "/interest/list",
     children: [
       {
         path: 'add',
