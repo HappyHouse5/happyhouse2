@@ -51,11 +51,15 @@
                                 </div>
                               </h5>
 
-                            <div>
                             <!-- update form Component -->
-                            <member-update></member-update>
+                            <div v-if="infoUpdate == 'update'">
+                                <member-update></member-update>
                             </div>
 
+                            <!-- update form Component -->
+                            <div v-if="infoUpdate == 'information'">
+                                <member-info></member-info>
+                            </div>
 
                             </div>
                           </div>
@@ -76,11 +80,25 @@
 
 <script>
 import MemberUpdate from '@/components/MemberUpdate.vue';
+import MemberInfo from '@/components/MemberInfo.vue';
 
 export default {
     name: "Member",
     components: {
-        MemberUpdate
+        MemberUpdate,
+        MemberInfo,
+    },
+    created(){
+        this.infoUpdate = this.$route.params.infoUpdate;
+        this.infoUpdate = "information"
+        // this.infoUpdate = "update"
+        console.log(this.infoUpdate);
+        
+    },
+    data:function(){
+        return{
+            infoUpdate: "",
+        }
     }
 }
 </script>
