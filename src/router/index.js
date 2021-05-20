@@ -1,14 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { Popover } from 'bootstrap';
 import Axios from 'axios';
 // import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
-Vue.use(Popover);
 Vue.prototype.$http = Axios;
 
 const routes = [
+
   // {
   //   path: "/",
   //   name: "Home",

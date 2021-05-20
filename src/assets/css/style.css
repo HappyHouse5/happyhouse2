@@ -825,7 +825,7 @@ div#preloader {
   position: relative;
   overflow: hidden;
 }
-
+/* 
 .team-member::before {
   background: rgba(0, 0, 0, 0) url("../img/team/team01.jpg") repeat scroll 0 0;
   content: "";
@@ -843,7 +843,7 @@ div#preloader {
   background-position: top center;
   transition: 5s;
   transform: scale(1);
-}
+} */
 
 .team-member:hover.team-member::before {
   transform: scale(1.2);

@@ -5,6 +5,12 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+// require('./assets/css/style.css');
+
+// for bootstrap 5
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+
 new Vue({
   router,
   store,
