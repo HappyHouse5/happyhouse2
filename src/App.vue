@@ -26,7 +26,6 @@ import NavBar from '@/components/NavBar.vue';
 // import '@/assets/js/main.js';
 // import '@/assets/vendor/**';
 
-
 export default {
   name: "app",
   props: {

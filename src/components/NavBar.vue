@@ -1,7 +1,7 @@
 <template>
 <div>
 <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-center">
+    <header id="header" class="fixed-top d-flex align-items-center">    <!-- fixed-top : position: fixed로 되어있다. -> z-index 무시하고 최상위, -> style="position:static" 하면 해결 가능 -->
       <div class="container d-flex justify-content-between">
         <div class="logo">
           <h1>
@@ -56,7 +56,7 @@ export default {
       }
     },
     mounted() {
-      this.loginModal = new Modal(document.querySelector("#loginModal"));
+      this.loginModal = new Modal(document.getElementById("loginModal"));
       console.log(this.isLogin);
     },
     methods: {
@@ -90,6 +90,8 @@ export default {
     //   })
     // }
 }
+
+//document.getElementById("loginModal")
 </script>
 
 <style>

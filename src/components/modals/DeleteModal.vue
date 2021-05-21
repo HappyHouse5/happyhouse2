@@ -39,6 +39,9 @@ export default {
             .then(({data}) => {
                 console.log(data);
                 this.modal.hide();
+                alert("회원탈퇴 !");
+                this.$store.commit('logout');
+                this.$router.push({name: 'Home'});
             })
             .catch((err) => {
                 console.log("err: " + err);
