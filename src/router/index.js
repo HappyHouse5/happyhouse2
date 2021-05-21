@@ -13,6 +13,10 @@ import InterestList from "../components/InterestList.vue";
 // import { format } from 'core-js/core/date';
 // import { BootstrapIconsPlugin  } from 'bootstrap-icons';
 
+
+  // <a :href="'#' + i" @click="$router.push({name: 'member', params: {infoUpdate: information}})">{{i}}번 게시글</a>
+  // <router-link :to="{name: 'member', params: {id: 'member', no: i}}">{{i}}번 게시글</router-link>
+
 Vue.use(VueRouter);
 Vue.prototype.$http = Axios;
 
@@ -32,10 +36,9 @@ const routes = [
       'default': Join,
     }
   },
-  // <a :href="'#' + i" @click="$router.push({name: 'member', params: {infoUpdate: information}})">{{i}}번 게시글</a>
-  // <router-link :to="{name: 'member', params: {id: 'member', no: i}}">{{i}}번 게시글</router-link>
+
   {  
-    path: "/member/:type",
+    path: "/member",
     name: "Member",
     components: {
       'default': Member,

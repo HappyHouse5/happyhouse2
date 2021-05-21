@@ -1,4 +1,7 @@
 <template>
+
+
+    <div>
         <!-- ======= hero Section ======= -->
     <section id="hero" style="height: 1800px">
       <div class="hero-container">
@@ -52,14 +55,14 @@
                               </h5>
 
                             <!-- update form Component -->
-                            <div v-if="type == 'update'">
-                                <member-update v-on:type="changeType"></member-update>
-                            </div>
+                            <template v-if="type == 'update'">
+                                <member-update v-on:toInfo="changeType" v-on:delete="withdrawModal"></member-update>
+                            </template>
 
-                            <!-- update form Component -->
-                            <div v-if="type == 'info'">
-                                <member-info v-on:toUpdate="changeType"></member-info>
-                            </div>
+                            <!-- Information form Component -->
+                            <template v-if="type == 'info'">
+                                <member-info v-on:toUpdate="changeType" v-on:delete="withdrawModal"></member-info>
+                            </template>
 
                             </div>
                           </div>
@@ -76,35 +79,46 @@
       </div>
     </section>
     <!-- End Hero Section -->
+
+
+      <delete-modal v-bind:modal=deleteModal></delete-modal>
+    </div>
 </template>
 
 <script>
 import MemberUpdate from '@/components/MemberUpdate.vue';
 import MemberInfo from '@/components/MemberInfo.vue';
+// import axios from 'axios';
+import DeleteModal from '@/components/modals/DeleteModal.vue';
+
+import {Modal} from 'bootstrap';
 
 export default {
     name: "Member",
     components: {
         MemberUpdate,
         MemberInfo,
+        DeleteModal,
     },
-    created(){
-        this.type = this.$route.params.type;
-        // this.infoUpdate = "info"
-        // this.infoUpdate = "update"
+    mounted(){
+        this.type = "info"
         console.log(this.type);
-        
+        this.deleteModal = new Modal(document.getElementById('deleteModal'));
     },
     data:function(){
         return{
-            type: "info",
+            type: "",
+            deleteModal: null,
         }
     },
     methods:{
       changeType:function(data){
-        console.log(data);
         this.type = data.type;
         console.log(this.type);
+      },
+      withdrawModal:function(){
+        // console.log("delete button pushed");
+        this.deleteModal.show();
       }
     }
 }

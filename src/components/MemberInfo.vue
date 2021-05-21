@@ -61,7 +61,8 @@
                             type="button"
                             id="delete"
                             class="btn btn-dark bg-dark signup"
-                            style="width: 100%"
+                            style="width: 100%"  
+                            v-on:click="withdraw" 
                             >
                             DELETE
                             </button>
@@ -119,8 +120,11 @@ export default {
     methods:{
         toUpdate: function(){
             this.$emit('toUpdate', {type: 'update'});
-        }
-    }
+        },
+        withdraw:function(){
+            this.$emit('delete');
+        },
+    },
 }
 </script>
 
