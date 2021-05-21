@@ -543,7 +543,7 @@ div#preloader {
 
 @media (max-height: 500px) {
   #hero {
-    height: 150vh;
+    height: 200vh;
   }
 }
 
@@ -585,7 +585,7 @@ div#preloader {
 #hero .carousel-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   position: absolute;
   bottom: 0;
   top: 70px;

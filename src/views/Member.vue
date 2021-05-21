@@ -3,7 +3,7 @@
 
     <div>
         <!-- ======= hero Section ======= -->
-    <section id="hero" style="height: 1800px">
+    <section id="hero" style="height: 1600px">
       <div class="hero-container">
         <div
           id="heroCarousel"
@@ -14,7 +14,7 @@
           <div class="carousel-inner" role="listbox">
             <div
               class="carousel-item-sub active"
-              style="background-image: url(assets/img/hero-carousel/bg3.jpg)"
+              style="background-image: url(assets/img/hero-carousel/bg1.jpg)"
             >
               <div class="carousel-container">
                 <div class="container">

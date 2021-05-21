@@ -1,6 +1,6 @@
 <template>
     <!-- ======= hero Section ======= -->
-    <section id="hero" style="height: 100vh">
+    <section id="hero" style="height: 1600px">
       <div class="hero-container">
         <div
           id="heroCarousel"
