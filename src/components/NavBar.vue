@@ -10,12 +10,11 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#">Join</a></li>
-            <li><a class="nav-link scrollto" href="#">MyPage</a></li>
-            <li><a class="nav-link scrollto" href="#">House</a></li>
-            <li><a class="nav-link scrollto" href="#">Interest</a></li>
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <a class="nav-link" style="cursor:pointer" v-on:click="$router.push({name: 'Home'}).catch(()=>{});">Home</a>
+            <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'Join'}).catch(()=>{});">Join</a></li>
+            <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'Member', params: {type: 'info'}}).catch(()=>{});">MyPage</a></li>
+            <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'House'}).catch(()=>{});">House</a></li>
+            <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'Interest'}).catch(()=>{});">Interest</a></li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>

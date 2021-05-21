@@ -52,13 +52,13 @@
                               </h5>
 
                             <!-- update form Component -->
-                            <div v-if="infoUpdate == 'update'">
-                                <member-update></member-update>
+                            <div v-if="type == 'update'">
+                                <member-update v-on:type="changeType"></member-update>
                             </div>
 
                             <!-- update form Component -->
-                            <div v-if="infoUpdate == 'information'">
-                                <member-info></member-info>
+                            <div v-if="type == 'info'">
+                                <member-info v-on:toUpdate="changeType"></member-info>
                             </div>
 
                             </div>
@@ -89,16 +89,23 @@ export default {
         MemberInfo,
     },
     created(){
-        this.infoUpdate = this.$route.params.infoUpdate;
-        this.infoUpdate = "information"
+        this.type = this.$route.params.type;
+        // this.infoUpdate = "info"
         // this.infoUpdate = "update"
-        console.log(this.infoUpdate);
+        console.log(this.type);
         
     },
     data:function(){
         return{
-            infoUpdate: "",
+            type: "info",
         }
+    },
+    methods:{
+      changeType:function(data){
+        console.log(data);
+        this.type = data.type;
+        console.log(this.type);
+      }
     }
 }
 </script>

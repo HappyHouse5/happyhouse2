@@ -44,11 +44,14 @@
                             </button>
                         </div>
                         <div class="col-sm-4">
+
+                        <!-- <router-link type="button" style="width: 100%" class="btn btn-dark bg-dark" :to="{name: 'Member', params: {type: 'update'}}">UPDATE</router-link> -->
                             <button
                             type="button"
                             id="update"
                             class="btn btn-dark bg-dark"
-                            style="width: 100%"
+                            style="width: 100%" 
+                            v-on:click="toUpdate"
                             >
                             UPDATE
                             </button>
@@ -113,6 +116,11 @@
 <script>
 export default {
     name: "Memberinfo",
+    methods:{
+        toUpdate: function(){
+            this.$emit('toUpdate', {type: 'update'});
+        }
+    }
 }
 </script>
 
