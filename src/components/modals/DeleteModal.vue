@@ -4,15 +4,6 @@
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">회원 탈퇴 하시겠습니까?</h4>
-            <button
-            type="button"
-            class="close"
-            v-on:click="hideModal"
-            data-dismiss="modal"
-            aria-label="Close"
-            >
-            <span aria-hidden="true">&times;</span>
-            </button>
         </div>
 
         <!-- Modal body -->
@@ -42,10 +33,18 @@ export default {
         },
         withdrawConfirm: function(){
             console.log("delete Confirm");
-            axios.delete("http:/localhost:80/members/member", {
-                
+            axios.delete("http://localhost:80/members/member", {
+
+            })
+            .then(({data}) => {
+                console.log(data);
+                this.modal.hide();
+            })
+            .catch((err) => {
+                console.log("err: " + err);
+                this.modal.hide();
             });
-        }
+        },
     }
 }
 </script>

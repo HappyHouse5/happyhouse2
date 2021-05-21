@@ -13,6 +13,7 @@
               type="text"
               class="form-control"
               placeholder="Email address"
+              v-model="id" 
               required
             />
             <label for="inputPassword" class="sr-only">Password</label>
@@ -21,6 +22,7 @@
               id="userpwd"
               class="form-control"
               placeholder="Password"
+              v-model="pwd" 
               required
             />
             <div class="checkbox mb-3">
@@ -47,16 +49,42 @@
 </template>
 
 <script>
+import axios from "@/common/axios.js";
+
 export default {
     name: "LoginModal",
     props: ['loginModal'],
+    data:function(){
+      return{
+        id: "admin",
+        pwd: "123",
+      }
+    },
     methods: {
         loginSubmit() {
             console.log("login submit");
+            axios.post("/members/login", {
+              userId: this.id,
+              userPassword: this.pwd,
+            })
+            .then(({data}) => {
+              console.log(data);
+              if(data == ""){
+                alert("ID, PW 확인해주세요.");
+              }
+              else{
+                sessionStorage.setItem("member", data);
+                this.$store.dispatch('login', data);
+              }
+              this.closeModal();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
         },
         closeModal() {
             this.loginModal.hide();
-        }
+        },
     }
 }
 </script>
