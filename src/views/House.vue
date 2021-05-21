@@ -174,7 +174,8 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-4" id="map" style="height: 400px"></div>
+          <div class="col-sm-4" id="map" style="height: 400px">
+          </div>
           <div class="col-sm-8">
             <!-- <canvas id="myChart"></canvas> -->
             <!-- <Line></Line> -->
@@ -187,10 +188,10 @@
   </div>
 </template>
 
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb6a0403bc69b1c833879cae3c194c2b"
-    ></script>
+<script
+  type="text/javascript"
+  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb6a0403bc69b1c833879cae3c194c2b"
+></script>
 
 <script>
 import HouseSearch from '@/components/HouseSearch.vue';
@@ -199,6 +200,9 @@ import HouseSearch from '@/components/HouseSearch.vue';
 
 import ChartVue from '@/components/Chart.vue';
 
+
+
+  // kakaoMap(target[0].location[0], target[0].location[1], target[0].name);
 export default {
     name:"house",
     // props:['chartdata', 'options'],
@@ -215,83 +219,80 @@ export default {
                 'c':15,
                 'd':9,
                 'e':14,
-               },
-        }
-    }
-   
-   
-    // data:function(){
-    //     return{
-    //         myChart:"",
-    //     }
-    // }
+            },
+            target: [
+              {
+                location: [37.57571759553137, 126.96994660802713],
+                name: "신동아광화문",
+              },
+            ],
+            marker: "",
+            map: null,
+
+      };
+    },
+    mounted(){                                      // 페이지 mount 되는 시점
+      // script 헤더에 Kakao Map API src 담아주기
+      if (window.kakao && window.kakao.maps) {
+      this.initMap();
+      } else {
+        const script = document.createElement('script');
+        /* global kakao */
+        script.onload = () => kakao.maps.load(this.initMap);
+        script.src =
+          'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=cb6a0403bc69b1c833879cae3c194c2b';
+        document.head.appendChild(script);
+      };
+    },
+    methods:{
+      initMap:function() {
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(this.target[0].location[0], this.target[0].location[1]), // 지도의 중심좌표
+          level: 3,          // 지도의 확대 레벨
+        };
+
+        this.map = new kakao.maps.Map(mapContainer, mapOption);          // 맵 생성 (map을 출력할 container{html}, 맵의 좌표 & 크기)
+
+        // 마커 표시하기 : 맵, 좌표, 마커 이미지
+       this.marker = new kakao.maps.Marker({
+          map: this.map,
+          position: new kakao.maps.LatLng(this.target[0].location[0], this.target[0].location[1]),
+        })
+        this.marker.setMap(this.map);
+
+
+        let $this = this;       // kakao 함수 내에서 this 사용을 위해 변수 생성
+        // 마커에 마우스오버 이벤트
+        kakao.maps.event.addListener(this.marker, 'mouseover', function() {
+          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+            $this.markerMouseOn();
+            console.log("mouseover!");
+        });
+
+        // 마커에 마우스아웃 이벤트
+        kakao.maps.event.addListener(this.marker, 'mouseout', function() {
+            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+            $this.infowindow.close();
+        });
+      },
+      markerMouseOn:function(){
+        var iwContent = "<div style=\"width:200px; height:100px; text-align: center; padding: 5px;\">" + 'here!!' + "</div>"; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        var iwPosition = new kakao.maps.LatLng(this.target[0].location[0], this.target[0].location[1]); //인포윈도우 표시 위치입니다
+        // var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+        this.infowindow = new kakao.maps.InfoWindow({
+          map: this.map,
+          position: iwPosition,
+          content: iwContent,
+          // removable: iwRemoveable,
+        });
+        this.infowindow.open(this.map, this.marker);
+      },
+    },
 }
 
 
-//   const labels = ["January", "February", "March", "April", "May", "June"];
-//   const data = {
-//     labels: labels,
-//     datasets: [
-//       {
-//         label: "My First dataset",
-//         backgroundColor: "rgb(255, 99, 132)",
-//         borderColor: "rgb(255, 99, 132)",
-//         data: [0, 10, 5, 2, 20, 30, 45],
-//       },
-//     ],
-//   };
-
-//   const config = {
-//     type: "line",
-//     data,
-//     options: {},
-//   };
-
-//   var myChart = n ew Chart(document.getElementById("myChart"), config);
-
-//   var target = [
-//     {
-//       location: [37.57571759553137, 126.96994660802713],
-//       name: "신동아광화문",
-//     },
-//   ];
-
-//   // 카카오 맵 위치 좌표 연동
-//   var kakaoMap = function (x, y, name) {
-//     var mapContainer = document.querySelector("#map");
-//     var options = {
-//       center: new kakao.maps.LatLng(x, y),
-//       level: 3,
-//     };
-
-//     var map = new kakao.maps.Map(mapContainer, options);
-
-//     var coords = new kakao.maps.LatLng(x, y);
-//     var marker = new kakao.maps.Marker({
-//       map: map,
-//       position: coords,
-//     });
-
-//     var infowindow = new kakao.maps.InfoWindow({
-//       content:
-//         '<div style="width:200px; height:100px; text-align: center; padding: 5px;">' +
-//         name +
-//         "</div>",
-//     });
-
-//     // 마커에 마우스가 올라갔을 때 이벤트
-//     kakao.maps.event.addListener(marker, "mouseover", function () {
-//       infowindow.open(map, marker);
-//     });
-
-//     kakao.maps.event.addListener(marker, "mouseout", function () {
-//       infowindow.close();
-//     });
-
-//     map.setCenter(coords);
-//   };
-
-//   kakaoMap(target[0].location[0], target[0].location[1], target[0].name);
 
 
 </script>

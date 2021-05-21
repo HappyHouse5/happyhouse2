@@ -32,8 +32,10 @@ const routes = [
       'default': Join,
     }
   },
-  {
-    path: "/member",
+  // <a :href="'#' + i" @click="$router.push({name: 'member', params: {infoUpdate: information}})">{{i}}번 게시글</a>
+  // <router-link :to="{name: 'member', params: {id: 'member', no: i}}">{{i}}번 게시글</router-link>
+  {  
+    path: "/member/:type",
     name: "Member",
     components: {
       'default': Member,
