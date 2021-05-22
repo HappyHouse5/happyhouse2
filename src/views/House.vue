@@ -1,6 +1,6 @@
 <template>
   <div>
-      <house-search></house-search>
+      <house-search v-on:search="searchHouse"></house-search>
 
           <div class="container mt-3 mb-3">
       <div class="row mt-3">
@@ -33,111 +33,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" />
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>aptName</td>
-                  <td>55000</td>
-                  <td>buildYear</td>
-                  <td>area</td>
-                  <td>dealDate</td>
-                  <td>dong</td>
-                  <td>code</td>
-                </tr>
-                <tr class="spacer">
-                  <td colspan="100"></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" />
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>aptName</td>
-                  <td>55000</td>
-                  <td>buildYear</td>
-                  <td>area</td>
-                  <td>dealDate</td>
-                  <td>dong</td>
-                  <td>code</td>
-                </tr>
-                <tr class="spacer">
-                  <td colspan="100"></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" />
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>aptName</td>
-                  <td>55000</td>
-                  <td>buildYear</td>
-                  <td>area</td>
-                  <td>dealDate</td>
-                  <td>dong</td>
-                  <td>code</td>
-                </tr>
-                <tr class="spacer">
-                  <td colspan="100"></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" />
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>aptName</td>
-                  <td>55000</td>
-                  <td>buildYear</td>
-                  <td>area</td>
-                  <td>dealDate</td>
-                  <td>dong</td>
-                  <td>code</td>
-                </tr>
-                <tr class="spacer">
-                  <td colspan="100"></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" />
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>aptName</td>
-                  <td>55000</td>
-                  <td>buildYear</td>
-                  <td>area</td>
-                  <td>dealDate</td>
-                  <td>dong</td>
-                  <td>code</td>
-                </tr>
-                <tr class="spacer">
-                  <td colspan="100"></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" />
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>aptName</td>
-                  <td>55000</td>
-                  <td>buildYear</td>
-                  <td>area</td>
-                  <td>dealDate</td>
-                  <td>dong</td>
-                  <td>code</td>
-                </tr>
+                  <tr v-for="(item, idx) in houseList" :key=idx @click="houseDetail(idx)">
+                    <th scope="row">
+                      <label class="control control--checkbox">
+                        <input type="checkbox" />
+                        <div class="control__indicator"></div>
+                      </label>
+                    </th>
+                    <td>{{item.aptName}}</td>
+                    <td>{{item.dealAmount}}</td>
+                    <td>{{item.buildYear}}</td>
+                    <td>{{item.area}}</td>
+                    <td>{{item.dealDate}}</td>
+                    <td>{{item.dong}}</td>
+                    <td>{{item.code}}</td>
+                      <td colspan="100"></td>
+                  </tr>
+                  <!-- <tr class="spacer">
+                    <td colspan="100"></td>
+                  </tr>  -->
               </tbody>
             </table>
           </div>
@@ -199,26 +113,27 @@ import HouseSearch from '@/components/HouseSearch.vue';
 // import { Bar } from "vue-chartjs";
 
 import ChartVue from '@/components/Chart.vue';
-
+import axios from '@/common/axios.js';
 
 
   // kakaoMap(target[0].location[0], target[0].location[1], target[0].name);
 export default {
     name:"house",
-    // props:['chartdata', 'options'],
     components:{
         HouseSearch,
         ChartVue,
     },
     watch:{
-      // console.log("house page");
-      // console.log(this.$route.params.searchType);
-      // console.log(this.$route.params.searchWord);
     },
     data:function(){
         return{
             searchType: this.$route.params.searchType,
             searchWord: this.$route.params.searchWord == undefined ? "" : this.$route.params.searchWord,
+            offset: 0,
+            limit: 8,
+
+            houseList: null,
+
             chartData1:[5, 40,15, 15, 8],
             chartData2:{
                 'a':5,
@@ -239,6 +154,11 @@ export default {
       };
     },
     mounted(){                                      // 페이지 mount 되는 시점
+      // console.log(this.searchType);
+      // console.log(this.searchWord);
+
+      this.searchHouse({searchType: this.searchType, searchWord: this.searchWord});
+
       // script 헤더에 Kakao Map API src 담아주기
       if (window.kakao && window.kakao.maps) {
       this.initMap();
@@ -250,9 +170,6 @@ export default {
           'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=cb6a0403bc69b1c833879cae3c194c2b';
         document.head.appendChild(script);
       };
-
-      console.log(this.searchType);
-      console.log(this.searchWord);
     },
     methods:{
       initMap:function() {
@@ -299,6 +216,33 @@ export default {
         });
         this.infowindow.open(this.map, this.marker);
       },
+
+      searchHouse:function(data){
+        axios.get('/houses/houseInfo', {
+          params:{
+            searchType: data.searchType,
+            searchWord: data.searchWord,
+            offset: this.offset,
+            limit: this.limit,
+          }
+        })
+        .then(({data}) => {
+          console.log(data);
+          this.houseList = data;
+          let houseList = this.houseList;
+          houseList.forEach(function(item, idx) {
+            houseList[idx].dealDate = item.dealYear + "/" + item.dealMonth + "/" + item.dealDay;
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      },
+      houseDetail:function(idx) {
+        console.log(houseList[idx]);
+
+      }
+
     },
 }
 

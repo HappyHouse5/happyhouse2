@@ -75,7 +75,17 @@ export default {
     methods:{
       search: function(){
         console.log(this.searchType + " : " + this.searchWord);
-        this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord}}).catch(()=>{});
+        console.log(document.location.href);
+        if(document.location.href == 'http://localhost:8080/' || document.location.href == 'http://localhost:8080/#'){
+          this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord}}).catch(()=>{});
+        }
+        else{
+          console.log("here");
+          console.log(this.searchType);
+          this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord});
+          
+        }
+
       },
       typeChange:function(data){
         this.searchType = data;
