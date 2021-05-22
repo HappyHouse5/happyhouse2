@@ -80,7 +80,6 @@ export default {
           this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord}}).catch(()=>{});
         }
         else{
-          console.log(this.searchType);
           this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord});
           
         }

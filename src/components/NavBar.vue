@@ -78,7 +78,7 @@ export default {
           console.log(err);
         })
         this.$store.commit('logout');
-        this.$router.push({name: 'Home'} );
+        this.$router.push({name: 'Home'} ).catch(()=>{});
       },
       // checkLogin:function(){
       //   // console.log(this.member);

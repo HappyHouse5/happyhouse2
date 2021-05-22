@@ -197,54 +197,10 @@
           </button>
         </div>
       </div>
-      <div style="font-size: large" class="text-center mt-5">
-        <span>Or continue with these social profile</span>
-      </div>
-      <div class="row text-center">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-1 text-center">
-          <a
-            class="btn btn-primary"
-            style="background-color: #3b5998"
-            href="#!"
-            role="button"
-            ><i class="fab fa-facebook-f"></i
-          ></a>
-        </div>
-
-        <div class="col-sm-1 text-center">
-          <a
-            class="btn btn-primary"
-            style="background-color: #55acee"
-            href="#!"
-            role="button"
-            ><i class="fab fa-twitter"></i
-          ></a>
-        </div>
-        <div class="col-sm-1 text-center">
-          <a
-            class="btn btn-primary"
-            style="background-color: #ac2bac"
-            href="#!"
-            role="button"
-            ><i class="fab fa-instagram"></i
-          ></a>
-        </div>
-        <div class="col-sm-1 text-center">
-          <a
-            class="btn btn-primary"
-            style="background-color: #333333"
-            href="#!"
-            role="button"
-            ><i class="fab fa-github"></i
-          ></a>
-        </div>
-      </div>
     </div>
 </template>
 
 <script>
-
 export default {
     name: "MemberUpdate",
     methods:{
