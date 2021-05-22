@@ -97,7 +97,7 @@ router.beforeEach(function (to, from, next) {
         console.log(data.result);
         if (data.result == 'login') {
           alert("로그인이 필요합니다.");
-          next('/');            // 로그인 페이지로 이동
+          next('/').catch((err) => { console.log(err);});            // 로그인 페이지로 이동
         }
         else {
           console.log("from -> to path: " + from.path + "=>" + to.path);

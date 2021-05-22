@@ -213,6 +213,10 @@ div#preloader {
   padding-bottom: 90px;
 }
 
+.section-headline {
+  margin-top: 70px;
+}
+
 .section-headline h2 {
   display: inline-block;
   font-size: 40px;
@@ -621,6 +625,10 @@ div#preloader {
   line-height: 1.2;
   margin: 30px auto 30px auto;
   color: #fff;
+}
+
+#hero .house-search-p {
+  margin: 280px auto 30px auto;
 }
 
 @media (min-width: 1024px) {

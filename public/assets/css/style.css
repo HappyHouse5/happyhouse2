@@ -213,10 +213,16 @@ div#preloader {
   padding-bottom: 90px;
 }
 
+.section-headline {
+  margin-top: 50px;
+}
+
 .section-headline h2 {
   display: inline-block;
   font-size: 40px;
   font-weight: 600;
+
+  /* margin-top: 70px; */
   margin-bottom: 70px;
   position: relative;
   text-transform: capitalize;

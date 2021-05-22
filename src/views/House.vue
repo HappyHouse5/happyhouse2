@@ -17,7 +17,7 @@
                 <tr>
                   <th scope="col">
                     <label class="control control--checkbox">
-                      <input type="checkbox" class="js-check-all" />
+                      <input type="checkbox" class="js-check-all" v-model="allChecked" @click="checkAll()" />
                       <div class="control__indicator"></div>
                     </label>
                   </th>
@@ -31,20 +31,20 @@
                 </tr>
               </thead>
               <tbody>
-                  <tr v-for="(item, idx) in houseList" :key=idx @click="houseDetail(item)">
+                  <tr v-for="(item, idx) in houseList" :key="idx">
                     <th scope="row">
                       <label class="control control--checkbox">
-                        <input type="checkbox" v-model="checkList" :value="item" />
+                        <input type="checkbox" v-model="checkList" :value="item" @change="changeCheck()" @click="checkOneItem(item)"/>
                         <div class="control__indicator"></div>
                       </label>
                     </th>
-                    <td>{{item.aptName}}</td>
-                    <td>{{item.dealAmount}}</td>
-                    <td>{{item.buildYear}}</td>
-                    <td>{{item.area}}</td>
-                    <td>{{item.dealDate}}</td>
-                    <td>{{item.dong}}</td>
-                    <td>{{item.code}}</td>
+                    <td @click="houseDetail(item)">{{item.aptName}}</td>
+                    <td @click="houseDetail(item)">{{item.dealAmount}}</td>
+                    <td @click="houseDetail(item)">{{item.buildYear}}</td>
+                    <td @click="houseDetail(item)">{{item.area}}</td>
+                    <td @click="houseDetail(item)">{{item.dealDate}}</td>
+                    <td @click="houseDetail(item)">{{item.dong}}</td>
+                    <td @click="houseDetail(item)">{{item.code}}</td>
                   </tr>
                   <tr class="spacer">
                     <td colspan="100"></td>
@@ -54,13 +54,13 @@
           </div>
         </div>
 
-        <div class="col-sm-3 col-md-3 mb-4 mt-3">
+        <div class="col-sm-3 col-md-3">
           <div class="card h-100">
             <div class="card-body">
-              <h4 class="card-title">
-                <a href="#" id="aptName">아파트 명</a>
-              </h4>
-              <th id="homeType">아파트/주택</th>
+              <sapn class="card-title fs-5">
+                {{houseInfo.aptName}}
+              </sapn>
+              <p id="homeType">아파트/주택</p>
               <p id="price">가격  {{houseInfo.dealAmount}}</p>
               <p class="card-text" id="dong">법정동  {{houseInfo.dong}}</p>
               <p class="card-text" id="jibun">지번  {{houseInfo.jibun}}</p>
@@ -142,6 +142,7 @@ export default {
             checkList: [],
             label: [],
             price: [],
+            allChecked: false,
 
             chartData1:[5, 40,15, 15, 8],
             chartData2:{
@@ -283,6 +284,31 @@ export default {
           document.head.appendChild(script);
         };
       },
+      checkAll: function() {
+        console.log(this.allChecked);
+        this.allChecked = !this.allChecked;
+        console.log(this.allChecked);
+
+        this.checkList = [];
+       
+        if(this.allChecked) {
+          this.checkList = this.houseList;
+          console.log(this.checkList);
+        }
+      },
+      changeCheck: function() {
+        if(this.houseList.length == this.checkList.length){
+          this.allChecked = true;
+        }else{
+          this.allChecked = false;
+        }
+        console.log(this.allChecked);
+      },
+      checkOneItem: function(item) {
+        if(!this.checkList.includes(item)) {
+          this.houseDetail(item);
+        }
+      }
     },
     watch: {
       checkList: function(event) {
