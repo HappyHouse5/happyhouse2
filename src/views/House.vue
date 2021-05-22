@@ -120,9 +120,9 @@ import axios from '@/common/axios.js';
 export default {
     name:"house",
     components:{
-        HouseSearch,
-        ChartVue,
-        Pagination,
+        HouseSearch,                  // 검색창
+        ChartVue,                     // 차트
+        Pagination,                   // 페이징
     },
     watch:{
     },
