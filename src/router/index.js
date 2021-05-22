@@ -9,7 +9,7 @@ import Interest from "../views/Interest.vue";
 import InterestAdd from "../components/InterestAdd.vue";
 import InterestDel from "../components/InterestDel.vue";
 import InterestList from "../components/InterestList.vue";
-import axios from '../common/axios.js';
+import axios from '@/common/axios.js';
 
 // import { format } from 'core-js/core/date';
 // import { BootstrapIconsPlugin  } from 'bootstrap-icons';
@@ -90,14 +90,13 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (routeInfo) {        // meta : authRequired(true) 라면
     return routeInfo.meta.authRequired;
   })) {
-    axios.get('/members/sessionCheck', {            // axios로 서버측 세션 살아있는지 확인
+    axios.get('/members/sessionCheck', {
     })
       .then(({ data }) => {
         console.log(data);
-        console.log(data.result);
         if (data.result == 'login') {
           alert("로그인이 필요합니다.");
-          next('/').catch((err) => { console.log(err);});            // 로그인 페이지로 이동
+          next('/');            // 로그인 페이지로 이동
         }
         else {
           console.log("from -> to path: " + from.path + "=>" + to.path);
@@ -110,7 +109,7 @@ router.beforeEach(function (to, from, next) {
   }
   else {
     console.log("from -> to path: " + from.path + "=>" + to.path);
-    next();                           // 가려고 했던 페이지로 이동
+    next();                    // 가려고 했던 페이지로 이동
   }
 });
 
