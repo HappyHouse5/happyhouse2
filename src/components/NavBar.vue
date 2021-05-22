@@ -40,6 +40,7 @@
 <script>
 import LoginModal from '@/components/modals/LoginModal.vue';
 import {Modal} from 'bootstrap';
+import axios from '@/common/axios.js';
 
 export default {
     name: "NavBar",
@@ -67,7 +68,17 @@ export default {
       logout:function(){
         sessionStorage.removeItem("member");
         sessionStorage.clear();
+        axios.get('/members/logout',{}
+        )
+        .then(({data}) => {
+          alert("로그아웃 되었둥");
+          console.log("1이면 정상 로그아웃 : " + data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
         this.$store.commit('logout');
+        this.$router.push({name: 'Home'} );
       },
       // checkLogin:function(){
       //   // console.log(this.member);
