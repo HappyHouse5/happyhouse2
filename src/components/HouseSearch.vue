@@ -18,7 +18,7 @@
               <div class="carousel-container">
                 <div class="container">
                   <!-- <h2 class="animate__animated animate__fadeInDown">No.1 House Sale Website</h2> -->
-                  <p class="house-search-p animate__animated animate__fadeInUp">No.1 House Sale Website</p>
+                  <p class="animate__animated animate__fadeInUp">No.1 House Sale Website</p>
 
                   <div class="input-group house-search-bar" id="searchform">
                     <button
@@ -80,7 +80,6 @@ export default {
           this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord}}).catch(()=>{});
         }
         else{
-          console.log(this.searchType);
           this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord});
           
         }
