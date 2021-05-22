@@ -34,7 +34,7 @@
                   <tr v-for="(item, idx) in houseList" :key=idx @click="houseDetail(item)">
                     <th scope="row">
                       <label class="control control--checkbox">
-                        <input type="checkbox" v-model="checkList" :value="item"/>
+                        <input type="checkbox" v-model="checkList" :value="item" />
                         <div class="control__indicator"></div>
                       </label>
                     </th>
@@ -85,13 +85,13 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-4" id="map" style="height: 400px">
+          <div class="col-sm-6" id="map" style="height: 400px">
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-6">
             <!-- <canvas id="myChart"></canvas> -->
             <!-- <Line></Line> -->
             <!-- <Bar></Bar> -->
-            <chart-vue :data="{chartData1, chartData2}"></chart-vue>
+            <chart-vue :chartData="{label, price}"></chart-vue>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ export default {
             },
 
             checkList: [],
-            label:[],
+            label: [],
             price: [],
 
             chartData1:[5, 40,15, 15, 8],

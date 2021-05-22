@@ -3,34 +3,22 @@
 import { Bar } from "vue-chartjs";
 
 export default {
+  props:['chartData'],
   extends: Bar,
-  props:['data'],
-  mounted() {
-    //   console.log(this.chartData2);
-    //     for(let i=0; i<3; i++){
-    //         console.log(i);
-    //     }
+  watch: {
+    chartData: function() {
     this.renderChart(
       {
-
-        labels: [
-          this.data.chartData2.a,
-          this.data.chartData2.b,
-          this.data.chartData2.c,
-          this.data.chartData2.d,
-          this.data.chartData2.e,
-        ],
-        datasets: [
-          {
+        labels: this.chartData.label,
+        datasets: [{
             label: "Data One",
             backgroundColor: "#f87979",
-            data: this.data.chartData1,
-          }
-        ]
+            data: this.chartData.price
+        }]
       },
       { responsive: true, maintainAspectRatio: false }
-    );
-  }
+    )},
+  },
 };
 </script>
 
