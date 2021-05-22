@@ -47,11 +47,10 @@
                     <td>{{item.dealDate}}</td>
                     <td>{{item.dong}}</td>
                     <td>{{item.code}}</td>
-                      <td colspan="100"></td>
                   </tr>
-                  <!-- <tr class="spacer">
+                  <tr class="spacer">
                     <td colspan="100"></td>
-                  </tr>  -->
+                  </tr> 
               </tbody>
             </table>
           </div>
