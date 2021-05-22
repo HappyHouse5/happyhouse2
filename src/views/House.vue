@@ -210,8 +210,15 @@ export default {
         HouseSearch,
         ChartVue,
     },
+    watch:{
+      // console.log("house page");
+      // console.log(this.$route.params.searchType);
+      // console.log(this.$route.params.searchWord);
+    },
     data:function(){
         return{
+            searchType: this.$route.params.searchType,
+            searchWord: this.$route.params.searchWord == undefined ? "" : this.$route.params.searchWord,
             chartData1:[5, 40,15, 15, 8],
             chartData2:{
                 'a':5,
@@ -243,6 +250,9 @@ export default {
           'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=cb6a0403bc69b1c833879cae3c194c2b';
         document.head.appendChild(script);
       };
+
+      console.log(this.searchType);
+      console.log(this.searchWord);
     },
     methods:{
       initMap:function() {

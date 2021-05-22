@@ -1,7 +1,9 @@
 <template>
      <!-- ======= hero Section ======= -->
+     
     <section id="hero">
       <div class="hero-container">
+
         <div
           id="heroCarousel"
           class="carousel carousel-fade"
@@ -25,11 +27,11 @@
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      동/아파트
+                      {{type}}
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#" id="dong-search">동별</a></li>
-                      <li><a class="dropdown-item" href="#" id="apt-search">아파트별</a></li>
+                      <li><a class="dropdown-item" href="#" id="dong-search" @click="typeChange('dong')">동별</a></li>
+                      <li><a class="dropdown-item" href="#" id="apt-search" @click="typeChange('apt')">아파트별</a></li>
                     </ul>
                     <input
                       type="text"
@@ -38,12 +40,14 @@
                       placeholder="검색어를 입력하세요."
                       name="searchWord"
                       id="searchText"
+                      v-model="searchWord" 
                     />
                     <button
                       class="btn btn-outline-secondary btn-main-search"
                       type="button"
                       aria-expanded="false"
                       id="searchApt"
+                      v-on:click="search" 
                     >
                       Search
                     </button>
@@ -61,7 +65,27 @@
 <script>
 export default {
     name: "HouseSearch",
+    data:function(){
+      return{
+        searchType: "dong",
+        searchWord: "",
+        type: "동/아파트",
+      }
+    },
+    methods:{
+      search: function(){
+        console.log(this.searchType + " : " + this.searchWord);
+        this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord}}).catch(()=>{});
+      },
+      typeChange:function(data){
+        this.searchType = data;
+        if(data == 'dong') this.type = "동별";
+        else this.type = "아파트별";
+      }
+    },
 }
+
+
 </script>
 
 <style>
