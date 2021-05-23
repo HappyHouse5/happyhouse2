@@ -244,7 +244,11 @@ export default {
           document.querySelector("#chkFileUploadUpdate").checked = true;
           this.attachFile = true;
           this.profileName = this.file[0].fileName;
-          this.$emit('profileImage', "../assets/img/noProfile.png");  // this.file[0]
+          // this.$emit('profileImage', this.file[0]); 
+          this.$emit('profileImage', "../assets/img/favicon.png");  // this.file[0]
+        }
+        else{
+          this.$emit('profileImage', "../assets/img/noProfile.png");
         }
         this.attachFile = this.file.length == 0 ? false : true;
         // if(this.attachFile) document.querySelector("#chkFileUploadUpdate").checked = true;
