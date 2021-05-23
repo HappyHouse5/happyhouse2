@@ -97,7 +97,9 @@ router.beforeEach(function (to, from, next) {
         console.log(data);
         if (data.result == 'login') {
           alert("로그인이 필요합니다.");
-          next('/');            // 로그인 페이지로 이동
+          sessionStorage.removeItem("member");
+          location.href = "/";                  // 페이지 새로고침을 위해서 next() 대신 href 사용 -> Navbar는 클라이언트 세션을 기반으로 동작하므로 서버와 동기화를 위함
+          // next('/');            // 로그인 페이지로 이동
         }
         else {
           console.log("from -> to path: " + from.path + "=>" + to.path);

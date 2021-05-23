@@ -78,10 +78,10 @@ export default {
         console.log(this.searchType + " : " + this.searchWord);
         console.log(document.location.href);
         if(document.location.href == 'http://localhost:8080/' || document.location.href == 'http://localhost:8080/#'){
-          this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord}}).catch(()=>{});
+          this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord.trim()}}).catch(()=>{});
         }
         else{
-          this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord});
+          this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord.trim()});
           
         }
 

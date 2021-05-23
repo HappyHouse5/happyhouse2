@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    member: "",
+    member: '',
   },
   getters: {
     getMember(state) {
@@ -18,7 +18,7 @@ export default new Vuex.Store({
       console.log("state.member: " + state.member);
     },
     logout(state) {
-      state.member = false;
+      state.member = '';
     }
   },
   actions: {

@@ -31,7 +31,7 @@
 
             </div>
 
-            <div class="row mt-3 align-bottom">
+            <div class="row mt-3">
             <div class="col-sm-4">
                 <button
                 type="button"
@@ -89,4 +89,4 @@ export default {
 }
 </script>
 
-<style>
+

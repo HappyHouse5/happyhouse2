@@ -73,8 +73,10 @@ export default {
                 alert("ID, PW 확인해주세요.");
               }
               else{
-                sessionStorage.setItem("member", data);
+                console.log(data);
+                sessionStorage.setItem("member", JSON.stringify(data));
                 this.$store.dispatch('login', data);
+                this.$emit('loginSuccess');
               }
               this.closeModal();
             })
@@ -85,6 +87,6 @@ export default {
         closeModal() {
             this.loginModal.hide();
         },
-    }
+    },
 }
 </script>

@@ -40,18 +40,18 @@
                                   <div class="swiper-slide">
                                     <div class="testimonial-item mb-2">
                                       <img
-                                        src="assets/img/testimonials/testimonials-1.jpg"
+                                        v-bind:src="imageSrc" 
                                         class="testimonial-img"
                                         alt=""
                                       />
-                                    </div>
+                                    </div>                 <!-- assets/img/testimonials/testimonials-1.jpg -->
                                   </div>
                                 </div>
                               </div>
-
+</div>
                             <!-- update form Component -->
                             <template v-if="type == 'update'">
-                                <member-update v-on:toInfo="changeType" v-on:delete="withdrawModal"></member-update>
+                                <member-update v-on:toInfo="changeType" v-on:profileImage="profileImage" v-on:delete="withdrawModal"></member-update>
                             </template>
 
                             <!-- Information form Component -->
@@ -59,7 +59,7 @@
                                 <member-info v-on:toUpdate="changeType" v-on:delete="withdrawModal"></member-info>
                             </template>
 
-                            </div>
+                            
                           </div>
                         </div>
                       </div>
@@ -105,6 +105,7 @@ export default {
             type: "",
             deleteModal: null,
             memberDetail: this.$store.getters.getMember,
+            imageSrc:'',
         }
     },
     methods:{
@@ -115,6 +116,9 @@ export default {
       withdrawModal:function(){
         // console.log("delete button pushed");
         this.deleteModal.show();
+      },
+      profileImage:function(imgSrc){
+        this.imageSrc = imgSrc;
       }
     }
 }
