@@ -304,7 +304,7 @@ export default {
             const file = fileEvent.target.files[i];
             this.file.push(URL.createObjectURL(file));
           }
-          console.log("a: " + fileEvent.target.files[0].name);
+          console.log("파일 명 : " + fileEvent.target.files[0].name);
           this.profileName = fileEvent.target.files[0].name;
         }
       },

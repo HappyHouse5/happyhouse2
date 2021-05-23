@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/house",
     name: "House",
-    meta: {authRequired: true},       // 로그인이 필요한 페이지
+    // meta: {authRequired: true},       // 로그인이 필요한 페이지
     components: {
       'default': House,
     }
