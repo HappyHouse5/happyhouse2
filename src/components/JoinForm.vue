@@ -286,8 +286,8 @@ export default {
       this.phone = '';
       this.email = '';
       this.fileURL = '';
-      this.mailcom = '';
-      this.locationCode = '';
+      this.mailcom = 'ssafy.com';
+      this.locationCode = '11110';
       this.checkProfileImage = false;
       this.fileList = [];
     },
