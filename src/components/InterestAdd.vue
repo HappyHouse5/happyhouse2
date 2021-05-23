@@ -4,7 +4,8 @@
                           class="row align-items-center justify-content-center interest-add"
                         >
                           <div class="col-2 my-2">
-                            <select name="location" id="location" class="form-select mr-sm-2">
+                            <select @change="dongSelect" v-model="guCode" name="location" id="location" class="form-select mr-sm-2">
+                              <option selected disabled hidden value="">구선택</option>
                               <option class="loc" value="11110">종로구</option>
                               <option class="loc" value="11140">중구</option>
                               <option class="loc" value="11170">용산구</option>
@@ -33,10 +34,13 @@
                             </select>
                           </div>
                           <div class="col-2 my-1">
-                            <select class="form-select mr-sm-2" id="dongSelect"></select>
+                            <select class="form-select mr-sm-2" v-model="dongCode" id="dongSelect">
+                              <option selected disabled hidden value="">동선택</option>
+                              <option v-for="(dong, idx) in dongList" :key="idx" :value="dong.dongCode">{{dong.dongName}}</option>
+                            </select>
                           </div>
                           <div class="col-auto my-1">
-                            <button type="button" class="btn btn-outline-secondary" id="subBtn">
+                            <button @click="interestAdd" type="button" class="btn btn-outline-secondary" id="subBtn">
                               Search
                             </button>
                           </div>
@@ -47,8 +51,50 @@
 </template>
 
 <script>
+import axios from '@/common/axios.js';
+
 export default {
     name:"InterestList",
+    data() {
+      return {
+        guCode: '',
+        dongList: [],
+        dongCode: '',
+      }
+    },
+    methods: {
+      dongSelect() {
+        console.log("dongSelect method");
+        console.log(this.guCode);
+
+        axios.get('/houses/dongSelect',
+        {params: {
+          guCode: parseInt(this.guCode),
+        }})
+        .then(({data}) => {
+          console.log(data);
+          this.dongList = data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      },
+      interestAdd() {
+        console.log("interestAdd method");
+        console.log(this.dongCode);
+        axios.post("/houses/interest", {
+          guCode: parseInt(this.guCode),
+          dongCode: parseInt(this.dongCode)
+        })
+        .then(({data}) => {
+          console.log(data);
+          alert("관심 지역이 등록되었습니다.");
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      },
+    }
 }
 </script>
 

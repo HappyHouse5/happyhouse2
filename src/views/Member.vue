@@ -23,23 +23,7 @@
                     Add a region of interest to easily check listings
                   </h2> -->
 
-                  <!-- ======= Testimonials Section ======= -->
-                  <div id="testimonials" class="testimonials">
-                    <div class="testimonials-slider swiper-container">
-                      <div class="">
-                        <div class="swiper-slide">
-                          <div class="testimonial-item">
-                            <img
-                              src="assets/img/testimonials/testimonials-1.jpg"
-                              class="testimonial-img"
-                              alt=""
-                            />
-                            <h3>Saul Goodman</h3>
-                            <h4>Ceo &amp; Founder</h4>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
 
                     <!-- 가입, 수정, 탈퇴, 내정보 -->
                     <div id="info">
@@ -48,11 +32,22 @@
                         <div class="row d-flex align-items-center justify-content-center">
                           <div class="col-md-12">
                             <div class="card px-5 py-5" style="text-align: left">
-                              <h5 class="mt-3">
-                                <div class="section-headline text-center">
-                                  <h2 style="color: black">Information</h2>
+
+                            <!-- ======= Testimonials Section ======= -->
+                            <div id="testimonials" class="testimonials">
+                              <div class="testimonials-slider swiper-container">
+                                <div class="">
+                                  <div class="swiper-slide">
+                                    <div class="testimonial-item mb-2">
+                                      <img
+                                        src="assets/img/testimonials/testimonials-1.jpg"
+                                        class="testimonial-img"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
-                              </h5>
+                              </div>
 
                             <!-- update form Component -->
                             <template v-if="type == 'update'">
@@ -109,6 +104,7 @@ export default {
         return{
             type: "",
             deleteModal: null,
+            memberDetail: this.$store.getters.getMember,
         }
     },
     methods:{

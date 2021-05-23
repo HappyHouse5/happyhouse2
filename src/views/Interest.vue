@@ -60,6 +60,7 @@ export default {
         // InterestDel,
     },
     mounted() {
+
       this.$router.push("/interest/list");
     }
 }

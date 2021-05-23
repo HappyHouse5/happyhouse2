@@ -12,12 +12,6 @@
                                   <h2 style="color: black">Put In</h2>
                                 </div>
                               </h5>
-                              <div class="row">
-                                <small class="col-sm-10 mt-2 text-muted"
-                                  >We are confident that our trading site is reliable and the most
-                                  attractive.</small
-                                >
-                              </div>
                               <div class="form-group mt-3 row">
                                 <label for="id">ID</label>
                                 <div class="col-sm-9">
@@ -26,6 +20,7 @@
                                     class="form-control"
                                     placeholder="Enter ID"
                                     id="id"
+                                    v-model="userId"
                                   />
                                 </div>
 
@@ -74,7 +69,7 @@
                                   type="password"
                                   class="form-control"
                                   placeholder="Enter Password"
-                                  id="pw"
+                                  v-model="pw"
                                 />
                               </div>
                               <div class="form-group mt-3">
@@ -83,7 +78,7 @@
                                   type="password"
                                   class="form-control"
                                   placeholder="Enter Password Double Check"
-                                  id="pwdchk"
+                                  v-model="pwdchk"
                                 />
                               </div>
                               <div class="form-group mt-3">
@@ -92,7 +87,7 @@
                                   type="text"
                                   class="form-control"
                                   placeholder="Name"
-                                  id="name"
+                                  v-model="name"
                                 />
                               </div>
                               <div class="form-group mt-3">
@@ -101,26 +96,30 @@
                                   type="text"
                                   class="form-control"
                                   placeholder="Enter PhoneNumber"
-                                  id="phone"
+                                  v-model="phone"
                                 />
                               </div>
+
                               <div class="col-xl-12 form-group mt-3">
                                 <div class="checkbox-custom checkbox-primary">
-                                  <input type="checkbox" id="chkFileUploadInsert" />
-                                  <label for="chkFileUploadInsert">Profile</label>
+                                  <input type="checkbox" class="form-check-input" id="chkFileUploadInsert" v-model="checkProfileImage" />
+                                  <label for="chkFileUploadInsert">Profile Image</label>
                                 </div>
                               </div>
                               <div
                                 class="col-xl-12 form-group mt-3"
-                                style="display: none"
                                 id="imgFileUploadInsertWrapper"
+                                v-show="checkProfileImage"
                               >
-                                <input type="file" id="inputFileUploadInsert" />
+                                <input @change="changeFile"  type="file" id="inputFileUploadInsert" multiple>
                                 <div
                                   id="imgFileUploadInsertThumbnail"
                                   class="thumbnail-wrapper"
-                                ></div>
-                              </div>
+                                >
+                                  <!-- <img v-for="(file, index) in fileList" v-bind:src="file" v-bind:key="index"> -->
+                                </div>
+                              </div>                                          
+
                               <div class="row mt-3">
                                 <label for="email">Email</label>
                               </div>
@@ -130,16 +129,16 @@
                                     type="text"
                                     class="form-control"
                                     placeholder="Enter E-mail"
-                                    id="email"
+                                    v-model="email"
                                   />
                                 </div>
                                 <div class="col-sm-3">
                                   <select
                                     name="mailcom"
-                                    id="mailcom"
+                                    v-model="mailcom"
                                     style="width: 250px; height: 40px"
                                   >
-                                    <option value="ssafy.com">ssafy.com</option>
+                                    <option selected value="ssafy.com">ssafy.com</option>
                                     <option value="naver.com">naver.com</option>
                                     <option value="gmail.com">gmail.com</option>
                                     <option value="nate.com">nate.com</option>
@@ -155,10 +154,10 @@
                                 <div class="col-sm-6">
                                   <select
                                     name="location"
-                                    id="location"
+                                    v-model="locationCode"
                                     style="width: 250px; height: 40px"
                                   >
-                                    <option value="11110">종로구</option>
+                                    <option selected value="11110">종로구</option>
                                     <option value="11140">중구</option>
                                     <option value="11170">용산구</option>
                                     <option value="11200">성동구</option>
@@ -190,11 +189,11 @@
                                 <div class="col-sm-6">
                                   <button
                                     type="button"
-                                    id="back"
                                     class="btn btn-dark"
                                     style="width: 100%"
+                                    v-on:click="clearForm"
                                   >
-                                    HOME
+                                    CLEAR
                                   </button>
                                 </div>
                                 <div class="col-sm-6">
@@ -203,6 +202,7 @@
                                     id="btnSubmit"
                                     class="btn btn-dark signup"
                                     style="width: 100%"
+                                    @click="memberJoin"
                                   >
                                     JOIN IN
                                   </button>
@@ -259,8 +259,84 @@
 </template>
 
 <script>
-
+import axios from "@/common/axios.js";
 export default {
-name: "JoinForm"
+  name: "JoinForm",
+  data() {
+    return {
+      userId: '',
+      pw: '',
+      pwdchk: '',
+      name: '',
+      phone: '',
+      fileURL: '',
+      email: '',
+      mailcom: '',
+      locationCode: '',
+      checkProfileImage: false,
+      fileList: [],
+    }
+  },
+  methods: {
+    clearForm() {
+      this.userId = '';
+      this.pw = '';
+      this.pwdchk = '';
+      this.name = '';
+      this.phone = '';
+      this.email = '';
+      this.fileURL = '';
+      this.mailcom = '';
+      this.locationCode = '';
+      this.checkProfileImage = false;
+      this.fileList = [];
+    },
+    memberJoin: function() {
+      console.log("join submit");
+      
+      // file upload
+      var formData = new FormData();
+      formData.append("userId", this.userId);
+      formData.append("pw", this.pw);
+      formData.append("name", this.name);
+      formData.append("phone", this.phone);
+      formData.append("email", this.email + "@" + this.mailcom);
+      formData.append("locationCode", parseInt(this.locationCode));
+      
+      var attachFiles = document.querySelector("#inputFileUploadInsert");
+      console.log("InsertModalVue: data 1 : ");
+      console.log(attachFiles);
+
+      var cnt = attachFiles.files.length;
+      for (var i = 0; i < cnt; i++) {
+        formData.append("file", attachFiles.files[i]);
+      }
+      
+      axios.post("/members/member", 
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(({data}) => {
+        console.log(data);
+        if(data == 0){
+          alert("회원가입 실패! 회원정보를 확인해주세요.");
+        }
+        else{
+          alert("회원가입이 완료되었습니다.");
+          this.$router.push({name: 'Home'});
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    },
+    changeFile(fileEvent) {
+      if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
+        for( var i=0; i<fileEvent.target.files.length; i++ ){
+          const file = fileEvent.target.files[i];
+          this.fileList.push(URL.createObjectURL(file));
+        }
+      }
+    },
+  }
 }
 </script>
