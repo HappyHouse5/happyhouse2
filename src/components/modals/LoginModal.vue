@@ -77,6 +77,7 @@ export default {
                 sessionStorage.setItem("member", JSON.stringify(data));
                 this.$store.dispatch('login', data);
                 this.$emit('loginSuccess');
+                this.$alertify.success(data.name + " 님 환영합니다");
               }
               this.closeModal();
             })

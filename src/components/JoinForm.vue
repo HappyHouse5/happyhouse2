@@ -271,8 +271,8 @@ export default {
       phone: '',
       fileURL: '',
       email: '',
-      mailcom: '',
-      locationCode: '',
+      mailcom: 'ssafy.com',
+      locationCode: '11110',
       checkProfileImage: false,
       fileList: [],
     }
@@ -317,8 +317,12 @@ export default {
         { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(({data}) => {
         console.log(data);
-        if(data == 0){
-          alert("회원가입 실패! 회원정보를 확인해주세요.");
+        if(data == -1){
+          // this.$alertify.alert("회원가입 실패! 회원 ID를 확인해주세요.", () =>
+            this.$alertify.warning("회원가입 실패! 회원 ID를 확인해주세요.");
+        }
+        else if(data == -2){
+          this.$alertify.warning("회원가입 실패! 회원 Email을 확인해주세요.");
         }
         else{
           alert("회원가입이 완료되었습니다.");

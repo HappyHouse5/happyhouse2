@@ -38,25 +38,27 @@
                               <div class="testimonials-slider swiper-container">
                                 <div class="">
                                   <div class="swiper-slide">
-                                    <div class="testimonial-item mb-2">
+                                    <div class="testimonial-item">
                                       <img
                                         v-bind:src="imageSrc" 
                                         class="testimonial-img"
-                                        alt=""
+                                        alt="Profile Img Error"
+                                        style="width:180px; height:170px;"
                                       />
                                     </div>                 <!-- assets/img/testimonials/testimonials-1.jpg -->
+                                    <div style="text-align: center; font-style: italic;">{{name}}</div>
                                   </div>
                                 </div>
                               </div>
-</div>
+                            </div>
                             <!-- update form Component -->
                             <template v-if="type == 'update'">
-                                <member-update v-on:toInfo="changeType" v-on:profileImage="profileImage" v-on:delete="withdrawModal"></member-update>
+                                <member-update v-on:toInfo="changeType" v-on:profileImage="profileImage" v-on:name="changeName" v-on:delete="withdrawModal"></member-update>
                             </template>
 
                             <!-- Information form Component -->
                             <template v-if="type == 'info'">
-                                <member-info v-on:toUpdate="changeType" v-on:delete="withdrawModal"></member-info>
+                                <member-info v-on:toUpdate="changeType" v-on:profileImage="profileImage" v-on:delete="withdrawModal"></member-info>
                             </template>
 
                             
@@ -106,6 +108,7 @@ export default {
             deleteModal: null,
             memberDetail: this.$store.getters.getMember,
             imageSrc:'',
+            name: '',
         }
     },
     methods:{
@@ -119,6 +122,9 @@ export default {
       },
       profileImage:function(imgSrc){
         this.imageSrc = imgSrc;
+      },
+      changeName:function(name){
+        this.name = name;
       }
     }
 }

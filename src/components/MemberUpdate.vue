@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="row">
-        <small class="col-sm-10 mt-2 text-muted"
+        <small class="col-sm-10 text-muted"
           >We are confident that our trading site is reliable and the most
           attractive.</small
         >
@@ -70,7 +70,7 @@
           class="form-control"
           placeholder="Name"
           id="name"
-          v-model="member.name"
+          v-model.lazy="name"
         />
       </div>
       <div class="form-group mt-3">
@@ -98,7 +98,7 @@
         </div>
         <div id="imgFileUploadUpdateThumbnail" class="thumbnail-wrapper col-sm-1" >
                         <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
-          <img v-for="(profile, index) in file" v-bind:src="profile" v-bind:key="index">
+          <!-- <img v-for="(profile, index) in file" v-bind:src="profile" v-bind:key="index"> -->
         </div>
       </div>
       <div class="row mt-3">
@@ -169,8 +169,6 @@
           </select>
         </div>
       </div>
-
-
       
       <div class="row mt-3 align-bottom">
         <div class="col-sm-4">
@@ -220,6 +218,7 @@ export default {
         mail: "",
         mailcom: "",
         member: JSON.parse(sessionStorage.getItem("member")),
+        name: JSON.parse(sessionStorage.getItem("member")).name,
         
         file: [],
         attachFile: false,
@@ -245,15 +244,15 @@ export default {
           this.attachFile = true;
           this.profileName = this.file[0].fileName;
           // this.$emit('profileImage', this.file[0]); 
-          this.$emit('profileImage', "../assets/img/favicon.png");  // this.file[0]
+          this.$emit('profileImage', "../assets/img/favicon.png");      // 프로필 사진이 있을 때
         }
         else{
-          this.$emit('profileImage', "../assets/img/noProfile.png");
+          this.$emit('profileImage', "../assets/img/noProfile.png");     // 프로필 사진이 없을 때
         }
+        this.$emit('name', this.name);
         this.attachFile = this.file.length == 0 ? false : true;
         // if(this.attachFile) document.querySelector("#chkFileUploadUpdate").checked = true;
 
-        
         console.log(this.file);
       })
       .catch((err) => {
@@ -269,7 +268,7 @@ export default {
       withdraw:function(){
         this.$emit('delete');
       },
-      update: function(){
+      update: async function(){
         // this.member.email = this.mail + "@" + this.mailcom;
         console.log(this.member);
 
@@ -283,23 +282,32 @@ export default {
         formData.append("fileURL", this.member.fileURL);
         formData.append("locationCode", this.member.locationCode);
         
-        var attachFile = document.querySelector("#inputFileUploadUpdate");
-        console.log(attachFile);
-        formData.append("file", attachFile.files[0]);
+        if(this.attachFile){
+          formData.append("file", document.querySelector("#inputFileUploadUpdate").files[0]);
+        }
 
-        axios.post('/members/modifyMember', formData, {
+        await axios.post('/members/modifyMember', formData, {
           headers:{
             "Content-Type": "multipart/form-data",
           },
         })
-        .then(({data}) =>{
-          console.log(data);
+        .then(() => {
           alert("회원 정보가 수정되었습니다.");
-          this.$router.push({name: "Home"});
         })
         .catch((err) => {
           console.log(err);
+        });
+
+        axios.get('/members/logout',{}
+        )
+        .then(() => {
+          this.$store.commit('logout');
+          sessionStorage.removeItem("member");
+          location.href = "/";
         })
+        .catch((err) => {
+          console.log(err);
+        });
       },
       changeFile(fileEvent) {
         if( fileEvent.target.files && fileEvent.target.files.length > 0 ){
@@ -310,6 +318,7 @@ export default {
           }
           console.log("파일 명 : " + fileEvent.target.files[0].name);
           this.profileName = fileEvent.target.files[0].name;
+          this.$emit('profileImage', this.file[0]); 
         }
       },
       checkboxClick:function(){
@@ -331,6 +340,10 @@ export default {
         else{
           this.attachFile = false;
         }
+      },
+      name: function(){
+        this.member.name = this.name;
+        this.$emit('name', this.name);
       }
     }
 }

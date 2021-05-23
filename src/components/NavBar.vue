@@ -13,16 +13,16 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link" style="cursor:pointer" v-on:click="$router.push({name: 'Home'}).catch(()=>{});">Home</a></li>
-            <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'House'}).catch(()=>{});">House</a></li>
+            <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'House'}).catch(()=>{});">House</a></li>
             <template v-if="!isLogin"><!-- !isLogin -->
-              <li><a class="nav-link scrollto" v-on:click="login">Login</a></li>
-              <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'Join'}).catch(()=>{});">Join</a></li>
+              <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="login">Login</a></li>
+              <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Join'}).catch(()=>{});">Join</a></li>
             </template>
             
             <template v-if="isLogin">
-                <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'Interest'}).catch(()=>{});">Interest</a></li>
-                <li><a class="nav-link scrollto" v-on:click="$router.push({name: 'Member', params: {type: 'info'}}).catch(()=>{});">MyPage</a></li>
-                <li><a class="nav-link scrollto" v-on:click="logout">Logout</a></li>
+                <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Interest'}).catch(()=>{});">Interest</a></li>
+                <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Member', params: {type: 'info'}}).catch(()=>{});">MyPage</a></li>
+                <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="logout">Logout</a></li>
             </template>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/common/axios.js';
 
 export default {
     name: "DeleteModal",
@@ -33,15 +33,19 @@ export default {
         },
         withdrawConfirm: function(){
             console.log("delete Confirm");
-            axios.delete("http://localhost:80/members/member", {
-
+            axios.delete("/members/member", {
+                
             })
             .then(({data}) => {
-                console.log(data);
                 this.modal.hide();
-                alert("회원탈퇴 !");
-                this.$store.commit('logout');
-                this.$router.push({name: 'Home'});
+                console.log(data);
+                if(data == 1){
+                    alert("회원탈퇴 성공! \n메인페이지로 돌아갑니다.");
+                    this.$store.commit('logout');
+                    // this.$router.push({name: 'Home'});         
+                    sessionStorage.removeItem("member");
+                    location.href = "/"; 
+                }
             })
             .catch((err) => {
                 console.log("err: " + err);

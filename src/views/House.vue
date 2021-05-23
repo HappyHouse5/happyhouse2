@@ -91,10 +91,10 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
           <div class="col-sm-6" id="map" style="height: 400px">
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 mb-3">
             <chart-vue :chartData="{label, price}"></chart-vue>             <!-- 차트 -->
           </div>
         </div>
@@ -185,9 +185,9 @@ export default {
     mounted(){                                      // 페이지 mount 되는 시점
       console.log("마운트 될 때 searchType: " + this.searchType);
       console.log("마운트 될 때 searchWord: " + this.searchWord);
-
+      
       this.searchHouse({searchType: this.searchType, searchWord: this.searchWord});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
-   },
+    },
     methods:{
       initMap:function() {                                              // 클릭된 매물의 위치에 따라 지도 초기화하기
         var mapContainer = document.getElementById('map'),              // 맵 컨테이너
@@ -260,6 +260,7 @@ export default {
             });
 
             this.count = data.count;                                  // 검색된 매물의 총 row 수
+            if(this.currentPageIndex == 1) this.$alertify.success(this.count + "개의 매물이 검색되었습니다.");
             console.log(this.houseList);
           }
         })
