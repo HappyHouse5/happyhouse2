@@ -21,24 +21,7 @@
                     Add a region of interest to easily check listings
                   </h2> -->
 
-                  <!-- ======= Testimonials Section ======= -->
                   <div id="testimonials" class="testimonials">
-                    <div class="testimonials-slider swiper-container">
-                      <div class="">
-                        <div class="swiper-slide">
-                          <div class="testimonial-item">
-                            <img
-                              src="assets/img/testimonials/testimonials-1.jpg"
-                              class="testimonial-img"
-                              alt=""
-                            />
-                            <h3>Saul Goodman</h3>
-                            <h4>Ceo &amp; Founder</h4>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
                     <!-- Join Form Component -->
                     <join-form></join-form>
 

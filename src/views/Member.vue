@@ -18,7 +18,7 @@
             >
               <div class="carousel-container">
                 <div class="container">
-                  <p class="animate__animated animate__fadeInUp">Profile</p>
+                  <p class="animate__animated animate__fadeInUp">MyPage</p>
                   <!-- <h2 class="animate__animated animate__fadeInDown">
                     Add a region of interest to easily check listings
                   </h2> -->
@@ -31,7 +31,7 @@
                       <div class="container">
                         <div class="row d-flex align-items-center justify-content-center">
                           <div class="col-md-12">
-                            <div class="card px-5 py-5" style="text-align: left">
+                            <div class="card px-5 py-5" style="text-align: left" id="update-form">
 
                             <!-- ======= Testimonials Section ======= -->
                             <div id="testimonials" class="testimonials">

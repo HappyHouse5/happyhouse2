@@ -1,11 +1,6 @@
 <template>
     <div>
-      <div class="row">
-        <small class="col-sm-10 text-muted"
-          >We are confident that our trading site is reliable and the most
-          attractive.</small
-        >
-      </div>
+      <!-- User ID -->
       <div class="form-group mt-3 row">
         <label for="id">ID</label>
         <div class="col-sm-12">
@@ -19,30 +14,7 @@
           />
         </div>
       </div>
-      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
-        <div
-          id="liveToast"
-          class="toast hide"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
-          <div class="toast-header">
-            <!-- <img src="..." class="rounded me-2" alt="..."> -->
-            <!-- <strong class="me-auto">Bootstrap</strong> -->
-            <small>11 mins ago</small>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="toast"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="toast-body">
-            Hello, world! This is a toast message.
-          </div>
-        </div>
-      </div>
+      <!-- Password -->
       <div class="form-group mt-3">
         <label for="pw">Password</label>
         <input
@@ -51,8 +23,13 @@
           placeholder="Enter Password"
           id="pw"
           v-model="member.pw"
+          :class="{ 'is-valid': isPwFocusAndValid , 'is-invalid': isPwFocusAndInvalid  }"     
+          @input="validatePw"
+          @focus="isPwFocus = true"
         />
+        <div class="invalid-feedback">{{pwMsg}}</div>
       </div>
+      <!-- Password Check -->
       <div class="form-group mt-3">
         <label for="pwdchk">Password Check</label>
         <input
@@ -60,8 +37,12 @@
           class="form-control"
           placeholder="Enter Password Double Check"
           id="pwdchk"
-          v-model="member.checkPw"
+          v-model="pwdchk"
+          :class="{ 'is-valid': isPwchkFocusAndValid , 'is-invalid': isPwchkFocusAndInvalid  }"     
+          @input="validatePwchk"
+          @focus="isPwchkFocus = true"
         />
+        <div class="invalid-feedback">{{pwchkMsg}}</div>
       </div>
       <div class="form-group mt-3">
         <label for="name">Name</label>
@@ -70,8 +51,12 @@
           class="form-control"
           placeholder="Name"
           id="name"
-          v-model.lazy="name"
+          v-model="name"
+          :class="{ 'is-valid': isNameFocusAndValid , 'is-invalid': isNameFocusAndInvalid  }" 
+          @input="validateName"
+          @focus="isNameFocus = true"
         />
+        <div class="invalid-feedback">{{nameMsg}}</div>
       </div>
       <div class="form-group mt-3">
         <label for="phone">Phone Number</label>
@@ -105,42 +90,46 @@
         <label for="email">Email</label>
       </div>
       <div class="row form-group">
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Enter E-mail"
-            id="email"
-            v-model="mail"
-          />
-        </div>
-        <div class="col-sm-3">
-          <select
-            name="mailcom"
-            id="mailcom"
-            style="width: 250px; height: 40px"
-            v-model="mailcom"
-          >
-            <option value="ssafy.com">ssafy.com</option>
-            <option value="naver.com">naver.com</option>
-            <option value="gmail.com">gmail.com</option>
-            <option value="nate.com">nate.com</option>
-            <option value="kakao.com">kakao.com</option>
-            <option value="hanmail.com">hanmail.com</option>
-          </select>
+        <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter E-mail Name"
+          v-model="mail"
+          :class="{ 'is-valid': isEmailFocusAndValid , 'is-invalid': isEmailFocusAndInvalid  }" 
+          @input="validateEmail"
+          @focus="isEmailFocus = true"
+        />
+        <span class="input-group-text">@</span>
+        
+        <select
+          class="form-select"
+          name="mailcom"
+          v-model="mailcom"
+        >
+          <option value="ssafy.com">ssafy.com</option>
+          <option value="naver.com">naver.com</option>
+          <option value="gmail.com">gmail.com</option>
+          <option value="nate.com">nate.com</option>
+          <option value="kakao.com">kakao.com</option>
+          <option value="hanmail.com">hanmail.com</option>
+        </select>
+        <div class="invalid-feedback">{{emailMsg}}</div>
         </div>
       </div>
-      <div class="row mt-3">
+
+      <!-- Address -->
+      <div class="form-group mt-4">
         <label for="location">Address</label>
-      </div>
-      <div class="row form-group">
+                    <div class="form-group">
         <div class="col-sm-6">
           <select
             name="location"
-            id="location"
-            style="width: 250px; height: 40px"
             v-model="member.locationCode"
+            class="form-select"
+            style="width: 250px; height: 40px"
           >
+            <option selected disabled hidden value="">구선택</option>
             <option value="11110">종로구</option>
             <option value="11140">중구</option>
             <option value="11170">용산구</option>
@@ -169,8 +158,34 @@
           </select>
         </div>
       </div>
+      </div>
+
+      <!-- Prefer -->
+      <div class="mb-3 mt-4">
+        <div class="form-group mt-3">
+          <label for="prefer">Preferred Area Option</label>
+        </div>
+        <div class="form-check-inline" id="prefer-form">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="cf" value="CE7" name="prefer" v-model="member.prefer">
+            <label class="form-check-label" for="cf">카페</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="sc" value="SC4" name="prefer" v-model="member.prefer">
+            <label class="form-check-label" for="sc">학교</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="cs" value="CS2" name="prefer" v-model="member.prefer">
+            <label class="form-check-label" for="cs">편의점</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="sw" value="SW8" name="prefer" v-model="member.prefer">
+            <label class="form-check-label" for="sw">지하철</label>
+          </div>
+        </div>
+      </div>
       
-      <div class="row mt-3 align-bottom">
+      <div class="row mt-5 align-bottom">
         <div class="col-sm-4">
           <button
             type="button"
@@ -219,10 +234,32 @@ export default {
         mailcom: "",
         member: JSON.parse(sessionStorage.getItem("member")),
         name: JSON.parse(sessionStorage.getItem("member")).name,
+        pwchk: '',
         
         file: [],
         attachFile: false,
         profileName: null,
+
+        // focus
+        isPwFocus: false,
+        isPwchkFocus: false,
+        isNameFocus: false,
+        isEmailFocus: false,
+        isEmailcomFocus: false,
+
+        // validation
+        isPwValid: false,
+        isPwchkValid: false,
+        isNameValid: false,
+        isEmailValid: false,
+        isEmailcomValid: false,
+
+        // invalid message
+        pwMsg: '4자리 이상의 숫자와 문자로 이루어진 비밀번호를 입력해주세요.',
+        pwchkMsg: '비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+        nameMsg: '사용자 이름을 입력해주세요.',
+        emailMsg: '이메일을 입력해주세요.',
+
       }
     },
     mounted(){
@@ -278,7 +315,7 @@ export default {
         formData.append("pw", this.member.pw);
         formData.append("phone", this.member.phone);
         formData.append("name", this.member.name);
-        formData.append("email", this.member.email);
+        formData.append("email", this.mail + '@' + this.mailcom);
         formData.append("fileURL", this.member.fileURL);
         formData.append("locationCode", this.member.locationCode);
         
@@ -331,6 +368,32 @@ export default {
           this.attachFile = false;
         }
       },
+      validatePw() {
+        let patternEngAtListOne = new RegExp(/[a-zA-Z]+/);// + for at least one
+        let patternNumAtListOne = new RegExp(/[0-9]+/);// + for at least one
+
+        this.isPwValid = 
+        ( patternEngAtListOne.test( this.member.pw ) 
+          && patternNumAtListOne.test( this.member.pw )
+          && this.member.pw.length >= 4
+        ) ? true : false;
+
+        console.log(this.isPwValid);
+      },
+      validatePwchk() {
+        this.isPwchkValid = this.member.pw == this.pwdchk ? true : false;
+
+        console.log(this.isPwchkValid);
+      },
+      validateName() {
+        this.isNameValid = this.name.length > 0 ? true : false;
+
+        console.log(this.isNameValid);
+      },
+      validateEmail() {
+        this.isEmailValid = this.member.email.length > 0 ? true : false;
+        console.log(this.isEmailValid);
+      },
     },
     watch:{
       file:function(){
@@ -345,6 +408,32 @@ export default {
         this.member.name = this.name;
         this.$emit('name', this.name);
       }
-    }
+    },
+    computed: {
+      isPwFocusAndValid() {
+        return this.isPwFocus && this.isPwValid;
+      },
+      isPwFocusAndInvalid() {
+        return this.isPwFocus && !this.isPwValid;
+      },
+      isPwchkFocusAndValid() {
+        return this.isPwchkFocus && this.isPwchkValid;
+      },
+      isPwchkFocusAndInvalid() {
+        return this.isPwchkFocus && !this.isPwchkValid;
+      },
+      isNameFocusAndValid() {
+        return this.isNameFocus && this.isNameValid;
+      },
+      isNameFocusAndInvalid() {
+        return this.isNameFocus && !this.isNameValid;
+      },
+      isEmailFocusAndValid() {
+        return this.isEmailFocus && this.isEmailValid;
+      },
+      isEmailFocusAndInvalid() {
+        return this.isEmailFocus && !this.isEmailValid;
+      },
+    },
 }
 </script>

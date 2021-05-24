@@ -56,8 +56,8 @@ export default {
     props: ['loginModal'],
     data:function(){
       return{
-        id: "admin",
-        pwd: "123",
+        id: "ssafy",
+        pwd: "1234",
       }
     },
     methods: {

@@ -572,7 +572,7 @@ div#preloader {
 
 #hero .carousel-item::before {
   content: "";
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #hero .carousel-item-sub {
@@ -623,7 +623,7 @@ div#preloader {
   width: 80%;
   font-size: 38px;
   line-height: 1.2;
-  margin: 30px auto 30px auto;
+  margin: 170px auto 30px auto;
   color: #fff;
 }
 
@@ -633,14 +633,14 @@ div#preloader {
 
 @media (min-width: 1024px) {
   #hero p {
-    margin: 160px auto 30px auto;
-    width: 60%;
+    width: 80%;
+    font-size: 38px;
+    line-height: 1.2;
   }
 }
 
 @media (max-width: 768px) {
   #hero p {
-    margin: 150px auto 30px auto;
     font-size: 28px;
     /* line-height: 1.2; */
   }
@@ -751,6 +751,29 @@ div#preloader {
 #hero .btn-get-started:hover {
   background: #fff;
   color: #3ec1d5;
+}
+
+/*--------------------------------------------------------------
+# Join Page
+--------------------------------------------------------------*/
+#join-form {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* #chkFileUploadInsert {
+  margin-top: 10px;
+}
+
+#prefer-form div > input {
+  margin-top: 10px;
+} */
+
+/*--------------------------------------------------------------
+# MemberUpdate Page
+--------------------------------------------------------------*/
+
+#update-form {
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 /*--------------------------------------------------------------
