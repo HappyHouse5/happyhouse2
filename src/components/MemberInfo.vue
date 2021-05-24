@@ -36,7 +36,7 @@
                 <button
                 type="button"
                 id="back"
-                class="btn btn-dark bg-dark"
+                class="btn btn-secondary"
                 style="width: 100%"
                 >
                 INFO
@@ -48,7 +48,7 @@
                 <button
                 type="button"
                 id="update"
-                class="btn btn-dark bg-dark"
+                class="btn btn-secondary"
                 style="width: 100%" 
                 v-on:click="toUpdate"
                 >
@@ -59,7 +59,7 @@
                 <button
                 type="button"
                 id="delete"
-                class="btn btn-dark bg-dark signup"
+                class="btn btn-secondary signup"
                 style="width: 100%"  
                 v-on:click="withdraw" 
                 >

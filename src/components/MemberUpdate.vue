@@ -190,7 +190,7 @@
           <button
             type="button"
             id="back"
-            class="btn btn-dark bg-dark"
+            class="btn btn-secondary"
             style="width: 100%" 
             v-on:click="toInfo" 
           >
@@ -201,7 +201,7 @@
           <button
             type="button"
             id="update"
-            class="btn btn-dark bg-dark"
+            class="btn btn-secondary"
             style="width: 100%"
             v-on:click="update" 
           >
@@ -212,7 +212,7 @@
           <button
             type="button"
             id="delete"
-            class="btn btn-dark bg-dark signup"
+            class="btn btn-secondary signup"
             style="width: 100%" 
             v-on:click="withdraw" 
           >
@@ -308,6 +308,12 @@ export default {
       update: async function(){
         // this.member.email = this.mail + "@" + this.mailcom;
         console.log(this.member);
+
+        if(!this.isPwValid || !this.isPwchkValid || !this.isNameValid || !this.isEmailValid) {
+          alert("회원정보 수정에 실패했습니다.\n양식을 다시 확인해주세요.");
+          return;
+        }
+
 
         var formData = new FormData();
         formData.append("keyId", this.member.keyId);

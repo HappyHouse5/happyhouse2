@@ -5,7 +5,7 @@
     <div class="container">
       <div class="row d-flex align-items-center justify-content-center">
         <div class="col-md-12" >
-          <div class="card px-5 py-5" style="text-align: left" id="join-form">
+          <div class="card px-5 py-5 mx-auto" style="text-align: left" id="join-form">
             <h5 class="mt-3">
             </h5>
             <!-- User ID -->
@@ -77,9 +77,9 @@
             </div>
             <!-- Profile Image -->
             <div class="col-xl-12 form-group mt-4">
-              <div class="checkbox-custom checkbox-primary align-middle">
+              <div class="checkbox-custom form-check checkbox-primary align-middle">
                 <input type="checkbox" class="form-check-input" id="chkFileUploadInsert" v-model="checkProfileImage"/>
-                <label for="chkFileUploadInsert">Profile Image</label>
+                <label for="chkFileUploadInsert ml-3">Profile Image</label>
               </div>
             </div>
             <div
@@ -330,9 +330,14 @@ export default {
       this.checkProfileImage = false;
       this.fileList = [];
     },
-    memberJoin: function() {
+    memberJoin() {
       console.log("join submit");
       
+      if(!this.isUserIdValid || !this.isPwValid || !this.isPwchkValid || !this.isNameValid || !this.isEmailValid || !this.isAddrValid ) {
+        alert("회원가입에 실패했습니다.\n양식을 다시 확인해주세요.");
+        return;
+      }
+
       // file upload
       var formData = new FormData();
       formData.append("userId", this.userId);

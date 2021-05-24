@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center align-middle">
+  <div class="text-center">
     <ul class="m-auto list-group list-group-flush interst-list align-items-center justify-content-center">
       <li class="m-2" v-for="(interest, idx) in interestList" :key="idx">
         <span class="fs-6 align-middle">{{interest.guName}}&nbsp;&nbsp;{{interest.dongName}}</span>

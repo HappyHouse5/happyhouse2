@@ -21,7 +21,7 @@
                   <!-- <h2 class="animate__animated animate__fadeInDown">No.1 House Sale Website</h2> -->
                   <p class="animate__animated animate__fadeInUp">No.1 House Sale Website</p>
 
-                  <div class="input-group house-search-bar" id="searchform">
+                  <div class="input-group house-search-bar searchform">
                     <button
                       class="btn btn-outline-secondary dropdown-toggle btn-main-option"
                       type="button"

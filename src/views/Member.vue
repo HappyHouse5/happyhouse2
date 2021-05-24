@@ -3,7 +3,7 @@
 
     <div>
         <!-- ======= hero Section ======= -->
-    <section id="hero" style="height: 1600px">
+    <section id="hero" style="height: 1800px">
       <div class="hero-container">
         <div
           id="heroCarousel"
@@ -26,12 +26,11 @@
 
 
                     <!-- 가입, 수정, 탈퇴, 내정보 -->
-                    <div id="info">
                       <!-- MyPage - Join -->
-                      <div class="container">
+                      <div  class="blog-inner area-padding mx-auto" style="max-width:1000px">
                         <div class="row d-flex align-items-center justify-content-center">
                           <div class="col-md-12">
-                            <div class="card px-5 py-5" style="text-align: left" id="update-form">
+                            <div class="card px-5 py-5 mx-auto" style="text-align: left" id="member-form">
 
                             <!-- ======= Testimonials Section ======= -->
                             <div id="testimonials" class="testimonials">
@@ -66,7 +65,6 @@
                         </div>
                       </div>
                     </div>
-                  </div>
                   <!-- End Testimonials Section -->
                 </div>
               </div>

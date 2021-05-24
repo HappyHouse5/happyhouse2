@@ -5,7 +5,7 @@
         <input class="form-check-input class_checkbox align-middle" type="checkbox" v-model="deleteList" :value="interest" id="flexCheckDefault">
         <span class="fs-6 align-middle px-3">{{interest.guName}}&nbsp;&nbsp;{{interest.dongName}}</span>
       </li>
-      <button type="button" class="btn btn-danger m-4" @click="interestDelete">관심지역 삭제</button>
+      <a class="mt-4 text-danger" @click="interestDelete" style="cursor:pointer; text-underline-position:under;">관심지역 삭제하기</a>
     </ul>
   </div>
 </template>
