@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row col-3">
            <ul id="category">
               <li id="CE7" data-order="0" v-on:click="searchPlaces('CE7')"> 
                   <!-- <span class="category_bg cafe"></span> -->
@@ -107,7 +107,7 @@
               </li>  
               <li id="SW8" data-order="5" v-on:click="searchPlaces('SW8')"> 
                   <!-- <span class="category_bg bank"></span> -->
-                  지하철
+                  역사
               </li>      
            </ul>
         </div>
@@ -206,6 +206,8 @@ export default {
             order: null,
 
             places: [],
+
+
       };
     },
     created(){
@@ -232,6 +234,8 @@ export default {
           x: this.location[0].lng,
         }]
         this.makeMarker(place);                                                // 마커 만들기
+        console.log(this.markers.length);
+        if(this.markers.length == 0) return;                  // 주변 상권, 학교 등 정보 검색 결과가 없다면 placeOverlay 만들지 않고 바로 return
         //--------------------------------------------------------------------
         // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
         var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
@@ -242,7 +246,6 @@ export default {
         // 장소 검색 객체(검색은 this.placeSearch를 통해서 수행)를 생성합니다
         this.placeSearch = new kakao.maps.services.Places(this.map); 
 
-        contentNode = document.createElement('div');
         this.contentNode = contentNode;
         this.contentNode.className = 'placeinfo_wrap';
 
@@ -254,39 +257,48 @@ export default {
         placeOverlay.setContent(this.contentNode); 
         this.placeOverlay = placeOverlay;
       },
-      makeMarker: function(places){        
+      makeMarker: function(places){        // 마커 표시하기 : 맵, 좌표, 마커 이미지
         this.places = places;                               // 마커에 mouseover 이벤트 시 places에 대한 정보를 출력하기 위해서 this.places data에 복사해둔다.
-        // 마커 표시하기 : 맵, 좌표, 마커 이미지
+
         this.markers = [];
         console.log("검색된 장소 개수 : " + places.length);
         // console.log(places);
         for(let i=0; i<places.length; i++){
-          var  //  스프라이트 이미지를 씁니다
-            marker = (new kakao.maps.Marker({
-              map: this.map,
-              position: new kakao.maps.LatLng(places[i].y, places[i].x),
-            }));
+          this.markers.push(new kakao.maps.Marker({
+            map: this.map,
+            position: new kakao.maps.LatLng(places[i].y, places[i].x),
+          }));
 
-          marker.setMap(this.map);
-          this.markers.push(marker);
-          
+          this.markers[i].setMap(this.map);
+          console.log("house click : " + this.currCategory)
           // Kakao Map Event handler
           let $this = this;
-          kakao.maps.event.addListener(this.markers[i], 'mouseover', function() {
-            $this.displayPlaceInfo(places[i]);
-          });
-          kakao.maps.event.addListener(this.markers[i], 'mouseout', function() {
-            $this.placeOverlay.setMap(null);  
-          });
-          kakao.maps.event.addListener(this.markers[i], 'click', function() {       // 마커 클릭 시
-            window.open(places[i].place_url, '_blank');
-          });
+          if(this.currCategory != false){
+            kakao.maps.event.addListener(this.markers[i], 'mouseover', function() {
+              $this.displayPlaceInfo(places[i]);
+            });
+            kakao.maps.event.addListener(this.markers[i], 'mouseout', function() {
+              $this.placeOverlay.setMap(null);  
+            });
+            kakao.maps.event.addListener(this.markers[i], 'click', function() {       // 마커 클릭 시
+              window.open(places[i].place_url, '_blank');
+            });
+          }
+          else{
+            kakao.maps.event.addListener(this.markers[i], 'mouseover', function() {
+              $this.markerMouseOn(places[i]);
+            });
+            kakao.maps.event.addListener(this.markers[i], 'mouseout', function() {
+              $this.infowindow.close();
+            });
+          }
         }
         
       },
-      markerMouseOn:function(idx){                                       // 마커에 마우스가 올라갔을 때 info window 띄우기
-        var iwContent = "<div style=\"width:200px; height:100px; text-align: center; padding: 5px;\">" + this.places[idx].place_name + "</div>"; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        var iwPosition = new kakao.maps.LatLng(this.places[idx].y, this.places[idx].x); //인포윈도우 표시 위치입니다
+      markerMouseOn:function(place){    // 아파트에 대한 정보마커에 마우스가 올라갔을 때 info window 띄우기
+       
+        var iwContent = "<div style=\"width:120px; height:40px; text-align: center; padding: 5px;\">" + this.houseInfo.aptName + "</div>"; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        var iwPosition = new kakao.maps.LatLng(place.y, place.x); //인포윈도우 표시 위치입니다
         // var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
         this.infowindow = new kakao.maps.InfoWindow({
@@ -295,7 +307,7 @@ export default {
           content: iwContent,
           // removable: iwRemoveable,
         });
-        this.infowindow.open(this.map, this.markers[idx]);          // 마커 열기
+        this.infowindow.open(this.map, this.markers[0]);          // 마커 열기
       },
       searchHouse: async function(data){                                          // 매물 정보 검색해서 DB에서 매물 정보 List 받아오기(Type, Word, Offset, limit)
         console.log("DB로 검색할 searchType : " + this.searchType);
@@ -335,7 +347,8 @@ export default {
       },
       houseDetail: async function(houseInfo) {                                         // 테이블 row 클릭 시 매물 위치정보 가져오기 + Kakao Map 연동
         console.log("aptName : " + houseInfo.aptName + "code : " + houseInfo.code);
-        this.houseInfo = houseInfo;                                                    // 매물 상세 카드에 보여지는 houseInfo data 업데이트
+        this.houseInfo = houseInfo;            // 매물 상세 카드에 보여지는 houseInfo data 업데이트
+        this.currCategory = false;
         await axios.get('/houses/location', {
           params:{
             aptName: this.houseInfo.aptName,
@@ -400,11 +413,9 @@ export default {
         if(code == '') return;
         // if(this.currCategory == '') this.currCategory = 'CE7';
         this.placeOverlay.setMap(null);
+        
         this.removeMarker();
-        console.log(code);
         this.placeSearch.categorySearch(this.currCategory, this.placeSearchCB, {useMapBounds: true});   // useMapBounds : 현재 맵이 보여지는 공간 내에 검색
-        console.log("searchPlace2");
-
       },
       removeMarker: function() {
           for ( var i = 0; i < this.markers.length; i++ ) {
