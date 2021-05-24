@@ -14,6 +14,7 @@
           <ul>
             <li><a class="nav-link" style="cursor:pointer" v-on:click="$router.push({name: 'Home'}).catch(()=>{});">Home</a></li>
             <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'House'}).catch(()=>{});">House</a></li>
+            <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Board'}).catch(()=>{});">Board</a></li>
             <template v-if="!isLogin"><!-- !isLogin -->
               <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="login">Login</a></li>
               <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Join'}).catch(()=>{});">Join</a></li>

@@ -234,25 +234,25 @@ export default {
         mailcom: "",
         member: JSON.parse(sessionStorage.getItem("member")),
         name: JSON.parse(sessionStorage.getItem("member")).name,
-        pwchk: '',
+        pwdchk: '',
         
         file: [],
         attachFile: false,
         profileName: null,
 
         // focus
-        isPwFocus: false,
+        isPwFocus: true,
         isPwchkFocus: false,
-        isNameFocus: false,
-        isEmailFocus: false,
-        isEmailcomFocus: false,
+        isNameFocus: true,
+        isEmailFocus: true,
+        isEmailcomFocus: true,
 
         // validation
-        isPwValid: false,
+        isPwValid: true,
         isPwchkValid: false,
-        isNameValid: false,
-        isEmailValid: false,
-        isEmailcomValid: false,
+        isNameValid: true,
+        isEmailValid: true,
+        isEmailcomValid: true,
 
         // invalid message
         pwMsg: '4자리 이상의 숫자와 문자로 이루어진 비밀번호를 입력해주세요.',
@@ -397,7 +397,7 @@ export default {
         console.log(this.isNameValid);
       },
       validateEmail() {
-        this.isEmailValid = this.member.email.length > 0 ? true : false;
+        this.isEmailValid = this.mail.length > 0 ? true : false;
         console.log(this.isEmailValid);
       },
     },

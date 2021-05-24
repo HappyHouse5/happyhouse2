@@ -57,7 +57,7 @@ export default {
     data:function(){
       return{
         id: "admin",
-        pwd: "123",
+        pwd: "123a",
       }
     },
     methods: {

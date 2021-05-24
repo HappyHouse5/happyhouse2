@@ -10,6 +10,7 @@ import Interest from "../views/Interest.vue";
 import InterestAdd from "../components/InterestAdd.vue";
 import InterestDel from "../components/InterestDel.vue";
 import InterestList from "../components/InterestList.vue";
+import Board from "../views/Board.vue";
 import axios from '@/common/axios.js';
 import VueAlertify from 'vue-alertify'; 
 
@@ -78,6 +79,11 @@ const routes = [
         component: InterestList,
       },
     ],
+  },
+  {
+    path: '/board',
+    name: "Board",
+    component: Board,
   }
 ];
 
