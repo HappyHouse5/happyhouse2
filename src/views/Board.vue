@@ -188,7 +188,11 @@ export default {
         console.log(data);
 
         if( data.result == 'login' ){
-          this.$router.push("/login")
+            this.$store.commit("logout");
+            sessionStorage.removeItem("member");
+            alert("로그인이 필요합니다.");
+            location.href = "/";
+          // this.$router.push("/login");
         }else{
           this.$store.commit(
             'SET_BOARD_DETAIL',
@@ -264,7 +268,7 @@ export default {
           console.log("BoardMainVue: data : ");
           console.log(data);
           if( data.result == 'login' ){
-            this.$router.push("/login");
+            // this.$router.push("/login");
             this.$store.commit("logout");
             sessionStorage.removeItem("member");
             alert("로그인이 필요합니다.");

@@ -89,8 +89,12 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           console.log("BoardMainVue: data : " + data);
-          if( data.result == 'login' ){
-            this.$router.push({ name: "Home" }).catch(() => { });
+          if (data.result == 'login') {
+            // this.$store.commit("logout");
+            sessionStorage.removeItem("member");
+            alert("로그인이 필요합니다.");
+            location.href = "/";
+            // this.$router.push({ name: "Home" }).catch(() => { });
           }else{
             context.commit( 'SET_BOARD_LIST', data.list );
             context.commit( 'SET_BOARD_TOTAL_LIST_ITEM_COUNT', data.count );
