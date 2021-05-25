@@ -538,7 +538,6 @@ export default {
           this.op = this.op + 1;
           this.radarModal.show();
         }else this.chartModal.show();
-
       },
 
        placeDataSave:function(data, status, pagination){
@@ -582,7 +581,7 @@ export default {
           // let price = list.dealAmount.trim().replace(",", "");
           // console.log(price);
           // priceList.push(parseInt(price));
-          priceList = list.dealAmount;
+          priceList.push(list.dealAmount);
         });
         this.label = labelList;
         this.price = priceList;
