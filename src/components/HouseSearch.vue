@@ -21,7 +21,7 @@
                   <!-- <h2 class="animate__animated animate__fadeInDown">No.1 House Sale Website</h2> -->
                   <p class="animate__animated animate__fadeInUp">No.1 House Sale Website</p>
 
-                  <div class="input-group house-search-bar searchform">
+                  <div class="input-group house-search-bar searchform mb-4">
                     <button
                       class="btn btn-outline-secondary dropdown-toggle btn-main-option"
                       type="button"
@@ -53,7 +53,48 @@
                       Search
                     </button>
                   </div>
+
+                  <template v-if="showOption == true">
+                    <div class="row house-search-bar">
+                    <div class="btn-outline-secondary btn-main-search col-2">
+                      가격옵션
+                    </div>
+                    <div class="col-6">
+                      <!-- <div class="row"> -->
+                        <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="valueValidation('max')" v-model="searchOption.maxAmount"></div>
+                        <div class="col-6"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="searchOption.minAmount"></div>
+                        <!-- <div class="col-3">{{realMaxAmount}}</div> -->
+                      <!-- </div> -->
+                      <div class="row">
+                        <!-- <div class="col-8"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="minAmount"></div> -->
+                        {{realMinAmount}} ~ {{realMaxAmount}}
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row house-search-bar">
+                    <div class="btn-outline-secondary btn-main-search col-2">
+                      크기옵션
+                    </div>
+                    <div class="col-6">
+                      <!-- <div class="row"> -->
+                        <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="sizeValidation('max')" v-model="searchOption.maxSize"></div>
+                        <div class="col-6"> <input type="range" class="form-range" id="min" @mouseup="sizeValidation('min')" v-model="searchOption.minSize"></div>
+                        <!-- <div class="col-3">{{realMaxAmount}}</div> -->
+                      <!-- </div> -->
+                      <div class="row">
+                        <!-- <div class="col-8"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="minAmount"></div> -->
+                        {{realMinSize}} ~ {{realMaxSize}}
+                      </div>
+                    </div>
+                  </div>
+
+                  </template>
+                  
+
                 </div>
+
               </div>
             </div>
           </div>
@@ -66,22 +107,38 @@
 <script>
 export default {
     name: "HouseSearch",
+    props:['isHousePage'],
     data:function(){
       return{
         searchType: "dong",
         searchWord: "",
         type: "동/아파트",
+
+        searchOption:{
+          maxAmount: 100,       //(maxAmount * 2000)  -> 0 ~ 20억 or 20억 이상
+          minAmount: 0,
+
+          maxSize: 100,
+          minSize: 0,
+        },
+
+        showOption: false,
+      }
+    },
+    created(){
+      if(this.isHousePage){
+         this.showOption = true;
       }
     },
     methods:{
       search: function(){
         console.log(this.searchType + " : " + this.searchWord);
         console.log(document.location.href);
-        if(document.location.href == 'http://localhost:8080/' || document.location.href == 'http://localhost:8080/#'){
-          this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord.trim()}}).catch(()=>{});
+        if(!this.isHousePage){
+          this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord.trim(), searchOption: this.searchOption}}).catch(()=>{});
         }
         else{
-          this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord.trim()});
+          this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord.trim(), searchOption: this.searchOption});
           
         }
 
@@ -90,8 +147,58 @@ export default {
         this.searchType = data;
         if(data == 'dong') this.type = "동별";
         else this.type = "아파트별";
+      },
+
+      valueValidation:function(param){
+        // console.log("min : " +this.searchOption.minAmount);
+        // console.log(this.maxAmount);
+        if((this.searchOption.minAmount > this.searchOption.maxAmount) && this.searchOption.maxAmount != 100 && this.searchOption.minAmount != 0){
+          if(param == 'max') this.searchOption.minAmount = this.searchOption.maxAmount;
+          if(param == 'min') this.searchOption.maxAmount = this.searchOption.minAmount;
+        } 
+      },
+
+      sizeValidation:function(param){
+        if((this.searchOption.minSize > this.searchOption.maxSize) && this.searchOption.maxSize != 100 && this.searchOption.minSize != 0){
+          if(param == 'max') this.searchOption.minSize = this.searchOption.maxSize;
+          if(param == 'min') this.searchOption.maxSize = this.searchOption.minSize;
+        } 
       }
     },
+    watch:{
+      // maxAmount:function(){
+      //   console.log(this.maxAmount);
+      //   if(this.minAmount > this.maxAmount) this.minAmount = this.maxAmount;
+      // },
+      // minAmount:function(){
+      //   console.log(this.minAmount);
+      //   if(this.minAmount > this.maxAmount) this.maxAmount = this.minAmount;
+      // },
+    },
+    computed:{
+      realMaxAmount:function(){
+        let money = this.searchOption.maxAmount * 2000;
+        if(this.searchOption.maxAmount == 100) return "20억 이상";
+        return money/10000 + "억";
+        // return this.maxAmount * 3000 / 10000;
+      },
+      realMinAmount:function(){
+        let money = this.searchOption.minAmount * 2000;
+        return money/10000 + "억";
+      },
+
+      realMaxSize:function(){
+        let size = this.searchOption.maxSize * 2;
+        if(this.searchOption.maxSize == 100) return "200제곱미터 이상";
+        return size + "제곱미터";
+        // return this.maxAmount * 3000 / 10000;
+      },
+      realMinSize:function(){
+        let size = this.searchOption.minSize * 2;
+        return size + "제곱미터";
+      }
+      
+    }
 }
 
 
