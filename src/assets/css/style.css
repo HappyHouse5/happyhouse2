@@ -773,6 +773,53 @@ div#preloader {
 } */
 
 /*--------------------------------------------------------------
+# House Page
+--------------------------------------------------------------*/
+/* #bar-chart {
+  height: "300px";
+  width: "100%";
+  position: "relative";
+} */
+
+.pagination > li > .page-link {
+  background-color: white;
+  color: #4eb1c0;
+}
+
+.pagination > li > .page-link:focus,
+.pagination > li > .page-link:hover,
+.pagination > li > a > span:focus,
+.pagination > li > a > span:hover,
+.pagination > li > .page-link > span:focus,
+.pagination > li > .page-link > span:hover {
+  z-index: 5;
+  color: white;
+  background-color: #7eb6be;
+  border: solid 1px #7eb6be;
+}
+
+.page-item.active > .page-link,
+.page-item.active > .page-link > span {
+  z-index: 5;
+  background-color: #7eb6be !important;
+  border: solid 1px #7eb6be;
+  color: white;
+}
+
+.pagination > li.active > .page-link,
+.pagination > li.active > .page-link > span,
+.pagination > li.active > .page-link:focus,
+.pagination > li.active > .page-link:hover,
+.pagination > li.active > .page-link > span:focus,
+.pagination > li.active > .page-link > span:hover {
+  z-index: 5;
+  background-color: #7eb6be !important;
+  border: solid 1px #7eb6be;
+  color: white;
+  /* border-color: #4eb1c0; */
+}
+
+/*--------------------------------------------------------------
 # MemberUpdate Page
 --------------------------------------------------------------*/
 
