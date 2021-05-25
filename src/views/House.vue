@@ -104,31 +104,31 @@
         ></pagination>
         </div>
       </div>
-      <!-- <chart-modal v-bind:chartModal="chartModal" v-on:showModal="showModal"></chart-modal> -->
+      <chart-modal v-bind:chartModal="chartModal" v-bind:chartData="{label, price}" v-on:showModal="showModal"></chart-modal>
       
       <!-- 페이지에 바로 출력 => OK -->
       <!-- <chart-vue :chartData="{label, price}"></chart-vue> -->
       
-      <house-chart :chartData="{label, price}"></house-chart>
+      <!-- <house-chart :chartData="{label, price}"></house-chart> -->
       <button @click="showModal">차트보기</button>
 
       <!-- <div class="modal" tabindex="-1" id="chartModal">
-      <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">House Chart</h5>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">House Chart</h5>
+            </div>
+            <div class="modal-body">
+              <chart-vue :chartData="chartData"></chart-vue>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal"
+                >Close</button
+              >
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <chart-vue :chartData="chartData"></chart-vue>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal"
-            >Close</button
-          >
-        </div>
-      </div>
-    </div>
-    </div> -->
+      </div> -->
     </div>
 </template>
 
@@ -143,7 +143,7 @@ import HouseSearch from '@/components/HouseSearch.vue';
 import Pagination from '@/components/Pagination.vue';
 // import 'Chart.js';
 // import { Bar } from "vue-chartjs";
-// import ChartModal from '@/components/modals/ChartModal.vue';
+import ChartModal from '@/components/modals/ChartModal.vue';
 import ChartVue from '@/components/Chart.vue';
 import HouseChart from '@/components/HouseChart.vue';
 import axios from '@/common/axios.js';
@@ -154,7 +154,7 @@ export default {
     components:{
         HouseSearch,                  // 검색창
         ChartVue,                     // 차트
-        // ChartModal,
+        ChartModal,
         Pagination,                   // 페이징
         HouseChart
     },
@@ -191,6 +191,7 @@ export default {
             price: [],
             allChecked: false,              // one click all Check
             chartModal: null,
+            chartData: null,
             chartData1:[5, 40,15, 15, 8],
             chartData2:{
                 'a':5,
@@ -229,8 +230,8 @@ export default {
     mounted(){                                      // 페이지 mount 되는 시점
       console.log("마운트 될 때 searchType: " + this.searchType);
       console.log("마운트 될 때 searchWord: " + this.searchWord);
-      this.chartModal = new Modal(document.getElementById("chartModal"));
       this.searchHouse({searchType: this.searchType, searchWord: this.searchWord});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
+      this.chartModal = new Modal(document.getElementById("chartModal"));
     },
     methods:{
       initMap:function() {                                              // 클릭된 매물의 위치에 따라 지도 초기화하기

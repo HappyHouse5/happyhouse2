@@ -27,6 +27,8 @@ export default {
     props: ['chartModal', 'chartData'],
     data:function(){
       return{
+        // Cdata = this.chartData,
+        // sendData
       }
     },
     components: {
@@ -37,5 +39,10 @@ export default {
             this.loginModal.hide();
         },
     },
+    watch:{
+      // Cdata:function(){
+
+      // }
+    }
 }
 </script>

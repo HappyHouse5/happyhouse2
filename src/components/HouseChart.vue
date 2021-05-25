@@ -1,5 +1,5 @@
 <template>
-  <chart-vue :chartData="chatData"></chart-vue>
+  <chart-vue :chartData="chartData"></chart-vue>
 </template>
 
 <script>
