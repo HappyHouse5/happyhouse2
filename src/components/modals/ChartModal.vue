@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         closeModal() {
-            this.loginModal.hide();
+            this.chartModal.hide();
         },
     },
     watch:{

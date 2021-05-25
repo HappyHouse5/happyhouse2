@@ -55,12 +55,12 @@
         <div class="row mt-3">
           <!-- <div class="col-sm-6" id="map" style="height: 400px; overflow:hidden;"> -->
           <div class="table-responsive custom-table-responsive">
-            <table class="table custom-table">
+            <table class="table custom-table table-hover">
               <thead>
-                <tr style="text-align: center">
+                <tr>
                   <th scope="col">
                     <label class="control control--checkbox">
-                      <input type="checkbox" class="js-check-all" v-model="allChecked" @click="checkAll()" />
+                      <input type="checkbox" class="js-check-all class_checkbox align-middle" v-model="allChecked" @click="checkAll()" />
                       <div class="control__indicator"></div>
                     </label>
                   </th>
@@ -77,7 +77,7 @@
                   <tr v-for="(item, idx) in houseList" :key="idx">
                     <th scope="row">
                       <label class="control control--checkbox">
-                        <input type="checkbox" v-model="checkList" :value="item" @change="changeCheck()" @click="checkOneItem(item)"/>
+                        <input type="checkbox" class="class_checkbox align-middle" v-model="checkList" :value="item" @change="changeCheck()" @click="checkOneItem(item)"/>
                         <div class="control__indicator"></div>
                       </label>
                     </th>
@@ -95,22 +95,24 @@
               </tbody>
             </table>
           </div>
-          <pagination 
-            v-bind:listRowCount="listRowCount"
-            v-bind:pageLinkCount="pageLinkCount"
-            v-bind:currentPageIndex="currentPageIndex"
-            v-bind:totalListItemCount="count"
-            v-on:call-parent="movePage"
-        ></pagination>
+          <div class="row mb-5">
+            <button type="button" id="btn-chart" class="btn col-2" @click="showModal">Analysis</button>
+            <pagination class="col-10"
+              v-bind:listRowCount="listRowCount"
+              v-bind:pageLinkCount="pageLinkCount"
+              v-bind:currentPageIndex="currentPageIndex"
+              v-bind:totalListItemCount="count"
+              v-on:call-parent="movePage"
+            ></pagination>
+          </div>
         </div>
-      </div>
       <chart-modal v-bind:chartModal="chartModal" v-bind:chartData="{label, price}" v-on:showModal="showModal"></chart-modal>
       
       <!-- 페이지에 바로 출력 => OK -->
       <!-- <chart-vue :chartData="{label, price}"></chart-vue> -->
       
       <!-- <house-chart :chartData="{label, price}"></house-chart> -->
-      <button @click="showModal">차트보기</button>
+      
 
       <!-- <div class="modal" tabindex="-1" id="chartModal">
         <div class="modal-dialog">
@@ -130,6 +132,7 @@
         </div>
       </div> -->
     </div>
+  </div>
 </template>
 
 
@@ -220,6 +223,13 @@ export default {
 
             places: [],
 
+            kakaoData:{
+              CE7: [0, 0],        // 카페 [주변 반경 내 개수, 가장 가까운 거리 (m 단위)]
+              CS2: [0, 0],        // 편의점
+              SW8: [0, 0],        // 지하철
+              SC4: [0, 0],        // 학교
+              dealAmount: [0, 0], // 거래 금액[거래 금액/10000(억), 실 거래금액]
+            }
 
       };
     },
@@ -506,7 +516,39 @@ export default {
       // }
       showModal() {
         this.chartModal.show();
-      }
+      },
+
+       placeDataSave:function(data, status, pagination){
+        console.log(data);
+
+        if(status == kakao.maps.services.Status.OK){
+
+          let minDist = 1000;
+          data.forEach(element => {
+            minDist = minDist < element.distance ? minDist : element.distance;
+          })
+          console.log("검색 개수 :" + data.length);
+          console.log(data.category_group_code == 'CE7');
+          if(data.length > 0){
+            if(data[0].category_group_code == 'CE7') this.kakaoData.CE7 = [data.length, parseInt(minDist)];
+            else if(data[0].category_group_code == 'CS2') this.kakaoData.CS2 = [data.length, parseInt(minDist)];
+            else if(data[0].category_group_code == 'SC4') this.kakaoData.SC4 = [data.length, parseInt(minDist)];
+            else if(data[0].category_group_code == 'SW8') this.kakaoData.SW8 = [data.length, parseInt(minDist)];
+          }
+          
+
+          console.log(this.kakaoData);
+        }else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+              // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
+          console.log(data.category_group_code + "검색 결과 0개");
+        } else if (status === kakao.maps.services.Status.ERROR) {
+            // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
+          console.log("kakao api 카테고리 검색 중 에러 발생.");
+        }
+      },
+
+
+
     },
     watch: {
       checkList: function(event) {                                      // checkList 변수 watch -> Chart 연결
@@ -523,6 +565,30 @@ export default {
         // console.log(this.checkList);
         // console.log(this.label);
         // console.log(this.price);
+
+        if(this.checkList.length == 1){
+          console.log(this.checkList[0].aptName + this.checkList[0].dealAmount);
+          this.kakaoData.dealAmount = [this.price[0]/10000, this.price[0]];
+          axios.get('/houses/location', {
+            params:{
+              aptName: this.checkList[0].aptName,
+              code: this.checkList[0].code,
+            }
+          })
+          .then(({data}) => {
+            let categories = ['CE7', 'CS2', 'SC4', 'SW8'];                         // 카페, 편의점, 학교, 지하철
+            let loc = new kakao.maps.LatLng(data.lat, data.lng);                   // 검색 중심 좌표
+
+            categories.forEach(element => {
+              let dist = 250;   // 검색 반경 (m)
+              if(element == 'SC4') dist = 700;
+              this.placeSearch.categorySearch(element, this.placeDataSave, {location: loc, radius:dist });  //useMapBounds: true
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
       }
   },
 

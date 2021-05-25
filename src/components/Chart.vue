@@ -11,8 +11,10 @@ export default {
       {
         labels: this.chartData.label,
         datasets: [{
-            label: "Data One",
-            backgroundColor: "#f87979",
+            label: "Price: ",
+            backgroundColor: "#4eb1c077",
+            borderColor: "#4eb1c0",
+            borderWidth: 1.5,
             data: this.chartData.price
         }]
       },

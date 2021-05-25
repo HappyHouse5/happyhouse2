@@ -272,7 +272,8 @@ div#preloader {
 }
 
 #header .logo h1 span {
-  color: #3ec1d5;
+  color: #5eb5c2;
+  margin-top: 15px;
 }
 
 #header .logo h1 a,
@@ -781,6 +782,10 @@ div#preloader {
   position: "relative";
 } */
 
+.pagination {
+  margin: 0;
+}
+
 .pagination > li > .page-link {
   background-color: white;
   color: #4eb1c0;
@@ -817,6 +822,22 @@ div#preloader {
   border: solid 1px #7eb6be;
   color: white;
   /* border-color: #4eb1c0; */
+}
+
+#btn-chart {
+  display: inline-block;
+  color: #ebba33;
+  border: solid 1px #ebba33;
+  width: 90px;
+  max-height: 40px;
+  margin-left: 15px;
+}
+
+#btn-chart:hover {
+  display: inline-block;
+  color: white;
+  background: #ebba33;
+  border-color: d8c350;
 }
 
 /*--------------------------------------------------------------
@@ -1987,7 +2008,7 @@ span.email-notes {
 }
 
 .class_checkbox {
-  zoom: 1.5;
+  zoom: 1.3;
 }
 /*--------------------------------------------------------------
 # Footer

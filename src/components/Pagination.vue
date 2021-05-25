@@ -1,9 +1,9 @@
 <template>
-  <nav aria-label="Page navigation">
+  <nav class=" align-middle" aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       <li v-if="prev" class="page-item">
         <a class="page-link" style="cursor: pointer" aria-label="Previous" @click="paginationChanged(startPageIndex - 1)">
-          <span aria-hidden="true">«</span>
+          <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
         </a>
       </li>
       <li v-for="index in ( endPageIndex-startPageIndex + 1 )" :key="index"
@@ -13,7 +13,7 @@
       </li>
       <li v-if="next" class="page-item">
         <a class="page-link" style="cursor: pointer" aria-label="Next" @click="paginationChanged(endPageIndex + 1)">
-          <span aria-hidden="true">»</span>
+          <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
         </a>
       </li>
     </ul>
