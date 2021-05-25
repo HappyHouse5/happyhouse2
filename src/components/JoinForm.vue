@@ -171,7 +171,7 @@
                 <div class="invalid-feedback">{{addrMsg}}</div>
               </div>
             </div>
-            </div>
+          </div>
 
             <!-- Prefer -->
             <div class="mb-3 mt-4">
@@ -262,6 +262,7 @@ export default {
 
       // validation
       isUserIdValid: false,
+      isDuplUserId: true,
       isPwValid: false,
       isPwchkValid: false,
       isNameValid: false,
@@ -387,12 +388,14 @@ export default {
       }
     },
     validateUserId() {
-      this.isUserIdValid = this.userId == 'ssafy' ? false : true;
-      this.userIdMsg = '중복 ID가 존재합니다. 다른 ID를 입력해 주세요.'
-      if(this.isUserIdValid) {
-        this.isUserIdValid = this.userId.length == 0 ? false : true;
-        this.userIdMsg = 'ID를 입력해주세요.'
+      this.isUserIdValid = this.isDuplUserId;
+      if(!this.isUserIdValid){                         // DB에 중복 ID가 있을 때
+        this.userIdMsg = '중복 ID가 존재합니다. 다른 ID를 입력해 주세요.';
       }
+      else{                                           // DB에 중복 ID 가 없을 떼  // 4글자가 되지 않는 경우는 axios를 수행하지 않고 watch: 에서 무조건 this.userIdMsg 변경
+        this.userIdMsg = '사용 가능한 ID 입니다.';
+      }
+      this.isUserIdFocusAndValid();
       console.log(this.isUserIdValid);
     },
     validatePw() {
@@ -427,9 +430,32 @@ export default {
       console.log(this.isAddrValid);
     },
   },
-  watch: {  // 실제로 필요 없음: prefer 잘 받아오는지 확인하는 부분
+  watch: {
     prefer: function(){
       console.log(this.prefer);
+    },
+    userId: function(){
+      console.log(this.userId);
+
+      if(this.userId.length >= 4){          // 4글자 이상일 때 DB에서 중복 검사
+        axios.get('/members/checkId', {
+          params:{
+            userId: this.userId,
+          }
+        })
+        .then(({data}) => {
+          console.log("false 이면 중복 ID가 존재하는 것 : " + data);
+          this.isDuplUserId = data;
+          this.validateUserId();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+      else{                                 // 4글자 이하일 때 
+        this.isUserIdValid = false;
+        this.userIdMsg = 'ID를 4글자 이상 입력해주세요.';
+      }
     }
   }
 }
