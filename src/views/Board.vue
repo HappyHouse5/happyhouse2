@@ -77,7 +77,7 @@ import UpdateModal from '@/components/modals/UpdateModal.vue';
 
 import { Modal } from 'bootstrap';
 
-import http from "@/common/axios.js";
+import axios from "@/common/axios.js";
 import util from "@/common/util.js";
 
 import Pagination from '@/components/PaginationVuex.vue';
@@ -180,7 +180,7 @@ export default {
       // this.boardId = boardId;
       // this.$store.commit('mutateSetBoardBoardId', boardId);
 
-      http.get(
+      axios.get(
       '/boards/' + boardId, // props variable
       )
       .then(({ data }) => {
@@ -257,14 +257,19 @@ export default {
       );
     },
     boardDelete(){ // parameter 사용 X
-      http.delete(
-        "/boards/" + this.$store.state.board.boardId
+      axios.delete(
+        "/boards/delete/" + this.$store.state.board.boardId
         )
         .then(({ data }) => {
           console.log("BoardMainVue: data : ");
           console.log(data);
           if( data.result == 'login' ){
-            this.$router.push("/login")
+            this.$router.push("/login");
+            this.$store.commit("logout");
+            sessionStorage.removeItem("member");
+            alert("로그인이 필요합니다.");
+            location.href = "/";
+            // this.$router.push({name: "Home"});
           }else{
             this.boardList();
           }

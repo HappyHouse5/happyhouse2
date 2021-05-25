@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     pageCount: function(){
-      return Math.ceil(this.$store.state.board.totalListItemCount/this.listRowCount);
+      return Math.ceil(this.$store.state.board.totalListItemCount/this.$store.state.board.listRowCount);
     },
     startPageIndex: function(){
       if( (this.$store.state.board.currentPageIndex % this.$store.state.board.pageLinkCount) == 0 ){ //10, 20...맨마지막
@@ -62,7 +62,7 @@ export default {
       }
     },
     next: function(){
-      if( this.endPageIndex >  this.pageCount){
+      if( this.endPageIndex >=  this.pageCount){
         return false;
       }else{
         return true;

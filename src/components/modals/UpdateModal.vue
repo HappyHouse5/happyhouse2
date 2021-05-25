@@ -98,7 +98,11 @@ export default {
               console.log("UpdateModalVue: data : ");
               console.log(data);
               if( data.result == 'login' ){
-                this.$router.push("/login")
+                // this.$router.push("/login");
+                sessionStorage.removeItem("member");
+                this.$store.commit("logout");
+                alert("로그인이 필요합니다.");
+                location.href = "/";
               }else{
                 this.$alertify.success('글이 수정되었습니다.');
                 this.closeModal();

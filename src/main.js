@@ -5,14 +5,10 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
-// require('./assets/css/style.css');
-
 // for bootstrap 5
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import 'bootstrap/dist/js/bootstrap.bundle';
-// import "vue-kakao-sdk"
-// import "vue-kakao-api"
 
 new Vue({
   router,

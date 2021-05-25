@@ -83,7 +83,7 @@ export default {
         console.log("interestAdd method");
         // guCode: parseInt(this.guCode),
         axios.post("/houses/interest", {
-          guCode: parseInt(this.dongCode),
+          guCode: parseInt(this.guCode),
           dongCode: parseInt(this.dongCode),
         })
         .then(({data}) => {
