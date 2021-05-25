@@ -1,72 +1,95 @@
 <template>
-  <div class="container">
+<div>
+    <!-- ======= hero Section ======= -->
+    <section id="hero" style="height: 1200px">
+      <div class="hero-container">
+        <div
+          id="heroCarousel"
+          class="carousel carousel-fade"
+          data-bs-ride="carousel"
+          data-bs-interval="5000"
+        >
+          <div class="carousel-inner" role="listbox">
+            <div
+              class="carousel-item-sub active"
+              style="background-image: url(assets/img/hero-carousel/bg1.jpg)"
+            >
+              <div class="carousel-container">
+                <div class="container">
+                  <p class="animate__animated animate__fadeInUp">Board</p>
+                  <!-- <h2 class="animate__animated animate__fadeInDown">
+                    Add a region of interest to easily check listings
+                  </h2> -->
 
-    <h4 class="text-center">게시판 - Main</h4>
 
-    <!-- <div class="input-group mb-3">
-        <input id="inputSearchWord" type="text" class="form-control" placeholder="Search">
-        <div class="input-group-append">
-          <button id="btnSearchWord" class="btn btn-success">Go</button>
+                  <div class="p-5 board-inner mt-5">
+
+                  <div class="input-group mb-5 mt-3">
+                    <!-- store 사용 -->
+                    <!-- <input v-model="searchWord" @keydown.enter="boardList" type="text" class="form-control"> -->
+                    <input placeholder="검색어를 입력하세요." v-model="$store.state.board.searchWord" @keydown.enter="boardList" type="text" class="form-control">
+                    <button @click="boardList" class="btn btn-success " type="button" id="btn-board-search">Search</button>
+                  </div>
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>제목</th>
+                          <th>작성자</th>
+                          <th>작성일시</th>
+                          <th>조회수</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                          <!-- store 사용 -->
+
+                          <!-- 직접 store 에 접근해도 된다. -->
+                          <!-- <tr v-for="(board, index) in $store.state.board.list" @click="boardDetail(board.boardId)" v-bind:key="index"> -->
+                          
+                          <!-- getters 를 이용하는 코드 -->
+                          <!-- computed - listGetters - getBoardList  -->
+                          <tr v-for="(board, index) in listGetters" @click="boardDetail(board.boardId)" v-bind:key="index">
+                            <td>{{ board.boardId }}</td>
+                            <td>{{ board.title }}</td>
+                            <td>{{ board.userName }}</td>
+
+                            <!-- function 을 바로 사용하는 경우 -->
+                            <td>{{ makeDateStr(board.regDt.date.year, board.regDt.date.month, board.regDt.date.day, '.') }}</td>
+                            
+                            <td>{{ board.readCount }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  
+                <div class="row mt-5 align-bottom">
+                  <button class="btn btn-sm" id="btn-chart" @click="showInsertModal">글쓰기</button>
+                  <pagination class="col-10" v-on:call-parent="movePage"></pagination>
+                </div>
+
+
+                    
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div> -->
-  <div class="input-group mb-3">
-    <!-- store 사용 -->
-    <!-- <input v-model="searchWord" @keydown.enter="boardList" type="text" class="form-control"> -->
-    <input v-model="$store.state.board.searchWord" @keydown.enter="boardList" type="text" class="form-control">
-    <button @click="boardList" class="btn btn-success" type="button" >Search</button>
-  </div>
+      </div>
+ 
+    </section>
+    <!-- End Hero Section -->
+     
+                    <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
+                    <!-- props 제거 -->
+                    <detail-modal v-on:call-parent-change-to-update="changeToUpdate" v-on:call-parent-change-to-delete="changeToDelete"></detail-modal>
+                    <update-modal v-on:call-parent-update="closeAfterUpdate"></update-modal>
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>작성일시</th>
-          <th>조회수</th>
-        </tr>
-      </thead>
-        <tbody>
-          <!-- store 사용 -->
+</div>
 
-          <!-- 직접 store 에 접근해도 된다. -->
-          <!-- <tr v-for="(board, index) in $store.state.board.list" @click="boardDetail(board.boardId)" v-bind:key="index"> -->
-          
-          <!-- getters 를 이용하는 코드 -->
-          <!-- computed - listGetters - getBoardList  -->
-          <tr v-for="(board, index) in listGetters" @click="boardDetail(board.boardId)" v-bind:key="index">
-            <td>{{ board.boardId }}</td>
-            <td>{{ board.title }}</td>
-            <td>{{ board.userName }}</td>
 
-            <!-- function 을 바로 사용하는 경우 -->
-            <td>{{ makeDateStr(board.regDt.date.year, board.regDt.date.month, board.regDt.date.day, '.') }}</td>
-
-            <!-- computed + index 를 사용하는 경우 -->
-            <!-- <td>{{ formatDate[index] }}</td> -->
-            
-            <td>{{ board.readCount }}</td>
-          </tr>
-        </tbody>
-      </table>
-    
-    <!-- props 사용 X -->
-    <!-- <pagination 
-      v-bind:listRowCount="listRowCount"
-      v-bind:pageLinkCount="pageLinkCount"
-      v-bind:currentPageIndex="currentPageIndex"
-      v-bind:totalListItemCount="totalListItemCount"
-      v-on:call-parent="movePage"
-    ></pagination> -->
-    <pagination v-on:call-parent="movePage"></pagination>
-
-    <button class="btn btn-sm btn-primary" @click="showInsertModal">글쓰기</button>
-
-    <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
-    <!-- props 제거 -->
-    <detail-modal v-on:call-parent-change-to-update="changeToUpdate" v-on:call-parent-change-to-delete="changeToDelete"></detail-modal>
-    <update-modal v-on:call-parent-update="closeAfterUpdate"></update-modal>
-  </div>
 </template>
 
 

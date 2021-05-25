@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button @click="boardUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">수정</button>
+        <button @click="boardUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button" id="btn-board-update">수정하기</button>
       </div>
     </div>
   </div>

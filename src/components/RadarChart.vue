@@ -3,25 +3,97 @@ import { Radar } from "vue-chartjs";
 
 export default {
   extends: Radar,
-  mounted() {
-    this.renderChart(
+  props: ['chartData', 'op'],
+  watch: {
+      op: function() {
+          this.renderChart(
       {
         labels: [
+            "카페", 
+            "편의점", 
+            "학교", 
+            "역사", 
+            "매매가(억)"
         ],
         datasets: [
           {
             label:[],
             backgroundColor: "rgba(179,181,198,0.2)",
             borderColor: "rgba(179,181,198,1)",
-            pointBackgroundColor: "rgba(179,181,198,1)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: [65, 59, 90, 81, 56, 55, 40]
+            data: [
+                this.chartData.CE7[0],
+                this.chartData.CS2[0], 
+                this.chartData.SC4[0], 
+                this.chartData.SW8[0], 
+                this.chartData.dealAmount[0]
+            ]
           }
-        ]
+        ],
+        
       },
-      { responsive: true, maintainAspectRatio: false }
+      { 
+        responsive: true, 
+        maintainAspectRatio: false,
+        scale: {
+            ticks: {
+                beginAtZero: true,
+                max: 15,
+                min: 0,
+                stepSize: 3,
+                fontSize: 15
+            },
+        },
+        legend: {
+            display: false,
+        },
+      }
+    );
+      }
+  },
+  mounted() {
+    this.renderChart(
+      {
+        labels: [
+            "카페", 
+            "편의점", 
+            "학교", 
+            "역사", 
+            "매매가(억)"
+        ],
+        datasets: [
+          {
+            label:[],
+            backgroundColor: "#ebba3355",
+            borderColor: "#ebba33",
+            data: [
+                this.chartData.CE7[0],
+                this.chartData.CS2[0], 
+                this.chartData.SC4[0], 
+                this.chartData.SW8[0], 
+                this.chartData.dealAmount[0]
+            ]
+          }
+        ],
+        
+      },
+      { 
+        responsive: true, 
+        maintainAspectRatio: false,
+        scale: {
+            ticks: {
+                beginAtZero: true,
+                max: 15,
+                min: 0,
+                stepSize: 3,
+                fontSize: 15
+            },
+            pointLabels: { fontSize: 14 } ,
+            reverse: false
+        },
+        legend: {
+            display: false,
+        },
+      }
     );
   }
 };

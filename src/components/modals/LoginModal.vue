@@ -25,9 +25,6 @@
               v-model="pwd" 
               required
             />
-            <div class="checkbox mb-3">
-              <label> <input type="checkbox" value="remember-me" /> Remember me </label>
-            </div>
             
           </form>
         </div>

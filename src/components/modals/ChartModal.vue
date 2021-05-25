@@ -39,10 +39,5 @@ export default {
             this.chartModal.hide();
         },
     },
-    watch:{
-      // Cdata:function(){
-
-      // }
-    }
 }
 </script>

@@ -33,8 +33,8 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button v-show="$store.state.board.isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">글 수정하기</button>
-        <button v-show="$store.state.board.isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button">글 삭제하기</button>
+        <button v-show="$store.state.board.isOwner" @click="changeToUpdate" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button" id="btn-board-update">글 수정하기</button>
+        <button v-show="$store.state.board.isOwner" @click="changeToDelete" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" type="button" id="btn-board-delete">글 삭제하기</button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <house-search v-on:search="searchHouse"></house-search>
+    <house-search v-bind:isHousePage="true" v-on:search="searchHouse"></house-search>
       <div class="container mt-3 mb-3">
         <div class="row mt-3">
           <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -14,8 +14,8 @@
         <div class="row mt-3">
           <div class="col-8">
             <div>
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item ">
+          <ul class="nav nav-tabs" role="tablist" id="prefer-tab">
+            <li class="nav-item">
               <a class="nav-link active" data-bs-toggle="tab" id="CE7" data-order="0" v-on:click="searchPlaces('CE7')">카페</a>
             </li>
             <li class="nav-item">
@@ -107,7 +107,7 @@
           </div>
         </div>
       <chart-modal v-bind:chartModal="chartModal" v-bind:chartData="{label, price}" v-on:showModal="showModal"></chart-modal>
-      
+      <radar-modal v-bind:radarModal="radarModal" v-bind:chartData="kakaoData" v-bind:op="op" v-on:showModal="showModal"></radar-modal>
       <!-- 페이지에 바로 출력 => OK -->
       <!-- <chart-vue :chartData="{label, price}"></chart-vue> -->
       
@@ -147,6 +147,7 @@ import Pagination from '@/components/Pagination.vue';
 // import 'Chart.js';
 // import { Bar } from "vue-chartjs";
 import ChartModal from '@/components/modals/ChartModal.vue';
+import RadarModal from '@/components/modals/RadarModal.vue';
 import ChartVue from '@/components/Chart.vue';
 import HouseChart from '@/components/HouseChart.vue';
 import axios from '@/common/axios.js';
@@ -158,8 +159,9 @@ export default {
         HouseSearch,                  // 검색창
         ChartVue,                     // 차트
         ChartModal,
+        RadarModal,
         Pagination,                   // 페이징
-        HouseChart
+        HouseChart,
     },
     watch:{
     },
@@ -171,10 +173,16 @@ export default {
             searchWord: "",
             offset: 0,
             limit: 8,
+            searchOption: {
+              maxAmount: 100,       //(maxAmount * 2000)  -> 0 ~ 20억 or 20억 이상
+              minAmount: 0,
 
+              maxSize: 100,
+              minSize: 0,
+            },
             houseList: [],                  // 검색된 모든 매물 정보
             houseInfo:{                     // 클릭된 매물 1채 정보
-              dealAmount: '',
+              dealAmount: null,
               dong: '',
               jibun: '',
               buildYear: null,
@@ -188,12 +196,14 @@ export default {
             pageLinkCount: 10,              // 페이지 바 link 개수
             currentPageIndex: 1,            // 현재 페이지 번호
 
-
+            loaded: false,
+            op: 0,
             checkList: [],                  // 체크 박스 리스트
             label: [],                      // 차트 
             price: [],
             allChecked: false,              // one click all Check
             chartModal: null,
+            radarModal: null,
             chartData: null,
             chartData1:[5, 40,15, 15, 8],
             chartData2:{
@@ -236,12 +246,14 @@ export default {
     created(){
       this.searchType = this.$route.params.searchType == undefined ? "dong" : this.$route.params.searchType; // this.$route.params.searchType,
       this.searchWord = this.$route.params.searchWord == undefined ? "" : this.$route.params.searchWord;
+      this.searchOption = this.$route.params.searchOption == undefined ? this.searchOption : this.$route.params.searchOption;
     },
     mounted(){                                      // 페이지 mount 되는 시점
       console.log("마운트 될 때 searchType: " + this.searchType);
       console.log("마운트 될 때 searchWord: " + this.searchWord);
-      this.searchHouse({searchType: this.searchType, searchWord: this.searchWord});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
+      this.searchHouse({searchType: this.searchType, searchWord: this.searchWord, searchOption: this.searchOption});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
       this.chartModal = new Modal(document.getElementById("chartModal"));
+      this.radarModal = new Modal(document.getElementById("radarModal"));
     },
     methods:{
       initMap:function() {                                              // 클릭된 매물의 위치에 따라 지도 초기화하기
@@ -332,17 +344,24 @@ export default {
         });
         this.infowindow.open(this.map, this.markers[0]);          // 마커 열기
       },
-      searchHouse: async function(data){                                          // 매물 정보 검색해서 DB에서 매물 정보 List 받아오기(Type, Word, Offset, limit)
+       searchHouse: async function(data){                                          // 매물 정보 검색해서 DB에서 매물 정보 List 받아오기(Type, Word, Offset, limit)
         console.log("DB로 검색할 searchType : " + this.searchType);
         console.log("DB로 검색할 searchWord : " + this.searchWord);
+        console.log("DB로 검색할 옵션(최대가): " + this.searchOption.maxAmount * 2000);
+
         this.searchType = data.searchType;
         this.searchWord = data.searchWord;
+        this.searchOption = data.searchOption;
         await axios.get('/houses/houseInfo', {
           params:{
             searchType: data.searchType,
             searchWord: data.searchWord,
             offset: this.offset,
             limit: this.limit,
+            minSize: this.searchOption.minSize * 2,
+            maxSize: this.searchOption.maxSize == 100 ? 9999 : this.searchOption.maxSize * 2,
+            minAmount : this.searchOption.minAmount * 2000,
+            maxAmount: this.searchOption.maxAmount == 100 ? 999999 : this.searchOption.maxAmount * 2000,
           }
         })
         .then(({data}) => {
@@ -403,7 +422,7 @@ export default {
         this.SET_BOARD_MOVE_PAGE(pageIndex);
 
         console.log("페이지 이동 시 재 검색 타입, 명: " + this.searchType + this.searchWord);
-        this.searchHouse({searchType: this.searchType, searchWord: this.searchWord});
+        this.searchHouse({searchType: this.searchType, searchWord: this.searchWord, searchOption: this.searchOption});
       },
       SET_BOARD_MOVE_PAGE(pageIndex){                               // 페이지 이동에 따른 offset, 현재 페이지 번호 변화
         this.offset = (pageIndex - 1) * this.listRowCount;
@@ -515,7 +534,11 @@ export default {
       //     }
       // }
       showModal() {
-        this.chartModal.show();
+        if (this.checkList.length == 1) {
+          this.op = this.op + 1;
+          this.radarModal.show();
+        }else this.chartModal.show();
+
       },
 
        placeDataSave:function(data, status, pagination){
@@ -556,9 +579,10 @@ export default {
         let priceList = [];
         this.checkList.forEach(function(list){
           labelList.push(list.aptName);
-          let price = list.dealAmount.trim().replace(",", "");
+          // let price = list.dealAmount.trim().replace(",", "");
           // console.log(price);
-          priceList.push(parseInt(price));
+          // priceList.push(parseInt(price));
+          priceList = list.dealAmount;
         });
         this.label = labelList;
         this.price = priceList;
@@ -569,6 +593,7 @@ export default {
         if(this.checkList.length == 1){
           console.log(this.checkList[0].aptName + this.checkList[0].dealAmount);
           this.kakaoData.dealAmount = [this.price[0]/10000, this.price[0]];
+          this.loaded = false;
           axios.get('/houses/location', {
             params:{
               aptName: this.checkList[0].aptName,
@@ -584,10 +609,13 @@ export default {
               if(element == 'SC4') dist = 700;
               this.placeSearch.categorySearch(element, this.placeDataSave, {location: loc, radius:dist });  //useMapBounds: true
             })
+            this.loaded = true;
           })
           .catch((err) => {
             console.log(err);
           })
+
+          
         }
       }
   },

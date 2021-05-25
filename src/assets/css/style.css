@@ -827,10 +827,11 @@ div#preloader {
 #btn-chart {
   display: inline-block;
   color: #ebba33;
-  border: solid 1px #ebba33;
+  border: solid 1.5px #ebba33;
   width: 90px;
   max-height: 40px;
   margin-left: 15px;
+  font-weight: 600;
 }
 
 #btn-chart:hover {
@@ -838,6 +839,15 @@ div#preloader {
   color: white;
   background: #ebba33;
   border-color: d8c350;
+}
+
+#prefer-tab > li {
+  cursor: pointer;
+  color: #42414f;
+}
+
+#prefer-tab > li > a {
+  color: #42414f;
 }
 
 /*--------------------------------------------------------------
@@ -1947,6 +1957,79 @@ span.email-notes {
   border-top: 1px solid #e5e5e5;
   margin: 0;
   padding-top: 30px;
+}
+
+/*--------------------------------------------------------------
+# Board
+--------------------------------------------------------------*/
+.board-inner {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 60px 30px 80px 30px;
+  max-width: 1200px;
+  border-radius: 3.5px;
+}
+
+/* #btn-chart {
+  display: inline-block;
+  color: #ebba33;
+  border: solid 1.5px #ebba33;
+  width: 90px;
+  max-height: 40px;
+  margin-left: 15px;
+  font-weight: 600;
+}
+
+#btn-chart:hover {
+  display: inline-block;
+  color: white;
+  background: #ebba33;
+  border-color: d8c350;
+} */
+
+#btn-board-search {
+  display: inline-block;
+  color: white;
+  background: #ebba33;
+  border: solid 1.5px #ebba33;
+}
+
+#btn-board-search:hover {
+  display: inline-block;
+  color: #ebba33;
+  background: white;
+  border: solid 1.5px #ebba33;
+  /* width: 90px;
+  max-height: 40px;
+  margin-left: 15px;
+  font-weight: 600; */
+}
+
+#btn-board-update {
+  display: inline-block;
+  color: white;
+  background: #7eb6be;
+  border: solid 1.5px #7eb6be;
+}
+
+#btn-board-update:hover {
+  display: inline-block;
+  color: #7eb6be;
+  background: white;
+  border: solid 1.5px #7eb6be;
+}
+
+#btn-board-delete {
+  display: inline-block;
+  color: white;
+  background: #ebba33;
+  border: solid 1.5px #ebba33;
+}
+
+#btn-board-delete:hover {
+  display: inline-block;
+  color: #ebba33;
+  background: white;
+  border: solid 1.5px #ebba33;
 }
 
 /*--------------------------------------------------------------
