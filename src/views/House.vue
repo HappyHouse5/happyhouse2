@@ -1,17 +1,59 @@
 
 <template>
   <div>
-      <house-search v-on:search="searchHouse"></house-search>
-     <div class="container mt-3 mb-3">
-      <div class="row mt-3">
-        <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
-          <div class="section-headline text-center">
-            <h2>House's</h2>
+    <house-search v-on:search="searchHouse"></house-search>
+      <div class="container mt-3 mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
+            <div class="section-headline text-center">
+              <h2>House's</h2>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-sm-9">
+
+        <div class="row mt-3">
+          <div class="col-8">
+            <div>
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item ">
+              <a class="nav-link active" data-bs-toggle="tab" id="CE7" data-order="0" v-on:click="searchPlaces('CE7')">카페</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="CS2" data-order="1" v-on:click="searchPlaces('CS2')">편의점</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="SC4" data-order="4" v-on:click="searchPlaces('SC4')">학교</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" id="SW8" data-order="5" v-on:click="searchPlaces('SW8')">역사</a>
+            </li>
+          </ul>
+        </div>
+            <div id="map" class="rounded-1 border border-1" style="height: 400px; overflow:hidden;"></div>
+          </div>
+          <div class="col-4">
+            <div class="card h-100">
+                <div class="card-header">
+                  매물 상세 정보
+                </div>
+              <div class="card-body">
+                <span class="card-title fs-5">
+                  {{houseInfo.aptName}}
+                </span>
+                <!-- <p id="homeType">아파트/주택</p> -->
+                <p id="price">매매가  {{houseInfo.dealAmount}}</p>
+                <p class="card-text" id="dong">법정동  {{houseInfo.dong}}</p>
+                <p class="card-text" id="jibun">지번  {{houseInfo.jibun}}</p>
+                <p class="card-text" id="buildDate">건축년도  {{houseInfo.buildYear}}</p>
+                <p class="card-text" id="area">전용면적  {{houseInfo.area}}</p>
+                <p class="card-text" id="dealDate">거래일  {{houseInfo.dealDate}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <!-- <div class="col-sm-6" id="map" style="height: 400px; overflow:hidden;"> -->
           <div class="table-responsive custom-table-responsive">
             <table class="table custom-table">
               <thead>
@@ -61,67 +103,33 @@
             v-on:call-parent="movePage"
         ></pagination>
         </div>
-        <div class="col-sm-3 col-md-3">
-          <div class="card h-100">
-            <div class="card-body">
-              <span class="card-title fs-5">
-                {{houseInfo.aptName}}
-              </span>
-              <!-- <p id="homeType">아파트/주택</p> -->
-              <p id="price">가격  {{houseInfo.dealAmount}}</p>
-              <p class="card-text" id="dong">법정동  {{houseInfo.dong}}</p>
-              <p class="card-text" id="jibun">지번  {{houseInfo.jibun}}</p>
-              <p class="card-text" id="buildDate">건축년도  {{houseInfo.buildYear}}</p>
-              <p class="card-text" id="area">전용면적  {{houseInfo.area}}</p>
-              <p class="card-text" id="dealDate">거래일  {{houseInfo.dealDate}}</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">★ ★ ★ ★ ☆</small>
-            </div>
-          </div>
-        </div>
       </div>
+      <!-- <chart-modal v-bind:chartModal="chartModal" v-on:showModal="showModal"></chart-modal> -->
+      
+      <!-- 페이지에 바로 출력 => OK -->
+      <!-- <chart-vue :chartData="{label, price}"></chart-vue> -->
+      
+      <house-chart :chartData="{label, price}"></house-chart>
+      <button @click="showModal">차트보기</button>
 
-      <div class="container">
-        <div class="row mt-4">
-          <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
-            <div class="section-headline text-center">
-              <h2>Map & Chart</h2>
-            </div>
-          </div>
+      <!-- <div class="modal" tabindex="-1" id="chartModal">
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">House Chart</h5>
         </div>
-
-        <div class="row col-3">
-           <ul id="category">
-              <li id="CE7" data-order="0" v-on:click="searchPlaces('CE7')"> 
-                  <!-- <span class="category_bg cafe"></span> -->
-                  카페
-              </li>       
-              <li id="CS2" data-order="1" v-on:click="searchPlaces('CS2')"> 
-                  <!-- <span class="category_bg store"></span> -->
-                  편의점
-              </li>
-              <li id="SC4" data-order="4" v-on:click="searchPlaces('SC4')"> 
-                  <!-- <span class="category_bg "></span> -->
-                  학교
-              </li>  
-              <li id="SW8" data-order="5" v-on:click="searchPlaces('SW8')"> 
-                  <!-- <span class="category_bg bank"></span> -->
-                  역사
-              </li>      
-           </ul>
+        <div class="modal-body">
+          <chart-vue :chartData="chartData"></chart-vue>
         </div>
-        <div class="row mt-3">
-          <div class="col-sm-6" id="map" style="height: 400px; overflow:hidden;">
-            
-          </div>
-          <div class="col-sm-6 mb-3">
-            <chart-vue :chartData="{label, price}"></chart-vue>             <!-- 차트 -->
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal"
+            >Close</button
+          >
         </div>
       </div>
     </div>
-  </div>
+    </div> -->
+    </div>
 </template>
 
 
@@ -135,16 +143,20 @@ import HouseSearch from '@/components/HouseSearch.vue';
 import Pagination from '@/components/Pagination.vue';
 // import 'Chart.js';
 // import { Bar } from "vue-chartjs";
-
+// import ChartModal from '@/components/modals/ChartModal.vue';
 import ChartVue from '@/components/Chart.vue';
+import HouseChart from '@/components/HouseChart.vue';
 import axios from '@/common/axios.js';
+import {Modal} from 'bootstrap';
 
 export default {
     name:"house",
     components:{
         HouseSearch,                  // 검색창
         ChartVue,                     // 차트
+        // ChartModal,
         Pagination,                   // 페이징
+        HouseChart
     },
     watch:{
     },
@@ -178,7 +190,7 @@ export default {
             label: [],                      // 차트 
             price: [],
             allChecked: false,              // one click all Check
-
+            chartModal: null,
             chartData1:[5, 40,15, 15, 8],
             chartData2:{
                 'a':5,
@@ -217,7 +229,7 @@ export default {
     mounted(){                                      // 페이지 mount 되는 시점
       console.log("마운트 될 때 searchType: " + this.searchType);
       console.log("마운트 될 때 searchWord: " + this.searchWord);
-      
+      this.chartModal = new Modal(document.getElementById("chartModal"));
       this.searchHouse({searchType: this.searchType, searchWord: this.searchWord});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
     },
     methods:{
@@ -491,6 +503,9 @@ export default {
       //         children[i].onclick = onClickCategory;
       //     }
       // }
+      showModal() {
+        this.chartModal.show();
+      }
     },
     watch: {
       checkList: function(event) {                                      // checkList 변수 watch -> Chart 연결
