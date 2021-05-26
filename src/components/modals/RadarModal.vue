@@ -38,15 +38,6 @@ export default {
       return{
       }
     },
-    created() {
-      this.dataList.push(this.chartData.CE7[0]).push(this.chartData.CS2[0]).push(this.chartData.SC4[0]).push(this.chartData.SW8[0]).push(this.chartData.dealAmount[0]);
-        // this.chartData.CE7[0]
-        // this.chartData.CS2[0], 
-        // this.chartData.SC4[0], 
-        // this.chartData.SW8[0], 
-        // this.chartData.dealAmount[0]
-      console.log("여기 확인: " + this.dataList);
-    },
     components: {
       RadarVue
     },

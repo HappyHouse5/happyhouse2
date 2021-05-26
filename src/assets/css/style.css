@@ -724,16 +724,20 @@ div#preloader {
   display: inline-block;
   padding: 8px 32px;
   color: #36a9bb;
-  border-color: #3ec1d5;
+  border: solid 1.5px #36a9bb;
   border-left: none;
+  font-weight: bolder;
+  /* background-color: #e8e8e921; */
 }
 
 #hero .btn-main-option {
   display: inline-block;
   padding: 8px 32px;
   color: #36a9bb;
-  border-color: #3ec1d5;
+  border: solid 1.5px #36a9bb;
   border-right: none;
+  font-weight: bolder;
+  /* background-color: #e8e8e921; */
 }
 
 #hero .btn-main-search:hover {
@@ -750,6 +754,10 @@ div#preloader {
   color: #fff;
   background: #36a9bb;
   border-color: white;
+}
+
+#hero .input-main-search {
+  border: none;
 }
 
 #hero .btn-get-started:hover {
@@ -780,6 +788,25 @@ div#preloader {
   height: "300px";
   width: "100%";
   position: "relative";
+} */
+
+.btn-filter-drop {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  color: #ebba33;
+  font-weight: bolder;
+  list-style: underline;
+  font-size: large;
+}
+
+#ul-filter-drop {
+  font-weight: bolder;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* #ul-filter-drop > li {
+  font-weight: bolder;
+  background-color: rgba(255, 255, 255, 0.63);
 } */
 
 .pagination {
@@ -1964,7 +1991,6 @@ span.email-notes {
 --------------------------------------------------------------*/
 .board-inner {
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 60px 30px 80px 30px;
   max-width: 1200px;
   border-radius: 3.5px;
 }

@@ -36,7 +36,7 @@
                     </ul>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control input-main-search"
                       aria-label="Text input with 2 dropdown buttons"
                       placeholder="검색어를 입력하세요."
                       name="searchWord"
@@ -53,45 +53,51 @@
                       Search
                     </button>
                   </div>
+                  
 
                   <template v-if="showOption == true">
-                    <div class="row house-search-bar">
-                    <div class="btn-outline-secondary btn-main-search col-2">
-                      가격옵션
+                    <div class="btn-group dropdown" style="width: 800px;"  >
+                      <button class=" dropdown-toggle btn-filter-drop mt-2" type="button" style="width: 800px;" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        가격, 크기 필터 적용하기
+                      </button>
+                      <ul class="dropdown-menu mt-4" id="ul-filter-drop" aria-labelledby="dropdownMenuButton" style="width: 800px;">
+                        <li class="">
+                          <div class="house-search-bar row mt-3 mb-4">
+                            <div class="col-3 text-center pt-3">
+                              가격옵션
+                            </div>
+                            <div class="col-8 row">
+                              <!-- <div class="row"> -->
+                                <div class="col-6"><input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="searchOption.minAmount"></div>
+                                <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="valueValidation('max')" v-model="searchOption.maxAmount"></div>
+                                <!-- <div class="col-3">{{realMaxAmount}}</div> -->
+                              <!-- </div> -->
+                              <div class>
+                              <!-- <div class="col-8"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="minAmount"></div> -->
+                              {{realMinAmount}} ~ {{realMaxAmount}}
+                              </div>
+                            </div>
+                            
+                            
+                          </div>
+                          <div class="row house-search-bar mb-4">
+                            <div class="col-3 text-center pt-3">
+                              크기옵션
+                            </div>
+                            <div class="col-8 row">
+                              <div class="col-6"> <input type="range" class="form-range" id="min" @mouseup="sizeValidation('min')" v-model="searchOption.minSize"></div>
+                              <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="sizeValidation('max')" v-model="searchOption.maxSize"></div>
+                              <div>
+                                {{realMinSize}} ~ {{realMaxSize}}
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
-                    <div class="col-6">
-                      <!-- <div class="row"> -->
-                        <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="valueValidation('max')" v-model="searchOption.maxAmount"></div>
-                        <div class="col-6"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="searchOption.minAmount"></div>
-                        <!-- <div class="col-3">{{realMaxAmount}}</div> -->
-                      <!-- </div> -->
-                      <div class="row">
-                        <!-- <div class="col-8"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="minAmount"></div> -->
-                        {{realMinAmount}} ~ {{realMaxAmount}}
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div class="row house-search-bar">
-                    <div class="btn-outline-secondary btn-main-search col-2">
-                      크기옵션
-                    </div>
-                    <div class="col-6">
-                      <!-- <div class="row"> -->
-                        <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="sizeValidation('max')" v-model="searchOption.maxSize"></div>
-                        <div class="col-6"> <input type="range" class="form-range" id="min" @mouseup="sizeValidation('min')" v-model="searchOption.minSize"></div>
-                        <!-- <div class="col-3">{{realMaxAmount}}</div> -->
-                      <!-- </div> -->
-                      <div class="row">
-                        <!-- <div class="col-8"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="minAmount"></div> -->
-                        {{realMinSize}} ~ {{realMaxSize}}
-                      </div>
-                    </div>
-                  </div>
-
                   </template>
-                  
+
+                
 
                 </div>
 
@@ -105,6 +111,7 @@
 </template>
 
 <script>
+
 export default {
     name: "HouseSearch",
     props:['isHousePage'],

@@ -16,13 +16,13 @@
             >
               <div class="carousel-container">
                 <div class="container">
-                  <p class="animate__animated animate__fadeInUp">Board</p>
+                  <p class="animate__animated animate__fadeInUp mb-2">Board</p>
                   <!-- <h2 class="animate__animated animate__fadeInDown">
                     Add a region of interest to easily check listings
                   </h2> -->
 
 
-                  <div class="p-5 board-inner mt-5">
+                  <div class="p-5 board-inner mx-auto mt-5">
 
                   <div class="input-group mb-5 mt-3">
                     <!-- store 사용 -->

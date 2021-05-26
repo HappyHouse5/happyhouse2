@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button @click="boardInsert" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">등록</button>
+        <button @click="boardInsert" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button" id="btn-board-update">등록하기</button>
       </div>
     </div>
   </div>
