@@ -18,8 +18,8 @@ export default {
         datasets: [
           {
             label:[],
-            backgroundColor: "rgba(179,181,198,0.2)",
-            borderColor: "rgba(179,181,198,1)",
+            backgroundColor: "#ebba3344",
+            borderColor: "#ebba39",
             data: [
                 this.chartData.CE7[0],
                 this.chartData.CS2[0], 

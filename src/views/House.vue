@@ -14,7 +14,7 @@
         <div class="row mt-3">
           <div class="col-8">
             <div>
-          <ul class="nav nav-tabs" role="tablist" id="prefer-tab">
+          <ul class="nav nav-tabs nav-pills" role="tablist" id="prefer-tab">
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="tab" id="CE7" data-order="0" v-on:click="searchPlaces('CE7')">카페</a>
             </li>

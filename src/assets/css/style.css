@@ -766,6 +766,22 @@ div#preloader {
 }
 
 /*--------------------------------------------------------------
+# Home Page
+--------------------------------------------------------------*/
+
+.trophy-1 {
+  color: #eccb0b;
+}
+
+.trophy-2 {
+  color: #c0c0c0da;
+}
+
+.trophy-3 {
+  color: #9c5d1e;
+}
+
+/*--------------------------------------------------------------
 # Join Page
 --------------------------------------------------------------*/
 #join-form {
@@ -878,7 +894,49 @@ div#preloader {
 }
 
 #prefer-tab > li > a {
-  color: #42414f;
+  color: #7eb6be;
+}
+
+/* #prefer-tab > li:active, */
+/* #prefer-tab > li > a:active,
+/* #prefer-tab > li:focus, */
+/* #prefer-tab > li > a:focus {
+  color: white;
+  background-color: #7eb6be;
+} */
+/* #prefer-tab > li > a[data-bs-toggle="true"] {
+  color: white;
+  background-color: #7eb6be;
+} */
+
+/* .nav-pills > .active > a,
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus,
+.nav-pills > .active > a:active,
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus,
+.nav-pills > li.active > a:active {
+  background-color: #7eb6be !important;
+} */
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link.active > a,
+.nav-pills > nav-link.active > a:hover,
+.nav-pills > nav-link.active > a:focus {
+  color: white !important;
+  background-color: #7eb5bec2 !important;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.nav-pills .nav-link {
+  height: 32px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 /*--------------------------------------------------------------
@@ -1551,9 +1609,9 @@ div#preloader {
 }
 
 .single-blog .ready-btn {
-  border: 1px solid #444;
+  border: 1.5px solid #3ec1d5;
   border-radius: 30px;
-  color: #444;
+  color: #3ec1d5;
   cursor: pointer;
   display: inline-block;
   font-size: 15px;
@@ -1563,10 +1621,11 @@ div#preloader {
   text-align: center;
   text-transform: uppercase;
   transition: all 0.4s ease 0s;
+  text-decoration: none;
 }
 
 .single-blog .ready-btn:hover {
-  border: 1px solid #3ec1d5;
+  border: 1.5px solid #3ec1d5;
   color: #fff;
 }
 
@@ -2519,18 +2578,4 @@ span.email-notes {
   .slider-content {
     padding: 0;
   }
-}
-
-.alertify-notifier .ajs-message {
-  background: #7eb6be;
-  /* background: rgba(255, 255, 255, 0.95); */
-  color: #000;
-  text-align: center;
-  border: solid 1px #ddd;
-  border-radius: 2px;
-}
-
-.alertify-notifier .ajs-message.ajs-success {
-  /* color: #7eb6be; */
-  background: #7eb6be;
 }

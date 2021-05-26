@@ -28,7 +28,7 @@
 
                   <div class="blog-text">
                     <h4>
-                      <a href="blog.html"><i class="bi bi-trophy-fill fs-3 " style="color: yellow;"></i>정든한진7차</a>
+                      <a href="blog.html"><i class="bi bi-trophy-fill fs-4 trophy-1"></i> 정든한진7차</a>
                     </h4>
                     <p>
                       경기도 성남시 분당구 정자동 194 <br />
@@ -37,7 +37,7 @@
                     </p>
                   </div>
                   <span>
-                    <a href="blog.html" class="ready-btn">Read more</a>
+                    <a href="https://new.land.naver.com/complexes/2742?ms=37.360517,127.11556,17&a=APT:JGC:ABYG&e=RETAIL" class="ready-btn">Read more</a>
                   </span>
                 </div>
                 <!-- Start single blog -->
@@ -53,7 +53,7 @@
                   </div>
                   <div class="blog-text">
                     <h4>
-                      <a href="blog.html">상암월드컵파크5단지</a>
+                      <a><i class="bi bi-trophy-fill fs-4 trophy-2"></i> 상암월드컵파크5단지</a>
                     </h4>
                     <p>
                       서울시 마포구 상암동 1658<br />
@@ -62,7 +62,7 @@
                     </p>
                   </div>
                   <span>
-                    <a href="blog.html" class="ready-btn">Read more</a>
+                    <a href="https://new.land.naver.com/complexes/19427?ms=37.580234,126.885958,17&a=APT:JGC:ABYG&e=RETAIL" class="ready-btn">Read more</a>
                   </span>
                 </div>
                 <!-- Start single blog -->
@@ -78,7 +78,7 @@
                   </div>
                   <div class="blog-text">
                     <h4>
-                      <a href="blog.html">송림아마레스</a>
+                      <a><i class="bi bi-trophy-fill fs-4 trophy-3"></i> 송림아마레스</a>
                     </h4>
                     <p>
                       서울시 종로구 명륜1가 2-12 <br />
@@ -87,7 +87,7 @@
                     </p>
                   </div>
                   <span>
-                    <a href="blog.html" class="ready-btn">Read more</a>
+                    <a href="https://new.land.naver.com/complexes/102798?ms=37.590669,126.997675,17&a=APT:JGC:ABYG&e=RETAIL" class="ready-btn">Read more</a>
                   </span>
                 </div>
               </div>
