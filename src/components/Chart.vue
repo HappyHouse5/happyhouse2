@@ -1,4 +1,5 @@
 
+
 <script>
 import { Bar } from "vue-chartjs";
 
@@ -11,7 +12,7 @@ export default {
       {
         labels: this.chartData.label,
         datasets: [{
-            label: "Price: ",
+            label: "매매가",
             backgroundColor: "#4eb1c077",
             borderColor: "#4eb1c0",
             borderWidth: 1.5,

@@ -29,29 +29,52 @@
             </li>
           </ul>
         </div>
-            <div id="map" class="rounded-1 border border-1" style="height: 400px; overflow:hidden;"></div>
+            <div id="map" class="rounded-1 border border-1" style="height: 450px; overflow:hidden;"></div>
           </div>
           <div class="col-4">
-            <div class="card h-100">
+
+          
+          <div class="card" style="margin-top:15px; overflow:hidden;">
+            <div class="testimonial-item">
+            <img v-bind:src="aptImgSrc" class="testimonial-img card-img-top" style="height:220px;" />  <!-- @/assets/aptImg/apt_1.jpg             v-bind:src="aptImgSrc"   -->
+            </div>
+            <div class="card-body" style="height:140px;">
+              <div style="color:gray; text-align:center;">
+                <h5 class="card-title"><strong>{{houseInfo.aptName}}</strong></h5>
+              </div>
+             
+              <p class="card-text">'{{houseInfo.aptName}}' 매물은 '{{houseInfo.dong}}'에 위치하고 있습니다. <br> 
+                 &nbsp; {{houseInfo.buildYear}}년도에 준공되었으며 전용 면적은 '{{houseInfo.area}}'m<sup>2</sup> 입니다.</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>매매가</strong> {{amountConvert}}</li>
+              <li class="list-group-item"><strong>거래일</strong> : {{houseInfo.dealDate}}</li>
+              <li class="list-group-item"><strong>{{houseInfo.floor}}</strong> 층</li>
+            </ul>
+          </div>
+
+            <!-- <div class="card h-100">
                 <div class="card-header">
                   매물 상세 정보
                 </div>
               <div class="card-body">
                 <span class="card-title fs-5">
                   {{houseInfo.aptName}}
-                </span>
-                <!-- <p id="homeType">아파트/주택</p> -->
-                <p id="price">매매가  {{houseInfo.dealAmount}}</p>
+                </span> -->
+
+                <!-- <p id="price">매매가  {{houseInfo.dealAmount}}</p>
                 <p class="card-text" id="dong">법정동  {{houseInfo.dong}}</p>
                 <p class="card-text" id="jibun">지번  {{houseInfo.jibun}}</p>
                 <p class="card-text" id="buildDate">건축년도  {{houseInfo.buildYear}}</p>
                 <p class="card-text" id="area">전용면적  {{houseInfo.area}}</p>
                 <p class="card-text" id="dealDate">거래일  {{houseInfo.dealDate}}</p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
+        <div class="row" style="height:50px;">
 
+        </div>
         <div class="row mt-3">
           <!-- <div class="col-sm-6" id="map" style="height: 400px; overflow:hidden;"> -->
           <div class="table-responsive custom-table-responsive">
@@ -77,17 +100,17 @@
                   <tr v-for="(item, idx) in houseList" :key="idx">
                     <th scope="row">
                       <label class="control control--checkbox">
-                        <input type="checkbox" class="class_checkbox align-middle" v-model="checkList" :value="item" @change="changeCheck()" @click="checkOneItem(item)"/>
+                        <input type="checkbox" class="class_checkbox align-middle" v-model="checkList" :value="item" @change="changeCheck()" @click="checkOneItem(item, idx)"/>
                         <div class="control__indicator"></div>
                       </label>
                     </th>
-                    <td @click="houseDetail(item)">{{item.aptName}}</td>
-                    <td @click="houseDetail(item)">{{item.dealAmount}}</td>
-                    <td @click="houseDetail(item)">{{item.buildYear}}</td>
-                    <td @click="houseDetail(item)">{{item.area}}</td>
-                    <td @click="houseDetail(item)">{{item.dealDate}}</td>
-                    <td @click="houseDetail(item)">{{item.dong}}</td>
-                    <td @click="houseDetail(item)">{{item.code}}</td>
+                    <td @click="houseDetail(item, idx)">{{item.aptName}}</td>
+                    <td @click="houseDetail(item, idx)">{{item.dealAmount}}</td>
+                    <td @click="houseDetail(item, idx)">{{item.buildYear}}</td>
+                    <td @click="houseDetail(item, idx)">{{item.area}}m<sup>2</sup></td>
+                    <td @click="houseDetail(item, idx)">{{item.dealDate}}</td>
+                    <td @click="houseDetail(item, idx)">{{item.dong}}</td>
+                    <td @click="houseDetail(item, idx)">{{item.code}}</td>
                   </tr>
                   <tr class="spacer">
                     <td colspan="100"></td>
@@ -163,8 +186,6 @@ export default {
         Pagination,                   // 페이징
         HouseChart,
     },
-    watch:{
-    },
     data:function(){
         return{
             // searchType: this.$route.params.searchType == undefined ? "dong" : this.$route.params.searchType, // this.$route.params.searchType,
@@ -190,6 +211,8 @@ export default {
               dealDate: '',
               code: '',
             },
+
+            aptImgSrc: './assets/aptImg/apt_1.jpg',
 
             listRowCount: 8,                // 1 페이지 row 수
             count: 0,                       // 총 row 수
@@ -254,6 +277,7 @@ export default {
       this.searchHouse({searchType: this.searchType, searchWord: this.searchWord, searchOption: this.searchOption});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
       this.chartModal = new Modal(document.getElementById("chartModal"));
       this.radarModal = new Modal(document.getElementById("radarModal"));
+      // this.aptImgSrc = '@/assets/aptImg/apt_1.jpg';
     },
     methods:{
       initMap:function() {                                              // 클릭된 매물의 위치에 따라 지도 초기화하기
@@ -349,6 +373,7 @@ export default {
         console.log("DB로 검색할 searchWord : " + this.searchWord);
         console.log("DB로 검색할 옵션(최대가): " + this.searchOption.maxAmount * 2000);
 
+
         this.searchType = data.searchType;
         this.searchWord = data.searchWord;
         this.searchOption = data.searchOption;
@@ -368,7 +393,7 @@ export default {
           this.houseList = data.list;
           if(this.houseList == "") {
             alert("검색 결과가 없습니다.\n다시 다시 검색해주세요.");
-            location.reload();
+            location.href = "/house";
           }
           else{
             let houseList = this.houseList;
@@ -385,12 +410,17 @@ export default {
           console.log(err);
         });
 
-        this.houseDetail(this.houseList[0]);                                           // 매물 검색 후 바로 테이블 첫번째 매물의 위치정보를 기반으로 map 연동 + this.houseInfo 업데이트
+        this.houseDetail(this.houseList[0], 0);                                           // 매물 검색 후 바로 테이블 첫번째 매물의 위치정보를 기반으로 map 연동 + this.houseInfo 업데이트
       },
-      houseDetail: async function(houseInfo) {                                         // 테이블 row 클릭 시 매물 위치정보 가져오기 + Kakao Map 연동
-        console.log("aptName : " + houseInfo.aptName + "code : " + houseInfo.code);
+      houseDetail: async function(houseInfo, idx) {                                         // 테이블 row 클릭 시 매물 위치정보 가져오기 + Kakao Map 연동
+        console.log("aptName : " + houseInfo.aptName + ", code : " + houseInfo.code);
         this.houseInfo = houseInfo;            // 매물 상세 카드에 보여지는 houseInfo data 업데이트
         this.currCategory = false;
+        
+        let i = idx + 1;
+        this.aptImgSrc = './assets/aptImg/apt_' + i + '.jpg';
+        console.log("Image Source : " + this.aptImgSrc);
+
         await axios.get('/houses/location', {
           params:{
             aptName: this.houseInfo.aptName,
@@ -445,9 +475,9 @@ export default {
           this.allChecked = false;
         }
       },
-      checkOneItem: function(item) {                                  // 1개 체크박스 개별 선택 시
+      checkOneItem: function(item, idx) {                                  // 1개 체크박스 개별 선택 시
         if(!this.checkList.includes(item)) {
-          this.houseDetail(item);
+          this.houseDetail(item, idx);
         }
       },
       searchPlaces:function(code){
@@ -606,6 +636,7 @@ export default {
             categories.forEach(element => {
               let dist = 250;   // 검색 반경 (m)
               if(element == 'SC4') dist = 700;
+              if(element == 'SW8') dist = 1000;
               this.placeSearch.categorySearch(element, this.placeDataSave, {location: loc, radius:dist });  //useMapBounds: true
             })
             this.loaded = true;
@@ -613,11 +644,22 @@ export default {
           .catch((err) => {
             console.log(err);
           })
-
-          
         }
-      }
+      },
   },
+   computed:{
+      amountConvert:function(){
+        let uk = 0;
+        if(this.houseInfo.dealAmount >= 10000){
+          uk = Math.floor(this.houseInfo.dealAmount/10000);
+          return ": " + uk + "억 " + (this.houseInfo.dealAmount - uk*10000) + "만원";
+        }else{
+          uk = "";
+          return ": " + this.houseInfo.dealAmount + "만원";
+        }
+        
+      }
+    }
 
 }
 
