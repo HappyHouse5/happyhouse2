@@ -330,6 +330,16 @@ export default {
       this.locationCode = '';
       this.checkProfileImage = false;
       this.fileList = [];
+
+      // clear 버튼 클릭 시 validation 초기화하기 위해
+      this.isDuplUserId = true;
+      this.isPwValid = false;
+      this.isPwchkValid= false;
+      this.isNameValid= false;
+      this.isUserIdValid= false;
+      this.isEmailValid= false;
+      this.isEmailcomValid= false;
+      this.isAddrValid= false;
     },
     memberJoin() {
       console.log("join submit");
@@ -395,7 +405,7 @@ export default {
       else{                                           // DB에 중복 ID 가 없을 떼  // 4글자가 되지 않는 경우는 axios를 수행하지 않고 watch: 에서 무조건 this.userIdMsg 변경
         this.userIdMsg = '사용 가능한 ID 입니다.';
       }
-      this.isUserIdFocusAndValid();
+      // this.isUserIdFocusAndValid();
       console.log(this.isUserIdValid);
     },
     validatePw() {
