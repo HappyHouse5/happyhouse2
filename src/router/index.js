@@ -24,6 +24,7 @@ Vue.use(VueRouter);
 Vue.use(VueAlertify);
 Vue.prototype.$http = Axios;
 
+
 const routes = [
 
   {

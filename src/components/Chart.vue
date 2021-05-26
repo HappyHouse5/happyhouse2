@@ -19,7 +19,19 @@ export default {
             data: this.chartData.price
         }]
       },
-      { responsive: true, maintainAspectRatio: false }
+      { 
+        responsive: true, 
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            display: true,
+            ticks: {
+              beginAtZero: false,
+              min: 5000,
+            }
+          }]
+        },
+      }
     )},
   },
 };

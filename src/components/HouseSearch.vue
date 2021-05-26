@@ -63,7 +63,7 @@
                       </button>
                       <ul class="dropdown-menu mt-4" id="ul-filter-drop" aria-labelledby="dropdownMenuButton" style="width: 800px;">
                         <li class="">
-                          <div class="house-search-bar row mt-3 mb-4">
+                          <div class="house-search-bar row mt-4 mb-4">
                             <div class="col-3 text-center pt-3">
                               가격옵션
                             </div>

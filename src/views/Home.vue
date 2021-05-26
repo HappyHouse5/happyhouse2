@@ -28,7 +28,7 @@
 
                   <div class="blog-text">
                     <h4>
-                      <a href="blog.html">정든한진7차</a>
+                      <a href="blog.html"><i class="bi bi-trophy-fill fs-3 " style="color: yellow;"></i>정든한진7차</a>
                     </h4>
                     <p>
                       경기도 성남시 분당구 정자동 194 <br />

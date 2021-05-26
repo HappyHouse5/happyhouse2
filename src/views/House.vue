@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <house-search v-bind:isHousePage="true" v-on:search="searchHouse"></house-search>
+        <house-search v-bind:isHousePage="true" v-on:search="searchHouse" v-on:goPageOne="SET_BOARD_MOVE_PAGE"></house-search>
       <div class="container mt-3 mb-3">
         <div class="row mt-3">
           <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -16,7 +16,7 @@
             <div>
           <ul class="nav nav-tabs" role="tablist" id="prefer-tab">
             <li class="nav-item">
-              <a class="nav-link active" data-bs-toggle="tab" id="CE7" data-order="0" v-on:click="searchPlaces('CE7')">카페</a>
+              <a class="nav-link" data-bs-toggle="tab" id="CE7" data-order="0" v-on:click="searchPlaces('CE7')">카페</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="tab" id="CS2" data-order="1" v-on:click="searchPlaces('CS2')">편의점</a>
@@ -36,13 +36,12 @@
           
           <div class="card" style="margin-top:15px; overflow:hidden;">
             <div class="testimonial-item">
-            <img v-bind:src="aptImgSrc" class="testimonial-img card-img-top" style="height:220px;" />  <!-- @/assets/aptImg/apt_1.jpg             v-bind:src="aptImgSrc"   -->
+            <img v-bind:src="aptImgSrc" class="testimonial-img card-img-top" style="height:212px;" />  <!-- @/assets/aptImg/apt_1.jpg             v-bind:src="aptImgSrc"   -->
             </div>
             <div class="card-body" style="height:140px;">
               <div style="color:gray; text-align:center;">
                 <h5 class="card-title"><strong>{{houseInfo.aptName}}</strong></h5>
               </div>
-             
               <p class="card-text">'{{houseInfo.aptName}}' 매물은 '{{houseInfo.dong}}'에 위치하고 있습니다. <br> 
                  &nbsp; {{houseInfo.buildYear}}년도에 준공되었으며 전용 면적은 '{{houseInfo.area}}'m<sup>2</sup> 입니다.</p>
             </div>
@@ -72,23 +71,23 @@
             </div> -->
           </div>
         </div>
-        <div class="row" style="height:50px;">
+        <!-- <div class="row" style="height:50px;">
 
-        </div>
+        </div> -->
         <div class="row mt-3">
           <!-- <div class="col-sm-6" id="map" style="height: 400px; overflow:hidden;"> -->
           <div class="table-responsive custom-table-responsive">
-            <table class="table custom-table table-hover">
+            <table class="table custom-table table-hover fs-6 mt-4" >
               <thead>
                 <tr>
                   <th scope="col">
                     <label class="control control--checkbox">
-                      <input type="checkbox" class="js-check-all class_checkbox align-middle" v-model="allChecked" @click="checkAll()" />
+                      <input type="checkbox" class="js-check-all class_checkbox align-middle" id="bouse-list-checkbox" v-model="allChecked" @click="checkAll()" />
                       <div class="control__indicator"></div>
                     </label>
                   </th>
-                  <th scope="col">아파트명</th>
-                  <th scope="col">거래금액</th>
+                  <th scope="col" style="cursor:pointer" v-on:click="ordering('aptName')">아파트명</th>
+                  <th scope="col" style="cursor:pointer" v-on:click="ordering('dealAmount')">거래금액</th>
                   <th scope="col">건축년도</th>
                   <th scope="col">전용면적</th>
                   <th scope="col">거래일</th>
@@ -112,9 +111,6 @@
                     <td @click="houseDetail(item, idx)">{{item.dong}}</td>
                     <td @click="houseDetail(item, idx)">{{item.code}}</td>
                   </tr>
-                  <tr class="spacer">
-                    <td colspan="100"></td>
-                  </tr> 
               </tbody>
             </table>
           </div>
@@ -200,6 +196,9 @@ export default {
 
               maxSize: 100,
               minSize: 0,
+
+              ordering: 'aptName',
+              orderBy: 'asc',
             },
             houseList: [],                  // 검색된 모든 매물 정보
             houseInfo:{                     // 클릭된 매물 1채 정보
@@ -368,15 +367,23 @@ export default {
         });
         this.infowindow.open(this.map, this.markers[0]);          // 마커 열기
       },
-       searchHouse: async function(data){                                          // 매물 정보 검색해서 DB에서 매물 정보 List 받아오기(Type, Word, Offset, limit)
+      ordering(data){
+        this.searchOption.ordering = data;
+        if(this.searchOption.orderBy == 'desc') this.searchOption.orderBy = 'asc';
+        else this.searchOption.orderBy = 'desc';
+
+        this.searchHouse({searchType: this.searchType, searchWord: this.searchWord, searchOption: this.searchOption});
+      },
+      searchHouse: async function(data){                                          // 매물 정보 검색해서 DB에서 매물 정보 List 받아오기(Type, Word, Offset, limit)
         console.log("DB로 검색할 searchType : " + this.searchType);
         console.log("DB로 검색할 searchWord : " + this.searchWord);
         console.log("DB로 검색할 옵션(최대가): " + this.searchOption.maxAmount * 2000);
+        console.log("DB로 검색할 옵션(정렬): " + this.searchOption.maxAmount * 2000);
 
-
-        this.searchType = data.searchType;
+        this.searchType = data.searchType;              // 검색 옵션 저장하기 : 페이지네이션에서 기존 검색 정보를 들고 페이징 처리를 하기 때문
         this.searchWord = data.searchWord;
         this.searchOption = data.searchOption;
+        console.log(this.searchOption.ordering + " : " + this.searchOption.orderBy + " : ordering 옵션");
         await axios.get('/houses/houseInfo', {
           params:{
             searchType: data.searchType,
@@ -387,6 +394,8 @@ export default {
             maxSize: this.searchOption.maxSize == 100 ? 9999 : this.searchOption.maxSize * 2,
             minAmount : this.searchOption.minAmount * 2000,
             maxAmount: this.searchOption.maxAmount == 100 ? 999999 : this.searchOption.maxAmount * 2000,
+            ordering: this.searchOption.ordering,   //  <-  테이블 순서 오더링 값을 부여해서 정렬 순서 바꾸기 기능 구현 가능
+            orderBy: this.searchOption.orderBy,
           }
         })
         .then(({data}) => {
@@ -567,10 +576,14 @@ export default {
         if (this.checkList.length == 1) {
           this.op = this.op + 1;
           this.radarModal.show();
-        }else this.chartModal.show();
+        }else if(this.checkList.length == 0){
+          this.$alertify.warning("분석할 매물을 체크해주세요.");
+        }else{
+          this.chartModal.show();
+        }
       },
 
-       placeDataSave:function(data, status, pagination){
+      placeDataSave:function(data, status, pagination){
         console.log(data);
 
         if(status == kakao.maps.services.Status.OK){
