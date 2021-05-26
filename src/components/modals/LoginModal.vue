@@ -1,26 +1,27 @@
 <template>
 <div class="modal" tabindex="-1" id="loginModal">
-<div class="modal-dialog">
+<div class="modal-dialog modal-md">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <div class="modal-header" style="background-color:skyblue;"
+        >
+          <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-power" style="cursor:pointer;" @click="closeModal"></i></h5>
         </div>
-        <div class="modal-body">
+        <div class="modal-body pt-3 bg-transparent">
           <form class="form-signin">
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="inputEmail" class="sr-only">User ID</label>
+            <p class="mb-3 font-weight-normal text-end" style="color:gray; font-size: 7px; font-style:italic;">서부장과 권대리의 슬기로운 매물 관리 사이트</p>
+            <!-- <label for="inputEmail" class="sr-only">User ID</label> -->
             <input
               type="text"
               class="form-control"
-              placeholder="Email address"
+              placeholder="ID"
               v-model="id" 
               required
             />
-            <label for="inputPassword" class="sr-only">Password</label>
+            <!-- <label for="inputPassword" class="sr-only">Password</label> -->
             <input
               type="password"
               id="userpwd"
-              class="form-control"
+              class="form-control mt-2"
               placeholder="Password"
               v-model="pwd" 
               required
@@ -28,17 +29,16 @@
             
           </form>
         </div>
+         
         <div class="modal-footer">
             <button
-              id="btnLogin"
-              class="btn btn-primary"
+              id="btn-chart"
+              class="btn btn-sm"
               v-on:click="loginSubmit"
               data-dismiss="modal"
               >Sign in</button
-            >
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal"
-            >Close</button
-          >
+            ><i class="bi bi-play-fill"></i>
+          
         </div>
       </div>
     </div>
