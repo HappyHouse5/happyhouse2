@@ -25,7 +25,7 @@ export default {
                 this.chartData.CS2[0], 
                 this.chartData.SC4[0], 
                 this.chartData.SW8[0], 
-                this.chartData.dealAmount[0]
+                this.chartData.dealAmount[0] = this.chartData.dealAmount[0] > 15 ? 15 : this.chartData.dealAmount[0],
             ]
           }
         ],
@@ -70,7 +70,7 @@ export default {
                 this.chartData.CS2[0], 
                 this.chartData.SC4[0], 
                 this.chartData.SW8[0], 
-                this.chartData.dealAmount[0]
+                this.chartData.dealAmount[0] = this.chartData.dealAmount[0] > 15 ? 15 : this.chartData.dealAmount[0],
             ]
           }
         ],

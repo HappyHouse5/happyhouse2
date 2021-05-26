@@ -42,6 +42,7 @@
                       name="searchWord"
                       id="searchText"
                       v-model="searchWord" 
+                      v-on:keyup.enter="search" 
                     />
                     <button
                       class="btn btn-outline-secondary btn-main-search"
@@ -58,7 +59,7 @@
                   <template v-if="showOption == true">
                     <div class="btn-group dropdown" style="width: 800px;"  >
                       <button class=" dropdown-toggle btn-filter-drop mt-2" type="button" style="width: 800px;" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        가격, 크기 필터 적용하기
+                        가격, 면적 필터 적용하기
                       </button>
                       <ul class="dropdown-menu mt-4" id="ul-filter-drop" aria-labelledby="dropdownMenuButton" style="width: 800px;">
                         <li class="">
@@ -82,7 +83,7 @@
                           </div>
                           <div class="row house-search-bar mb-4">
                             <div class="col-3 text-center pt-3">
-                              크기옵션
+                              면적옵션
                             </div>
                             <div class="col-8 row">
                               <div class="col-6"> <input type="range" class="form-range" id="min" @mouseup="sizeValidation('min')" v-model="searchOption.minSize"></div>
@@ -127,6 +128,9 @@ export default {
 
           maxSize: 100,
           minSize: 0,
+
+          ordering: 'aptName',
+          orderBy: 'asc',
         },
 
         showOption: false,
@@ -141,10 +145,14 @@ export default {
       search: function(){
         console.log(this.searchType + " : " + this.searchWord);
         console.log(document.location.href);
+        
         if(!this.isHousePage){
+          // console.log("Home에서 검색")
           this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord.trim(), searchOption: this.searchOption}}).catch(()=>{});
         }
         else{
+          // console.log("House에서 검색")
+          this.$emit('goPageOne', 1);       // 검색 시 페이지네이션 1페이지로 넘기고 offset을 0으로 설정 후에 검색을 하도록 먼저 페이지 '1'로 변경
           this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord.trim(), searchOption: this.searchOption});
           
         }
