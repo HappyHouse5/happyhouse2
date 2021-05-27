@@ -402,7 +402,11 @@ export default {
           this.houseList = data.list;
           if(this.houseList == "") {
             alert("검색 결과가 없습니다.\n다시 다시 검색해주세요.");
-            location.href = "/house";
+            // this.$router.resolve({name: 'Home'}).href;
+            // this.$router.go();
+            this.$router.push({name:'House'}).catch(() => {});
+            // location.reload();
+            // location.href = "/";
           }
           else{
             let houseList = this.houseList;
@@ -422,6 +426,7 @@ export default {
         this.houseDetail(this.houseList[0], 0);                                           // 매물 검색 후 바로 테이블 첫번째 매물의 위치정보를 기반으로 map 연동 + this.houseInfo 업데이트
       },
       houseDetail: async function(houseInfo, idx) {                                         // 테이블 row 클릭 시 매물 위치정보 가져오기 + Kakao Map 연동
+        if(this.houseList.length == 0) return;
         console.log("aptName : " + houseInfo.aptName + ", code : " + houseInfo.code);
         this.houseInfo = houseInfo;            // 매물 상세 카드에 보여지는 houseInfo data 업데이트
         this.currCategory = false;

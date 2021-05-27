@@ -280,8 +280,8 @@ export default {
           document.querySelector("#chkFileUploadUpdate").checked = true;
           this.attachFile = true;
           this.profileName = this.file[0].fileName;
-          // this.$emit('profileImage', this.file[0]); 
-          this.$emit('profileImage', "../assets/img/favicon.png");      // 프로필 사진이 있을 때
+          this.$emit('profileImage', this.file[0].fileURL);
+          // this.$emit('profileImage', "../assets/img/favicon.png");      // 프로필 사진이 있을 때
         }
         else{
           this.$emit('profileImage', "../assets/img/noProfile.png");     // 프로필 사진이 없을 때
@@ -313,7 +313,6 @@ export default {
           alert("회원정보 수정에 실패했습니다.\n양식을 다시 확인해주세요.");
           return;
         }
-
 
         var formData = new FormData();
         formData.append("keyId", this.member.keyId);

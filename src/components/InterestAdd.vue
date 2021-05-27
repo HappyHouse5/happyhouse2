@@ -60,7 +60,19 @@ export default {
         guCode: '',
         dongList: [],
         dongCode: '',
+        interestList: [],
       }
+    },
+    mounted(){
+      axios.get('/houses/interests',
+      {})
+      .then(({data}) => {
+        console.log(data);
+        this.interestList = data;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     },
     methods: {
       dongSelect() {
@@ -80,6 +92,17 @@ export default {
         });
       },
       interestAdd() {
+
+        let flag = false;
+        this.interestList.forEach(el =>{
+          if(el.dongCode == this.dongCode) flag = true;
+        });
+
+        if(flag){
+          alert("이미 관심지역으로 등록되었습니다.");
+          return;
+        }
+
         console.log("interestAdd method");
         let $this = this;
         axios.post("/houses/interest", {
@@ -88,6 +111,7 @@ export default {
         })
         .then(({data}) => {
           console.log(data);
+          this.interestList.push({dongCode: data.dongCode});
           alert("관심 지역이 등록되었습니다.");
         })
         .catch((err) => {

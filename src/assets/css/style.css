@@ -928,14 +928,14 @@ div#preloader {
   background-color: #7eb5bec2 !important;
   border-bottom-left-radius: 0%;
   border-bottom-right-radius: 0%;
-  height: 32px;
-  font-size: 13px;
-  font-weight: 700;
+  /* height: 32px; */
+  /* font-size: 13px; */
+  font-weight: 600;
 }
 
 .nav-pills .nav-link {
-  height: 32px;
-  font-size: 13px;
+  /* height: 32px; */
+  /* font-size: 13px; */
   font-weight: 600;
 }
 

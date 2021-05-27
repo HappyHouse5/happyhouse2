@@ -14,13 +14,14 @@
           <ul>
             <li><a class="nav-link" style="cursor:pointer" v-on:click="$router.push({name: 'Home'}).catch(()=>{});">Home</a></li>
             <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'House'}).catch(()=>{});">House</a></li>
-            <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Board'}).catch(()=>{});">Board</a></li>
+            
             <template v-if="!isLogin"><!-- !isLogin -->
               <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="login">Login</a></li>
               <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Join'}).catch(()=>{});">Join</a></li>
             </template>
             
             <template v-if="isLogin">
+                <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Board'}).catch(()=>{});">Board</a></li>
                 <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Interest'}).catch(()=>{});">Interest</a></li>
                 <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="$router.push({name: 'Member', params: {type: 'info'}}).catch(()=>{});">MyPage</a></li>
                 <li><a class="nav-link scrollto" style="cursor:pointer" v-on:click="logout">Logout</a></li>
@@ -79,7 +80,7 @@ export default {
         axios.get('/members/logout',{}
         )
         .then(() => {
-          alert("로그아웃 되었둥");
+          alert("로그아웃 되었습니다.");
           this.isLogin = false;
         })
         .catch((err) => {

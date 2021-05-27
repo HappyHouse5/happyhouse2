@@ -11,7 +11,7 @@
                     </tr>
                     <tr>
                     <th scope="row">User Password</th>
-                    <td>{{member.userId}}</td>
+                    <td>{{password}}</td>
                     </tr>
                     <tr>
                     <th scope="row">User Name</th>
@@ -117,16 +117,16 @@ export default {
 
         }
     },
-    mounted(){
+    created(){
         axios.get('/members/getProfile', {
             params:{
                 code: this.member.keyId,
             },
         })
         .then(({data}) => {
-            if(data.isExist){
-                // this.$emit('profileImage', this.file[0]); 
-                this.$emit('profileImage', "../assets/img/favicon.png");  // this.file[0]
+            if(data.isExist == true){
+                this.$emit('profileImage', data.file.fileURL); 
+                // this.$emit('profileImage', "../assets/img/favicon.png");  // this.file[0]
             }
             else{
                 this.$emit('profileImage', "../assets/img/noProfile.png");
@@ -140,6 +140,15 @@ export default {
         
         this.convertAddress(this.member.locationCode);
 
+    },
+    computed:{
+        password:function(){
+            let ret = "";
+            for(let i=0; i<this.member.pw.length; i++){
+                ret += "*";
+            }
+            return ret;
+        }
     }
 }
 </script>
