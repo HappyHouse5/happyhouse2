@@ -109,12 +109,6 @@
   </div>
 </template>
 
-
-<script
-  type="text/javascript"
-  src="//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=cb6a0403bc69b1c833879cae3c194c2b&libraries=services"
-></script>
-
 <script>
 import HouseSearch from '@/components/HouseSearch.vue';
 import Pagination from '@/components/Pagination.vue';
