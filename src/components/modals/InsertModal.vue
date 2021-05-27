@@ -79,8 +79,6 @@ export default {
 
         // file upload
         var attachFiles = document.querySelector("#inputFileUploadInsert");
-        console.log("InsertModalVue: data 1 : ");
-        console.log(attachFiles);
 
         var cnt = attachFiles.files.length;
         for (var i = 0; i < cnt; i++) {
@@ -92,8 +90,6 @@ export default {
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } })
           .then(({ data }) => {
-            console.log("InsertModalVue: data : ");
-            console.log(data);
             if( data.result == 'login' ){
               // this.$router.push("/login");
               sessionStorage.removeItem("member");
@@ -106,7 +102,6 @@ export default {
             }
           })
           .catch((error) => {
-            console.log("InsertModalVue: error ");
             console.log(error);
           });
       },

@@ -14,7 +14,6 @@
             <tr><td>내용</td><td v-html="$store.state.board.content"></td></tr>
             <tr><td>작성자</td><td>{{ $store.state.board.userName }}</td></tr>
             <!-- 아래 코드는 오류 발생 초기 생성 시점에 regDt = {} -->
-            <!-- <tr><td>작성일시</td><td>{{ makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '.') }}</td></tr> -->
             <tr><td>작성일시</td><td>{{ $store.state.board.regDt }}</td></tr>
             <tr><td>조회수</td><td>{{ $store.state.board.readCount }}</td></tr>
             <!-- New for FileUpload -->
@@ -43,83 +42,15 @@
 
 
 <script>
-// 아래 import 사용 X
-// import http from "@/common/axios.js";
-// import util from "@/common/util.js";
 
 export default {
   name: 'DetailModal',
-  // props 사용 X
-  // props: ['boardId'],
-  // data 사용 X
-  // data() {
-  //       return {
-  //         title: '',
-  //         content: '',
-  //         userName: '',
-  //         regDt: {},
-
-  //         readCount: 0,
-  //         fileList: [],
-  //         isOwner: false
-  //       }
-  //   },
     methods: {
-      // http 요청 BoardMain 으로 이동!!
-        // boardDetail(){
-        //   http.get(
-        //     '/boards/' + this.$store.state.board.boardId, // props variable
-        //     )
-        //     .then(({ data }) => {
-        //       console.log("DetailModalVue: data : ");
-        //       console.log(data);
-
-        //       if( data.result == 'login' ){
-        //         this.$router.push("/login")
-        //       }else{
-        //         this.$store.commit(
-        //           'mutateSetBoardDetail',
-        //           { 
-        //             title: data.dto.title,
-        //             content: data.dto.content,
-        //             regDt: this.makeDateStr(data.dto.regDt.date.year, data.dto.regDt.date.month, data.dto.regDt.date.day, '.'),
-        //             fileList: data.dto.fileList,
-        //             isOwner: data.isOwner, // not data.dto.isOwner
-
-        //            }
-        //         )
-        //         // this.board.title = data.dto.title;
-        //         // this.content = data.dto.content;
-        //         // this.regDt = this.makeDateStr(data.dto.regDt.date.year, data.dto.regDt.date.month, data.dto.regDt.date.day, '.');
-        //         // this.userName = data.dto.userName;
-        //         // this.readCount = data.dto.readCount;
-        //         // this.fileList = data.dto.fileList;
-        //         // this.isOwner = data.isOwner; // not data.dto.isOwner
-        //       }
-        //     })
-        //     .catch((error) => {
-        //       console.log("DetailModalVue: error ");
-        //       console.log(error);
-        //     });
-        // },
-        // 이 곳에서 사용 X
-        // makeDateStr : util.makeDateStr,
         changeToUpdate(){
           this.$emit( 'call-parent-change-to-update' );
-          // data parameter 사용 X
-          // this.$emit(
-          //   'call-parent-change-to-update', 
-          //   { boardId: this.boardId, title: this.title, content: this.content, fileList: this.fileList}
-          // ); // need parameter
         },
         changeToDelete(){
           this.$emit( 'call-parent-change-to-delete' );
-
-          // data parameter 사용 X
-          // this.$emit(
-          //   'call-parent-change-to-delete', 
-          //   { boardId: this.boardId }
-          // ); // need parameter
         }
     },
 

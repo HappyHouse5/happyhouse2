@@ -284,7 +284,7 @@ export default {
           // this.$emit('profileImage', "../assets/img/favicon.png");      // 프로필 사진이 있을 때
         }
         else{
-          this.$emit('profileImage', "../assets/img/noProfile.png");     // 프로필 사진이 없을 때
+          this.$emit('profileImage', "@/assets/img/noProfile.png");     // 프로필 사진이 없을 때
         }
         this.$emit('name', this.name);
         this.attachFile = this.file.length == 0 ? false : true;

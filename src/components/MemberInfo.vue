@@ -129,7 +129,7 @@ export default {
                 // this.$emit('profileImage', "../assets/img/favicon.png");  // this.file[0]
             }
             else{
-                this.$emit('profileImage', "../assets/img/noProfile.png");
+                this.$emit('profileImage', "@/assets/img/noProfile.png");
             }
             // if(this.attachFile) document.querySelector("#chkFileUploadUpdate").checked = true;
             console.log(data.file);

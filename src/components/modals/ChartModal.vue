@@ -19,18 +19,11 @@
 </template>
 
 <script>
-// import ChartVue from '@/components/Chart.vue';
 import ChartVue from '@/components/Chart.vue';
 
 export default {
     name: "ChartModal",
     props: ['chartModal', 'chartData'],
-    data:function(){
-      return{
-        // Cdata = this.chartData,
-        // sendData
-      }
-    },
     components: {
       ChartVue
     },

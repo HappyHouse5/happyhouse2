@@ -28,26 +28,22 @@ export default {
     name: "DeleteModal",
     props:['modal'],
     methods:{
-        hideModal:function(){
+        hideModal:function(){   // modal close
             this.modal.hide();
         },
         withdrawConfirm: function(){
-            console.log("delete Confirm");
             axios.delete("/members/member", {
-                
             })
-            .then(({data}) => {
+            .then(({data}) => { // member delete success
                 this.modal.hide();
-                console.log(data);
                 if(data == 1){
                     alert("회원탈퇴 성공! \n메인페이지로 돌아갑니다.");
-                    this.$store.commit('logout');
-                    // this.$router.push({name: 'Home'});         
+                    this.$store.commit('logout');       
                     sessionStorage.removeItem("member");
                     location.href = "/"; 
                 }
             })
-            .catch((err) => {
+            .catch((err) => {   // member delete fail
                 console.log("err: " + err);
                 this.modal.hide();
             });

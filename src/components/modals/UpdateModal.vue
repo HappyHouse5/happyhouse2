@@ -82,8 +82,6 @@ export default {
 
           // file upload
           var attachFiles = document.querySelector("#inputFileUploadUpdate");
-          console.log("UpdateModalVue: data 1 : ");
-          console.log(attachFiles);
 
           var cnt = attachFiles.files.length;
           for (var i = 0; i < cnt; i++) {
@@ -95,10 +93,7 @@ export default {
             formData,
             { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(({ data }) => {
-              console.log("UpdateModalVue: data : ");
-              console.log(data);
               if( data.result == 'login' ){
-                // this.$router.push("/login");
                 sessionStorage.removeItem("member");
                 this.$store.commit("logout");
                 alert("로그인이 필요합니다.");
@@ -109,7 +104,6 @@ export default {
               }
             })
             .catch((error) => {
-              console.log("UpdateModalVue: error ");
               console.log(error);
             });
         },
@@ -141,26 +135,6 @@ export default {
       })
 
     },
-    // watch 사용 X
-    // props 사용 X
-    // watch: {
-    //   board : function(){
-    //     // props --> data
-    //     this.boardId = this.board.boardId;
-    //     this.title = this.board.title;
-    //     this.CKEditor.setData( this.board.content );
-    //     // 아래의 내용을 추가하지 않음
-    //     // 기존 파일 내용은 props - board 를 이용
-    //     // fileList 는 신규 파일에 적용
-    //     //this.fileList = this.board.fileList;
-
-    //     // 첨부 파일 관련 초기화
-    //     // 수정 또는 수정 전 첨부 파일을 선택하면 그대로 남아 있다.
-    //     this.attachFile = false;
-    //     this.fileList = [];
-    //   }
-    // }
-
 }
 </script>
 

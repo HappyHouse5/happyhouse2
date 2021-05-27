@@ -28,7 +28,6 @@
 </template>
 
 <script>
-// import ChartVue from '@/components/Chart.vue';
 import RadarVue from '@/components/RadarChart.vue';
 export default {
     name: "RadarModal",
