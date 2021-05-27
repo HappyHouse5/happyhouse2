@@ -125,8 +125,6 @@
               <div class="invalid-feedback">{{emailMsg}}</div>
               </div>
             </div>
-
-
             <!-- Address -->
             <div class="form-group mt-4">
               <label for="location">Address *</label>
@@ -172,7 +170,6 @@
               </div>
             </div>
           </div>
-
             <!-- Prefer -->
             <div class="mb-3 mt-4">
               <div class="form-group mt-3">
@@ -360,8 +357,6 @@ export default {
       formData.append("prefer", this.prefer);
 
       var attachFiles = document.querySelector("#inputFileUploadInsert");
-      console.log("InsertModalVue: data 1 : ");
-      console.log(attachFiles);
 
       var cnt = attachFiles.files.length;
       for (var i = 0; i < cnt; i++) {
@@ -374,7 +369,6 @@ export default {
       .then(({data}) => {
         console.log(data);
         if(data == -1){
-          // this.$alertify.alert("회원가입 실패! 회원 ID를 확인해주세요.", () =>
             this.$alertify.warning("회원가입 실패! 회원 ID를 확인해주세요.");
         }
         else if(data == -2){
@@ -422,31 +416,21 @@ export default {
     },
     validatePwchk() {
       this.isPwchkValid = this.pw == this.pwdchk ? true : false;
-
-      console.log(this.isPwchkValid);
     },
     validateName() {
       this.isNameValid = this.name.length > 0 ? true : false;
-
-      console.log(this.isNameValid);
     },
     validateEmail() {
       this.isEmailValid = this.email.length > 0 ? true : false;
-      console.log(this.isEmailValid);
     },
     validateAddr() {
       this.isAddrValid = this.locationCode.length > 0 ? true : false;
-
-      console.log(this.isAddrValid);
     },
   },
   watch: {
     prefer: function(){
-      console.log(this.prefer);
     },
     userId: function(){
-      console.log(this.userId);
-
       if(this.userId.length >= 4){          // 4글자 이상일 때 DB에서 중복 검사
         axios.get('/members/checkId', {
           params:{
@@ -454,7 +438,6 @@ export default {
           }
         })
         .then(({data}) => {
-          console.log("false 이면 중복 ID가 존재하는 것 : " + data);
           this.isDuplUserId = data;
           this.validateUserId();
         })

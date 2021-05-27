@@ -34,7 +34,7 @@
     </header>
     <!-- End Header -->
 
-    <login-modal v-bind:loginModal="loginModal" v-on:loginSuccess="loginSuccess"></login-modal> <!--v-on:checkLogin="checkLogin()"-->
+    <login-modal v-bind:loginModal="loginModal" v-on:loginSuccess="loginSuccess"></login-modal>
   </div>
 </template>
 
@@ -54,10 +54,6 @@ export default {
       return {
         loginModal: null,
         isLogin: false,
-        // isLogin: this.$store.getters.getIsLogin(),
-        // isLogin: false,
-        // isLogin: sessionStorage.getItem("member") == null ? false : true,
-        // member: this.$store.getters.getMember,
       }
     },
     mounted() {
@@ -92,7 +88,6 @@ export default {
     },
 }
 
-//document.getElementById("loginModal")
 </script>
 
 <style>

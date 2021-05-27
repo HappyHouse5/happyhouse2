@@ -26,11 +26,9 @@ export default {
       }
     },
     mounted() {
-      console.log("mounted: get interest list");
       axios.get('/houses/interests',
       {})
       .then(({data}) => {
-        console.log(data);
         this.interestList = data;
       })
       .catch((err) => {
@@ -39,7 +37,6 @@ export default {
     },
     methods: {
       searchHouse(interest) {
-        console.log("searchHouse method");
         this.$router.push({name: 'House', params: {searchType: "dong", searchWord: interest.dongName}});
         },
     }

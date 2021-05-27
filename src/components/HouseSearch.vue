@@ -18,7 +18,6 @@
             >
               <div class="carousel-container">
                 <div class="container">
-                  <!-- <h2 class="animate__animated animate__fadeInDown">No.1 House Sale Website</h2> -->
                   <p class="animate__animated animate__fadeInUp">No.1 House Sale Website</p>
 
                   <div class="input-group house-search-bar searchform mb-4">
@@ -68,13 +67,9 @@
                               가격옵션
                             </div>
                             <div class="col-8 row">
-                              <!-- <div class="row"> -->
                                 <div class="col-6"><input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="searchOption.minAmount"></div>
                                 <div class="col-6"><input type="range" class="form-range" id="max" @mouseup="valueValidation('max')" v-model="searchOption.maxAmount"></div>
-                                <!-- <div class="col-3">{{realMaxAmount}}</div> -->
-                              <!-- </div> -->
                               <div class>
-                              <!-- <div class="col-8"> <input type="range" class="form-range" id="min" @mouseup="valueValidation('min')" v-model="minAmount"></div> -->
                               {{realMinAmount}} ~ {{realMaxAmount}}
                               </div>
                             </div>
@@ -97,11 +92,7 @@
                       </ul>
                     </div>
                   </template>
-
-                
-
                 </div>
-
               </div>
             </div>
           </div>
@@ -143,15 +134,11 @@ export default {
     },
     methods:{
       search: function(){
-        console.log(this.searchType + " : " + this.searchWord);
-        console.log(document.location.href);
         
         if(!this.isHousePage){
-          // console.log("Home에서 검색")
           this.$router.push({name: 'House', params: {searchType: this.searchType, searchWord: this.searchWord.trim(), searchOption: this.searchOption}}).catch(()=>{});
         }
         else{
-          // console.log("House에서 검색")
           this.$emit('goPageOne', 1);       // 검색 시 페이지네이션 1페이지로 넘기고 offset을 0으로 설정 후에 검색을 하도록 먼저 페이지 '1'로 변경
           this.$emit('search', {searchType: this.searchType, searchWord: this.searchWord.trim(), searchOption: this.searchOption});
           
@@ -165,8 +152,6 @@ export default {
       },
 
       valueValidation:function(param){
-        // console.log("min : " +this.searchOption.minAmount);
-        // console.log(this.maxAmount);
         if((this.searchOption.minAmount > this.searchOption.maxAmount) && this.searchOption.maxAmount != 100 && this.searchOption.minAmount != 0){
           if(param == 'max') this.searchOption.minAmount = this.searchOption.maxAmount;
           if(param == 'min') this.searchOption.maxAmount = this.searchOption.minAmount;
@@ -180,22 +165,11 @@ export default {
         } 
       }
     },
-    watch:{
-      // maxAmount:function(){
-      //   console.log(this.maxAmount);
-      //   if(this.minAmount > this.maxAmount) this.minAmount = this.maxAmount;
-      // },
-      // minAmount:function(){
-      //   console.log(this.minAmount);
-      //   if(this.minAmount > this.maxAmount) this.maxAmount = this.minAmount;
-      // },
-    },
     computed:{
       realMaxAmount:function(){
         let money = this.searchOption.maxAmount * 2000;
         if(this.searchOption.maxAmount == 100) return "20억 이상";
         return money/10000 + "억";
-        // return this.maxAmount * 3000 / 10000;
       },
       realMinAmount:function(){
         let money = this.searchOption.minAmount * 2000;
@@ -206,7 +180,6 @@ export default {
         let size = this.searchOption.maxSize * 2;
         if(this.searchOption.maxSize == 100) return "200제곱미터 이상";
         return size + "제곱미터";
-        // return this.maxAmount * 3000 / 10000;
       },
       realMinSize:function(){
         let size = this.searchOption.minSize * 2;

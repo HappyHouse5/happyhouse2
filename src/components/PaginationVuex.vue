@@ -24,8 +24,6 @@
 <script>
 export default {
   name: 'Pagination',
-  // props 사용 X
-  // props: ['listRowCount', 'pageLinkCount', 'currentPageIndex', 'totalListItemCount'],
   data(){
     return {
     }
@@ -72,7 +70,6 @@ export default {
   methods:{
     // 부모에게 event 전달
     paginationChanged(pageIndex){
-      console.log("paginationVue : paginationChanged : pageIndex : " + pageIndex );
       this.$emit('call-parent', pageIndex);
     }
   },

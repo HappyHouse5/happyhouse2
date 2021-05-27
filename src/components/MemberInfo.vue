@@ -3,48 +3,44 @@
         <div>
             <!-- MyPage - myInfo -->
             <div id="form-myInfo" class="mypage-info p-5  m-auto" style="max-width: 650px" data-open="N">
-            <table class="table text-center">
-                <tbody>
-                    <tr>
-                    <th scope="row">User ID</th>
-                    <td>{{member.userId}}</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">User Password</th>
-                    <td>{{password}}</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">User Name</th>
-                    <td>{{member.name}}</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">User Address</th>
-                    <td>{{member.locationCode}}</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">User E-mail</th>
-                    <td>{{member.email}}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-
+                <table class="table text-center">
+                    <tbody>
+                        <tr>
+                        <th scope="row">User ID</th>
+                        <td>{{member.userId}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">User Password</th>
+                        <td>{{password}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">User Name</th>
+                        <td>{{member.name}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">User Address</th>
+                        <td>{{member.locationCode}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">User E-mail</th>
+                        <td>{{member.email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="row mt-3">
+                <div class="col-sm-4">
+                    <button
+                    type="button"
+                    id="back"
+                    class="btn btn-secondary"
+                    style="width: 100%"
+                    >
+                    INFO
+                    </button>
+                </div>
             <div class="col-sm-4">
-                <button
-                type="button"
-                id="back"
-                class="btn btn-secondary"
-                style="width: 100%"
-                >
-                INFO
-                </button>
-            </div>
-            <div class="col-sm-4">
-
-            <!-- <router-link type="button" style="width: 100%" class="btn btn-dark bg-dark" :to="{name: 'Member', params: {type: 'update'}}">UPDATE</router-link> -->
                 <button
                 type="button"
                 id="update"
@@ -66,8 +62,8 @@
                 DELETE
                 </button>
             </div>
-            </div>
-            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -113,8 +109,6 @@ export default {
             else if(locationCode == 11680) this.member.locationCode = '강남구'
             else if(locationCode == 11710) this.member.locationCode = '송파구'
             else if(locationCode == 11740) this.member.locationCode = '강동구'
-
-
         }
     },
     created(){
@@ -126,12 +120,10 @@ export default {
         .then(({data}) => {
             if(data.isExist == true){
                 this.$emit('profileImage', data.file.fileURL); 
-                // this.$emit('profileImage', "../assets/img/favicon.png");  // this.file[0]
             }
             else{
                 this.$emit('profileImage', "@/assets/img/noProfile.png");
             }
-            // if(this.attachFile) document.querySelector("#chkFileUploadUpdate").checked = true;
             console.log(data.file);
         })
         .catch((err) => {

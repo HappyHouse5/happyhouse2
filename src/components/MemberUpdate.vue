@@ -44,6 +44,7 @@
         />
         <div class="invalid-feedback">{{pwchkMsg}}</div>
       </div>
+      <!-- Name -->
       <div class="form-group mt-3">
         <label for="name">Name</label>
         <input
@@ -58,6 +59,7 @@
         />
         <div class="invalid-feedback">{{nameMsg}}</div>
       </div>
+      <!-- Phone Number -->
       <div class="form-group mt-3">
         <label for="phone">Phone Number</label>
         <input
@@ -68,15 +70,11 @@
           v-model="member.phone"
         />
       </div>
+      <!-- Profile Image -->
       <div class="form-check mb-3 mt-3">
             <input v-model="attachFile" v-on:click="checkboxClick" class="form-check-input" type="checkbox" id="chkFileUploadUpdate">
             <label class="form-check-label" for="chkFileUploadUpdate">Profile Image<template v-if="file.length > 0"> : {{profileName}}</template></label>
       </div>
-      <!-- <div v-for="(profile, index) in file" :key="index">
-        <span class="fileName">{{ profile.fileName }}</span>
-          
-        <a type="button" class="btn btn-outline btn-default btn-xs" v-bind:href="profile.fileUrl" download>내려받기</a>
-      </div> -->
       <div class="row mb-3" v-show="attachFile" id="imgFileUploadUpdateWrapper">
         <div class="col-sm-1">
         <input @change="changeFile" type="file" id="inputFileUploadUpdate" style="color: white">
@@ -86,6 +84,7 @@
           <!-- <img v-for="(profile, index) in file" v-bind:src="profile" v-bind:key="index"> -->
         </div>
       </div>
+      <!-- Email -->
       <div class="row mt-3">
         <label for="email">Email</label>
       </div>
@@ -117,7 +116,6 @@
         <div class="invalid-feedback">{{emailMsg}}</div>
         </div>
       </div>
-
       <!-- Address -->
       <div class="form-group mt-4">
         <label for="location">Address</label>
@@ -159,7 +157,6 @@
         </div>
       </div>
       </div>
-
       <!-- Prefer -->
       <div class="mb-3 mt-4">
         <div class="form-group mt-3">
@@ -185,6 +182,7 @@
         </div>
       </div>
       
+      <!-- Buttons -->
       <div class="row mt-5 align-bottom">
         <div class="col-sm-4">
           <button
@@ -263,32 +261,28 @@ export default {
       }
     },
     mounted(){
-      console.log(this.member.email);
       this.mail = this.member.email.substring(0, this.member.email.indexOf("@"));
       this.mailcom = this.member.email.substring(this.member.email.indexOf("@") + 1, this.member.email.length);
-      // this.member = JSON.parse(sessionStorage.getItem("member"));
+
       axios.get('/members/getProfile', {
         params:{
            code: this.member.keyId,
         },
       })
       .then(({data}) => {
-        console.log(data);
         this.file = [];
         if(data.isExist){
           this.file.push(data.file);
           document.querySelector("#chkFileUploadUpdate").checked = true;
           this.attachFile = true;
           this.profileName = this.file[0].fileName;
-          this.$emit('profileImage', this.file[0].fileURL);
-          // this.$emit('profileImage', "../assets/img/favicon.png");      // 프로필 사진이 있을 때
+          this.$emit('profileImage', this.file[0].fileURL);   // 프로필 사진이 있을 때
         }
         else{
           this.$emit('profileImage', "@/assets/img/noProfile.png");     // 프로필 사진이 없을 때
         }
         this.$emit('name', this.name);
         this.attachFile = this.file.length == 0 ? false : true;
-        // if(this.attachFile) document.querySelector("#chkFileUploadUpdate").checked = true;
 
         console.log(this.file);
       })
@@ -306,8 +300,6 @@ export default {
         this.$emit('delete');
       },
       update: async function(){
-        // this.member.email = this.mail + "@" + this.mailcom;
-        console.log(this.member);
 
         if(!this.isPwValid || !this.isPwchkValid || !this.isNameValid || !this.isEmailValid) {
           alert("회원정보 수정에 실패했습니다.\n양식을 다시 확인해주세요.");
@@ -382,22 +374,15 @@ export default {
           && patternNumAtListOne.test( this.member.pw )
           && this.member.pw.length >= 4
         ) ? true : false;
-
-        console.log(this.isPwValid);
       },
       validatePwchk() {
         this.isPwchkValid = this.member.pw == this.pwdchk ? true : false;
-
-        console.log(this.isPwchkValid);
       },
       validateName() {
         this.isNameValid = this.name.length > 0 ? true : false;
-
-        console.log(this.isNameValid);
       },
       validateEmail() {
         this.isEmailValid = this.mail.length > 0 ? true : false;
-        console.log(this.isEmailValid);
       },
     },
     watch:{

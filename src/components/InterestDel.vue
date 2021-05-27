@@ -22,10 +22,7 @@ export default {
       }
     },
     mounted() {
-      console.log("mounted: get interest list");
-
       this.getInterest();
-      
     },
     methods: {
       interestDelete() {
@@ -33,12 +30,9 @@ export default {
         for(let i=0; i<this.deleteList.length; i++){
           deleteList.push({dongCode: this.deleteList[i].dongCode});
         }
-        console.log("interestDelete method");
-        
-        console.log(deleteList);
+
         axios.post('/houses/interestDelete', deleteList)
         .then(({data}) => {
-          console.log(data);
           this.getInterest();
           alert(data + "개의 관심 매물 정보가 삭제되었습니다.");
         })
@@ -50,7 +44,6 @@ export default {
         axios.get('/houses/interests',
         {})
         .then(({data}) => {
-          console.log(data);
           this.interestList = data;
         })
         .catch((err) => {
