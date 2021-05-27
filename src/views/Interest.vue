@@ -16,9 +16,6 @@
               <div class="carousel-container">
                 <div class="container">
                   <p class="animate__animated animate__fadeInUp">Interest</p>
-                  <!-- <h2 class="animate__animated animate__fadeInDown">
-                    Add a region of interest to easily check listings
-                  </h2> -->
 
                   <div id="#interest" class="interest-area">
                     <div class="blog-inner area-padding mx-auto" style="max-width:1000px">
@@ -48,16 +45,10 @@
 </template>
 
 <script>
-// import InterestList from '@/components/InterestList.vue'
-// import InterestAdd from '@/components/InterestAdd.vue'
-// import InterestDel from '@/components/InterestDel.vue'
 
 export default {
     name: "Interest",
     components: {
-        // InterestList,
-        // InterestAdd,
-        // InterestDel,
     },
     mounted() {
 

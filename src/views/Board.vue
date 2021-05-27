@@ -17,16 +17,12 @@
               <div class="carousel-container">
                 <div class="container">
                   <p class="animate__animated animate__fadeInUp mb-2">Board</p>
-                  <!-- <h2 class="animate__animated animate__fadeInDown">
-                    Add a region of interest to easily check listings
-                  </h2> -->
 
 
                   <div class="p-5 board-inner mx-auto mt-5">
 
                   <div class="input-group mb-5 mt-3">
                     <!-- store 사용 -->
-                    <!-- <input v-model="searchWord" @keydown.enter="boardList" type="text" class="form-control"> -->
                     <input placeholder="검색어를 입력하세요." v-model="$store.state.board.searchWord" @keydown.enter="boardList" type="text" class="form-control">
                     <button @click="boardList" class="btn btn-success " type="button" id="btn-board-search">Search</button>
                   </div>
@@ -82,10 +78,10 @@
     </section>
     <!-- End Hero Section -->
      
-                    <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
-                    <!-- props 제거 -->
-                    <detail-modal v-on:call-parent-change-to-update="changeToUpdate" v-on:call-parent-change-to-delete="changeToDelete"></detail-modal>
-                    <update-modal v-on:call-parent-update="closeAfterUpdate"></update-modal>
+    <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
+    <!-- props 제거 -->
+    <detail-modal v-on:call-parent-change-to-update="changeToUpdate" v-on:call-parent-change-to-delete="changeToDelete"></detail-modal>
+    <update-modal v-on:call-parent-update="closeAfterUpdate"></update-modal>
 
 </div>
 
@@ -121,30 +117,6 @@ export default {
       detailModal : null,
       updateModal : null,
 
-      // 아래 data 사용 X
-      // // list
-      // list: [],
-      // limit: 10,
-      // offset: 0,
-      // searchWord: '',
-
-      // // pagination
-      // listRowCount: 10,
-      // pageLinkCount: 10,
-      // currentPageIndex: 1,
-
-      // totalListItemCount: 0,
-
-      // // detail
-      // boardId: 0,
-
-      // // update
-      // board: {
-      //   boardId: 0,
-      //   title: '',
-      //   content: '',
-      //   fileList: []
-      // }
     }
   },
   computed :{
@@ -199,9 +171,6 @@ export default {
     // board-vue 와 다르게 구현해 봄
     // Detail Component 에서 Server 요청을 하지 않고 이곳에서 수행 후에 Detail 보여줌
     boardDetail(boardId){
-      // store 변경
-      // this.boardId = boardId;
-      // this.$store.commit('mutateSetBoardBoardId', boardId);
 
       axios.get(
       '/boards/' + boardId, // props variable
@@ -215,7 +184,6 @@ export default {
             sessionStorage.removeItem("member");
             alert("로그인이 필요합니다.");
             location.href = "/";
-          // this.$router.push("/login");
         }else{
           this.$store.commit(
             'SET_BOARD_DETAIL',
@@ -241,14 +209,6 @@ export default {
 
 
     },
-
-    // update
-    // Detail 에서 board data 를 직접 변경
-    // changeToUpdate( board ){
-    //   this.board = board; 
-    //   this.detailModal.hide();
-    //   this.updateModal.show();
-    // },
     changeToUpdate(){ // board parameter 필요 없음.
       // data update 사용 X
       // this.board = board; 
@@ -291,12 +251,10 @@ export default {
           console.log("BoardMainVue: data : ");
           console.log(data);
           if( data.result == 'login' ){
-            // this.$router.push("/login");
             this.$store.commit("logout");
             sessionStorage.removeItem("member");
             alert("로그인이 필요합니다.");
             location.href = "/";
-            // this.$router.push({name: "Home"});
           }else{
             this.boardList();
           }

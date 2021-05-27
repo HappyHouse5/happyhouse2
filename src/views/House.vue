@@ -51,31 +51,9 @@
               <li class="list-group-item"><strong>{{houseInfo.floor}}</strong> 층</li>
             </ul>
           </div>
-
-            <!-- <div class="card h-100">
-                <div class="card-header">
-                  매물 상세 정보
-                </div>
-              <div class="card-body">
-                <span class="card-title fs-5">
-                  {{houseInfo.aptName}}
-                </span> -->
-
-                <!-- <p id="price">매매가  {{houseInfo.dealAmount}}</p>
-                <p class="card-text" id="dong">법정동  {{houseInfo.dong}}</p>
-                <p class="card-text" id="jibun">지번  {{houseInfo.jibun}}</p>
-                <p class="card-text" id="buildDate">건축년도  {{houseInfo.buildYear}}</p>
-                <p class="card-text" id="area">전용면적  {{houseInfo.area}}</p>
-                <p class="card-text" id="dealDate">거래일  {{houseInfo.dealDate}}</p>
-              </div>
-            </div> -->
           </div>
         </div>
-        <!-- <div class="row" style="height:50px;">
-
-        </div> -->
         <div class="row mt-3">
-          <!-- <div class="col-sm-6" id="map" style="height: 400px; overflow:hidden;"> -->
           <div class="table-responsive custom-table-responsive">
             <table class="table custom-table table-hover fs-6 mt-4" >
               <thead>
@@ -127,29 +105,6 @@
         </div>
       <chart-modal v-bind:chartModal="chartModal" v-bind:chartData="{label, price}" v-on:showModal="showModal"></chart-modal>
       <radar-modal v-bind:radarModal="radarModal" v-bind:chartData="kakaoData" v-bind:op="op" v-on:showModal="showModal"></radar-modal>
-      <!-- 페이지에 바로 출력 => OK -->
-      <!-- <chart-vue :chartData="{label, price}"></chart-vue> -->
-      
-      <!-- <house-chart :chartData="{label, price}"></house-chart> -->
-      
-
-      <!-- <div class="modal" tabindex="-1" id="chartModal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">House Chart</h5>
-            </div>
-            <div class="modal-body">
-              <chart-vue :chartData="chartData"></chart-vue>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal"
-                >Close</button
-              >
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -163,12 +118,13 @@
 <script>
 import HouseSearch from '@/components/HouseSearch.vue';
 import Pagination from '@/components/Pagination.vue';
-// import 'Chart.js';
-// import { Bar } from "vue-chartjs";
+
 import ChartModal from '@/components/modals/ChartModal.vue';
 import RadarModal from '@/components/modals/RadarModal.vue';
+
 import ChartVue from '@/components/Chart.vue';
 import HouseChart from '@/components/HouseChart.vue';
+
 import axios from '@/common/axios.js';
 import {Modal} from 'bootstrap';
 
@@ -184,8 +140,6 @@ export default {
     },
     data:function(){
         return{
-            // searchType: this.$route.params.searchType == undefined ? "dong" : this.$route.params.searchType, // this.$route.params.searchType,
-            // searchWord: this.$route.params.searchWord == undefined ? "" : this.$route.params.searchWord,
             searchType: "dong",              // 검색 옵션 
             searchWord: "",
             offset: 0,
@@ -271,8 +225,6 @@ export default {
       this.searchOption = this.$route.params.searchOption == undefined ? this.searchOption : this.$route.params.searchOption;
     },
     mounted(){                                      // 페이지 mount 되는 시점
-      console.log("마운트 될 때 searchType: " + this.searchType);
-      console.log("마운트 될 때 searchWord: " + this.searchWord);
       this.searchHouse({searchType: this.searchType, searchWord: this.searchWord, searchOption: this.searchOption});   // house 검색 반환 + searchDetail() : 첫 집 정보를 기반으로 위치정보 받기 + init Map() + 이벤트 Handler 등록
       this.chartModal = new Modal(document.getElementById("chartModal"));
       this.radarModal = new Modal(document.getElementById("radarModal"));
@@ -292,7 +244,6 @@ export default {
           x: this.location[0].lng,
         }]
         this.makeMarker(place);                                                // 마커 만들기
-        console.log(this.markers.length);
         if(this.markers.length == 0) return;                  // 주변 상권, 학교 등 정보 검색 결과가 없다면 placeOverlay 만들지 않고 바로 return
         //--------------------------------------------------------------------
         // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
@@ -328,7 +279,6 @@ export default {
           }));
 
           this.markers[i].setMap(this.map);
-          console.log("house click : " + this.currCategory)
           // Kakao Map Event handler
           let $this = this;
           if(this.currCategory != false){
@@ -357,13 +307,11 @@ export default {
        
         var iwContent = "<div style=\"width:120px; height:40px; text-align: center; padding: 5px;\">" + this.houseInfo.aptName + "</div>"; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         var iwPosition = new kakao.maps.LatLng(place.y, place.x); //인포윈도우 표시 위치입니다
-        // var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
         this.infowindow = new kakao.maps.InfoWindow({
           map: this.map,
           position: iwPosition,
           content: iwContent,
-          // removable: iwRemoveable,
         });
         this.infowindow.open(this.map, this.markers[0]);          // 마커 열기
       },
@@ -402,11 +350,7 @@ export default {
           this.houseList = data.list;
           if(this.houseList == "") {
             alert("검색 결과가 없습니다.\n다시 다시 검색해주세요.");
-            // this.$router.resolve({name: 'Home'}).href;
-            // this.$router.go();
             this.$router.push({name:'House'}).catch(() => {});
-            // location.reload();
-            // location.href = "/";
           }
           else{
             let houseList = this.houseList;
@@ -416,7 +360,6 @@ export default {
 
             this.count = data.count;                                  // 검색된 매물의 총 row 수
             if(this.currentPageIndex == 1) this.$alertify.success(this.count + "개의 매물이 검색되었습니다.");
-            console.log(this.houseList);
           }
         })
         .catch((err) => {
@@ -443,7 +386,6 @@ export default {
         })
         .then(({data}) => {
           this.location[0] = data;
-          console.log("location : " + this.location[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -464,8 +406,6 @@ export default {
       // pagination : 페이지 번호 받아서 페이징 처리
       movePage(pageIndex){
         this.SET_BOARD_MOVE_PAGE(pageIndex);
-
-        console.log("페이지 이동 시 재 검색 타입, 명: " + this.searchType + this.searchWord);
         this.searchHouse({searchType: this.searchType, searchWord: this.searchWord, searchOption: this.searchOption});
       },
       SET_BOARD_MOVE_PAGE(pageIndex){                               // 페이지 이동에 따른 offset, 현재 페이지 번호 변화
@@ -497,7 +437,6 @@ export default {
       searchPlaces:function(code){
         this.currCategory = code;
         if(code == '') return;
-        // if(this.currCategory == '') this.currCategory = 'CE7';
         this.placeOverlay.setMap(null);
         
         this.removeMarker();
@@ -548,7 +487,6 @@ export default {
             content += " <span title='" + place.road_address_name + "'>" + place.road_address_name + "</span>" + " <span class='jibun' title='" + place.address_name + "'>(지번 : " + place.address_name + ")</span> ";
         }else{
             content += " <span title='" + place.address_name + '">' + place.address_name + '</span>';
-            // content += " <span></span>" + "";
         }                
       
         content += ' <span class="tel">' + place.phone + '</span>' + 
@@ -568,15 +506,6 @@ export default {
               target.attachEvent('on' + type, callback);
           }
       },
-      // 각 카테고리에 클릭 이벤트를 등록합니다
-      // addCategoryClickEvent: function() {
-      //     var category = document.getElementById('category'),
-      //         children = category.children;
-
-      //     for (var i=0; i<children.length; i++) {
-      //         children[i].onclick = onClickCategory;
-      //     }
-      // }
       showModal() {
         if (this.checkList.length == 1) {
           this.op = this.op + 1;
@@ -626,16 +555,10 @@ export default {
         let priceList = [];
         this.checkList.forEach(function(list){
           labelList.push(list.aptName);
-          // let price = list.dealAmount.trim().replace(",", "");
-          // console.log(price);
-          // priceList.push(parseInt(price));
           priceList.push(list.dealAmount);
         });
         this.label = labelList;
         this.price = priceList;
-        // console.log(this.checkList);
-        // console.log(this.label);
-        // console.log(this.price);
 
         if(this.checkList.length == 1){
           console.log(this.checkList[0].aptName + this.checkList[0].dealAmount);
